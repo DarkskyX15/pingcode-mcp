@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-auth-token-2",
+  "meta": {
+    "name": "刷新用户令牌",
+    "method": "GET",
+    "path": "/v2/auth/token",
+    "group": "授权码",
+    "groupPath": [
+      "鉴权",
+      "授权码"
+    ],
+    "area": "鉴权",
+    "tags": [
+      "授权码"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [],
+      "scopes": []
+    },
+    "description": "开发者可通过 `refresh_token` 刷新获取全新的 `access_token`，从而避免用户频繁重复授权的问题。PingCode 中 `refresh_token` 的默认有效期为 90 天；删除应用或重置应用密钥（`Secret`），都会导致当前令牌立即失效。",
+    "summary": "开发者可通过 refresh_token 刷新获取全新的 access_token，从而避免用户频繁重复授权的问题。PingCode 中 refresh_token 的默认有效期为 90 天；删除应用或重置应用密钥（Secret），都会导致当前令牌立即失效。",
+    "sourceFile": "src/modules/v2/pingcode/authorization/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%B7%E6%96%B0%E7%94%A8%E6%88%B7%E4%BB%A4%E7%89%8C",
+    "originalUrl": "/v2/auth/token?grant_type=refresh_token",
+    "queryDefaults": [
+      {
+        "name": "grant_type",
+        "value": "refresh_token"
+      }
+    ]
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "type": "string",
+            "description": "授权类型，这里固定为：`refresh_token`。",
+            "enum": [
+              "refresh_token"
+            ]
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "通过 `authorization_code` 获取 `access_token` 时，一起返回的 `refresh_token`。"
+          }
+        },
+        "required": [
+          "grant_type",
+          "refresh_token"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "description": "令牌"
+        },
+        "refresh_token": {
+          "type": "string",
+          "description": "刷新令牌"
+        },
+        "token_type": {
+          "type": "string",
+          "description": "令牌类型"
+        },
+        "expires_in": {
+          "type": "string",
+          "description": "过期时间"
+        }
+      },
+      "required": [
+        "access_token",
+        "refresh_token",
+        "token_type",
+        "expires_in"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "access_token": "e7321ca8-f724-4abd-9169-d76d095c6acf",
+          "refresh_token": "f724-4abd-9169-e7321ca8-d76d095c6acf",
+          "token_type": "Bearer",
+          "expires_in": 1577808000
+        }
+      }
+    ]
+  }
+}

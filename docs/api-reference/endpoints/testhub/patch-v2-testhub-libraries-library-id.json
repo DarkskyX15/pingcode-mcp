@@ -1,0 +1,344 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-testhub-libraries-library-id",
+  "meta": {
+    "name": "部分更新一个测试库",
+    "method": "PATCH",
+    "path": "/v2/testhub/libraries/{library_id}",
+    "group": "测试库",
+    "groupPath": [
+      "测试管理",
+      "测试库"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "测试库"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:library"
+      ]
+    },
+    "description": "用于部分更新一个测试库。",
+    "summary": "用于部分更新一个测试库。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/library/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E6%B5%8B%E8%AF%95%E5%BA%93"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "library_id": {
+            "type": "string",
+            "description": "测试库的 id。"
+          }
+        },
+        "required": [
+          "library_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "测试库的名称。"
+          },
+          "identifier": {
+            "type": "string",
+            "description": "测试库的标识。在一个企业中这个标识是唯一的。项目的标识由大写英文字母/数字/下划线/连接线组成（不超过 15 个字符）。"
+          },
+          "description": {
+            "type": "string",
+            "description": "测试库的描述。"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "测试库",
+            "identifier": "CSK",
+            "description": "这是一个测试库"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "测试库的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "测试库的资源地址。"
+        },
+        "identifier": {
+          "type": "string",
+          "description": "测试库的标识。"
+        },
+        "name": {
+          "type": "string",
+          "description": "测试库的名称。"
+        },
+        "scope_type": {
+          "type": "string",
+          "description": "测试库的所属类型。",
+          "enum": [
+            "organization",
+            "user_group"
+          ]
+        },
+        "scope_id": {
+          "type": "string",
+          "description": "测试库的所属 id。"
+        },
+        "visibility": {
+          "type": "string",
+          "description": "测试库的可见性。",
+          "enum": [
+            "private",
+            "public"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "description": "测试库的主题色。"
+        },
+        "description": {
+          "type": "string",
+          "description": "测试库的描述。"
+        },
+        "entity_properties": {
+          "type": "object",
+          "description": "以键值型数据结构组织的实体扩展属性的集合。",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "x-dynamic-key": "$property_key",
+          "x-dynamic-key-description": "测试库上的实体扩展属性。`$property_key` 为占位符，实际属性名随请求变化，并非固定字段，对应实体扩展属性的 `property_key`。"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "测试库的成员列表。",
+          "x-inferred-from-example": true
+        },
+        "created_at": {
+          "type": "number",
+          "description": "测试库的创建时间。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "测试库的创建人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "updated_at": {
+          "type": "number",
+          "description": "测试库的更新时间。"
+        },
+        "updated_by": {
+          "type": "object",
+          "description": "测试库的更新人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_archived": {
+          "type": "number",
+          "description": "是否已归档。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "identifier",
+        "name",
+        "scope_type",
+        "scope_id",
+        "visibility",
+        "color",
+        "description",
+        "entity_properties",
+        "members",
+        "created_at",
+        "created_by",
+        "updated_at",
+        "updated_by",
+        "is_archived",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5eb623f6a70571487ea47000",
+          "url": "https://{rest_api_root}/v2/testhub/libraries/5eb623f6a70571487ea47000",
+          "identifier": "CSK",
+          "name": "测试库",
+          "scope_type": "user_group",
+          "scope_id": "63c8fb32729dee3334d96af7",
+          "visibility": "private",
+          "color": "#F693E7",
+          "description": "这是一个测试库",
+          "entity_properties": {
+            "entity_property_key_a": {
+              "score": 95,
+              "risk": "low"
+            },
+            "entity_property_key_b": "123456"
+          },
+          "members": [
+            {
+              "id": "a0417f68e846aae315c85d24643678a9",
+              "url": "https://{rest_api_root}/v2/testhub/libraries/5eb623f6a70571487ea47000/members/a0417f68e846aae315c85d24643678a9",
+              "type": "user",
+              "user": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            }
+          ],
+          "created_at": 1583290300,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "updated_at": 1583290300,
+          "updated_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "is_archived": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

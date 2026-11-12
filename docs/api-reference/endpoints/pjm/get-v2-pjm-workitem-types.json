@@ -1,0 +1,221 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-workitem-types",
+  "meta": {
+    "name": "获取全部工作项类型列表",
+    "method": "GET",
+    "path": "/v2/pjm/workitem_types",
+    "group": "工作项配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "工作项配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:configuration"
+      ]
+    },
+    "description": "用于分页获取企业内全部工作项类型。",
+    "summary": "用于分页获取企业内全部工作项类型。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/work-item-config/work-item-type/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E5%85%A8%E9%83%A8%E5%B7%A5%E4%BD%9C%E9%A1%B9%E7%B1%BB%E5%9E%8B%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "include_deleted": {
+            "type": "boolean",
+            "description": "是否包含已删除的工作项类型。该值默认为 `false`。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "group": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "icon": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "color": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "is_system": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "is_deleted": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "工作项类型的全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 2,
+          "values": [
+            {
+              "id": "630da48bc9443b1aa94ce3ea",
+              "url": "https://{rest_api_root}/v2/pjm/workitem_types/630da48bc9443b1aa94ce3ea",
+              "name": "需求",
+              "group": "requirement",
+              "icon": "story",
+              "color": "#56ABFB",
+              "is_system": 1,
+              "is_deleted": 0
+            },
+            {
+              "id": "6385c650fef18f2d7222d15d",
+              "url": "https://{rest_api_root}/v2/pjm/workitem_types/6385c650fef18f2d7222d15d?include_deleted=true",
+              "name": "自定义",
+              "group": "issue",
+              "icon": "issue",
+              "color": "#73D897",
+              "is_system": 0,
+              "is_deleted": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

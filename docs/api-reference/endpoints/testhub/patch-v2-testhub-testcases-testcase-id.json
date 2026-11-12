@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-testhub-testcases-testcase-id",
+  "meta": {
+    "name": "部分更新一个用例",
+    "method": "PATCH",
+    "path": "/v2/testhub/testcases/{testcase_id}",
+    "group": "用例",
+    "groupPath": [
+      "测试管理",
+      "用例"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "用例"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:testcase"
+      ]
+    },
+    "description": "用于部分更新一个用例。",
+    "summary": "用于部分更新一个用例。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/case/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BE%8B"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "testcase_id": {
+            "type": "string",
+            "description": "测试用例的 id。"
+          }
+        },
+        "required": [
+          "testcase_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "suite_id": {
+            "type": "string",
+            "description": "测试用例所属模块的 id。"
+          },
+          "state_id": {
+            "type": "string",
+            "description": "测试用例状态的 id。"
+          },
+          "type_id": {
+            "type": "string",
+            "description": "测试用例类型的 id。"
+          },
+          "title": {
+            "type": "string",
+            "description": "测试用例的标题。"
+          },
+          "important_level_id": {
+            "type": "string",
+            "description": "测试用例重要程度的 id。"
+          },
+          "maintenance_id": {
+            "type": "string",
+            "description": "测试用例维护人的 id。"
+          },
+          "properties": {
+            "type": "object",
+            "description": "测试用例属性的键值对集合。"
+          },
+          "description": {
+            "type": "string",
+            "description": "测试用例的备注。"
+          },
+          "precondition": {
+            "type": "string",
+            "description": "测试用例的前置条件。"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "测试用例的步骤列表。steps 是整体更新的。"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "suite_id": "55714870a70ea4eb623f6700",
+            "state_id": "686f62038668bbae4f4dd0c1",
+            "type_id": "5cf189b35de9c20620ad7153",
+            "title": "这是一个测试用例",
+            "important_level_id": "57a109b35ae8c20630fd7256",
+            "maintenance_id": "a0417f68e846aae315c85d24643678a9"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    }
+  }
+}

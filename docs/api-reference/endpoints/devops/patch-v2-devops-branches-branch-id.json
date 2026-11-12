@@ -1,0 +1,339 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-devops-branches-branch-id",
+  "meta": {
+    "name": "部分更新一个代码分支",
+    "method": "PATCH",
+    "path": "/v2/devops/branches/{branch_id}",
+    "group": "代码分支",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "代码分支"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "代码分支"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:code"
+      ]
+    },
+    "description": "用于部分更新一个代码分支。",
+    "summary": "用于部分更新一个代码分支。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E5%88%86%E6%94%AF"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "branch_id": {
+            "type": "string",
+            "description": "分支的 id。"
+          }
+        },
+        "required": [
+          "branch_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "代码托管平台的 id。"
+          },
+          "repo_id": {
+            "type": "string",
+            "description": "代码仓库的 id。"
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "是否设置为默认分支。该值只能是 `true`，设置该分支为默认分支后将取消其他分支的默认属性。"
+          },
+          "workitem_identifiers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "PingCode 工作项编号的列表。通过该参数将分支与一个或多个工作项关联，分支和工作项关联后，分支下所有的提交都会和该工作项关联。",
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "product_id",
+          "repo_id"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "product_id": "564587fe700d43b81b080765",
+            "repo_id": "564587fe700d43b81b080766",
+            "is_default": true,
+            "workitem_identifiers": [
+              "PLM-001"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "代码分支的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "代码分支的资源地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "托管平台的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "repository": {
+          "type": "object",
+          "description": "代码仓库的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "full_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "created_at": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "代码分支的名称。"
+        },
+        "created_at": {
+          "type": "number",
+          "description": "代码分支的创建时间。"
+        },
+        "sender": {
+          "type": "object",
+          "description": "代码分支创建者的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_default": {
+          "type": "boolean",
+          "description": "代码分支是否为默认分支。"
+        },
+        "workitems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "identifier": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "title": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "start": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "due": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "parent_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "prop_a": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "prop_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "代码分支关联的工作项列表。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "product",
+        "repository",
+        "name",
+        "created_at",
+        "sender",
+        "is_default",
+        "workitems"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "564587fe700d43b81b080767",
+          "url": "https://{rest_api_root}/v2/devops/branches/564587fe700d43b81b080767",
+          "product": {
+            "id": "564587fe700d43b81b080765",
+            "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+            "name": "Github",
+            "type": "github"
+          },
+          "repository": {
+            "id": "564587fe700d43b81b080766",
+            "url": "https://{rest_api_root}/v2/devops/repos/564587fe700d43b81b080766",
+            "name": "ngx-planet",
+            "full_name": "worktile/ngx-planet",
+            "created_at": 1403018919
+          },
+          "name": "terry/#PLM-001",
+          "created_at": 1403018919,
+          "sender": {
+            "id": "5666aea91f99e33cb7c44964",
+            "url": "https://{rest_api_root}/v2/devops/users/5666aea91f99e33cb7c44964",
+            "name": "terry"
+          },
+          "is_default": true,
+          "workitems": [
+            {
+              "id": "564587fe700d43b81b080ab8",
+              "url": "https://{rest_api_root}/v2/pjm/workitems/564587fe700d43b81b080ab8",
+              "short_id": "c9WqLmTO",
+              "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+              "identifier": "PLM-001",
+              "title": "这是一个用户故事",
+              "start": {
+                "date": 1583290309,
+                "with_time": 1
+              },
+              "due": {
+                "date": 1583290347,
+                "with_time": 1
+              },
+              "parent_id": "5edca524cad2fa112b06105c",
+              "properties": {
+                "prop_a": "prop_a_value",
+                "prop_b": "prop_b_value"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

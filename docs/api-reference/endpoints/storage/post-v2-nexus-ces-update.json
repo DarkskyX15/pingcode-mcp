@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-ces-update",
+  "meta": {
+    "name": "更新自定义实体",
+    "method": "POST",
+    "path": "/v2/nexus/ces/update",
+    "group": "CES",
+    "groupPath": [
+      "存储",
+      "CES"
+    ],
+    "area": "存储",
+    "tags": [
+      "CES"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:storage:app"
+      ]
+    },
+    "description": "更新自定义实体。",
+    "summary": "更新自定义实体。",
+    "sourceFile": "src/modules/v2/nexus/storage/ces/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%9B%B4%E6%96%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "entity_name": {
+            "type": "string",
+            "description": "自定义实体的名字。"
+          },
+          "condition": {
+            "type": "object",
+            "description": "查询条件，参考 [ConditionBuilder](https://open.pingcode.com/reference/functions/storage/ces-condition-builder)。",
+            "properties": {
+              "name": {
+                "type": "object",
+                "properties": {
+                  "eq": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "value": {
+            "type": "object",
+            "description": "更新的值。",
+            "properties": {
+              "age": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "entity_name",
+          "condition",
+          "value"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "entity_name": "user",
+            "condition": {
+              "name": {
+                "eq": "john"
+              }
+            },
+            "value": {
+              "age": 10
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-directory-team",
+  "meta": {
+    "name": "获取企业信息",
+    "method": "GET",
+    "path": "/v2/directory/team",
+    "group": "企业",
+    "groupPath": [
+      "全局",
+      "组织",
+      "企业"
+    ],
+    "area": "全局",
+    "tags": [
+      "企业"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:team"
+      ]
+    },
+    "description": "用于获取当前企业的基本信息。",
+    "summary": "用于获取当前企业的基本信息。",
+    "sourceFile": "src/modules/v2/pingcode/global/organization/team/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%BC%81%E4%B8%9A%E4%BF%A1%E6%81%AF"
+  },
+  "request": {},
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "企业的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "企业的地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "企业的名称。"
+        },
+        "domain": {
+          "type": "string",
+          "description": "企业的二级域名。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "domain"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "56ba35de87ad7153c2062f65",
+          "url": "https://{rest_api_root}/v2/directory/team",
+          "name": "YCtech",
+          "domain": "yctech"
+        }
+      }
+    ]
+  }
+}

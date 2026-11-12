@@ -1,0 +1,454 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-wiki-pages",
+  "meta": {
+    "name": "获取页面列表",
+    "method": "GET",
+    "path": "/v2/wiki/pages",
+    "group": "页面",
+    "groupPath": [
+      "知识管理",
+      "页面"
+    ],
+    "area": "知识管理",
+    "tags": [
+      "页面"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:wiki:page"
+      ]
+    },
+    "description": "用于分页获取页面列表。",
+    "summary": "用于分页获取页面列表。",
+    "sourceFile": "src/modules/v2/pingcode/wiki/page/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "space_id": {
+            "type": "string",
+            "description": "空间的 id。"
+          },
+          "parent_id": {
+            "type": "string",
+            "description": "父页面的 id。查询该页面下的直接子页面。与 `ancestor_id` 互斥，只允许传入其中一个。"
+          },
+          "ancestor_id": {
+            "type": "string",
+            "description": "祖先页面的 id。查询该页面下的全部子孙页面。与 `parent_id` 互斥，只允许传入其中一个。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "space": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "is_archived": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "is_deleted": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "parent": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "short_id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "html_url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "icon": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "reading": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "published_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "published_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "tags": {
+                "type": "array",
+                "x-inferred-from-example": true
+              },
+              "participants": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "display_name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "entity_properties": {
+                "type": "object",
+                "properties": {
+                  "entity_property_key_a": {
+                    "type": "object",
+                    "properties": {
+                      "score": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "risk": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "entity_property_key_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "position": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "created_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "updated_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "updated_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_locked": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "is_archived": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "is_deleted": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "页面全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "63e1bf51760505c8795ebccc",
+              "url": "https://{rest_api_root}/v2/wiki/pages/63e1bf51760505c8795ebccc",
+              "short_id": "5-x6NN",
+              "html_url": "https://yctech.pingcode.com/wiki/pages/5-x6NN",
+              "space": {
+                "id": "63e1bf51760505c8795ebcc8",
+                "url": "https://{rest_api_root}/v2/wiki/spaces/63e1bf51760505c8795ebcc8",
+                "name": "示例空间",
+                "identifier": "DEMO",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "name": "示例页面",
+              "type": "document",
+              "parent": {
+                "id": "63e1bf51760505c8795ebcce",
+                "url": "https://{rest_api_root}/v2/wiki/pages/63e1bf51760505c8795ebcce",
+                "short_id": "c-x6NN",
+                "html_url": "https://yctech.pingcode.com/wiki/pages/c-x6NN",
+                "name": "模板",
+                "type": "document"
+              },
+              "icon": "file-fill",
+              "reading": 0,
+              "published_at": 1675738962,
+              "published_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "tags": [],
+              "participants": [
+                {
+                  "id": "a0417f68e846aae315c85d24643678a9",
+                  "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=page&principal_id=63e1bf51760505c8795ebccc",
+                  "type": "user",
+                  "user": {
+                    "id": "a0417f68e846aae315c85d24643678a9",
+                    "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                    "name": "john",
+                    "display_name": "John",
+                    "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+                  }
+                }
+              ],
+              "entity_properties": {
+                "entity_property_key_a": {
+                  "score": 95,
+                  "risk": "low"
+                },
+                "entity_property_key_b": "123456"
+              },
+              "position": 65536,
+              "created_at": 1675738962,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "updated_at": 1675738962,
+              "updated_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "is_locked": 0,
+              "is_archived": 0,
+              "is_deleted": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

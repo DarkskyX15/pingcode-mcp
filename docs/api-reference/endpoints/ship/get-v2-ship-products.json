@@ -1,0 +1,417 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-products",
+  "meta": {
+    "name": "获取产品列表",
+    "method": "GET",
+    "path": "/v2/ship/products",
+    "group": "产品",
+    "groupPath": [
+      "产品管理",
+      "产品"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "产品"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:product"
+      ]
+    },
+    "description": "用于分页获取产品。  \n 默认不含已删除/已归档项。",
+    "summary": "用于分页获取产品。",
+    "sourceFile": "src/modules/v2/pingcode/ship/product/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%BA%A7%E5%93%81%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "scope_type": {
+            "type": "string",
+            "description": "产品的所属类型。允许值分别表示企业可见和团队可见。",
+            "enum": [
+              "organization",
+              "user_group"
+            ]
+          },
+          "scope_id": {
+            "type": "string",
+            "description": "产品的所属 id。仅支持团队的 id。"
+          },
+          "keywords": {
+            "type": "string",
+            "description": "关键字。只支持 `name` 关键字搜索。"
+          },
+          "member_type": {
+            "type": "string",
+            "description": "产品成员的类型。`member_type` 和 `member_id` 必须同时存在。",
+            "enum": [
+              "user",
+              "user_group"
+            ]
+          },
+          "member_id": {
+            "type": "string",
+            "description": "产品成员的 id。值为企业成员或团队的 id。值为企业成员或团队的 id。`member_id` 和 `member_type` 必须同时存在。"
+          },
+          "created_between": {
+            "type": "string",
+            "description": "创建时间介于的时间范围，通过','分割起始时间。"
+          },
+          "updated_between": {
+            "type": "string",
+            "description": "更新时间介于的时间范围，通过','分割起始时间。"
+          },
+          "include_deleted": {
+            "type": "boolean",
+            "description": "是否查询已删除的产品。该值默认为 `false`。"
+          },
+          "include_archived": {
+            "type": "boolean",
+            "description": "是否查询已归档的产品。该值默认为 `false`。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "identifier": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "visibility": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "scope_type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "scope_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "color": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "description": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "entity_properties": {
+                "type": "object",
+                "properties": {
+                  "entity_property_key_a": {
+                    "type": "object",
+                    "properties": {
+                      "score": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "risk": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "entity_property_key_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "members": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "type": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "display_name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    },
+                    "user_group": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "created_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "updated_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "updated_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_archived": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "is_deleted": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "产品全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "6422711c3f12e6c1e46d40e9",
+              "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9",
+              "identifier": "SLC",
+              "name": "示例产品",
+              "visibility": "private",
+              "scope_type": "user_group",
+              "scope_id": "6422711c3f12e6c1e46d40e9",
+              "color": "#FA8888",
+              "description": "示例产品描述",
+              "entity_properties": {
+                "entity_property_key_a": {
+                  "score": 95,
+                  "risk": "low"
+                },
+                "entity_property_key_b": "123456"
+              },
+              "members": [
+                {
+                  "id": "a0417f68e846aae315c85d24643678a9",
+                  "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9/members/a0417f68e846aae315c85d24643678a9",
+                  "type": "user",
+                  "user": {
+                    "id": "a0417f68e846aae315c85d24643678a9",
+                    "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                    "name": "john",
+                    "display_name": "John",
+                    "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+                  }
+                },
+                {
+                  "id": "63c8fb32729dee3334d96af7",
+                  "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9/members/63c8fb32729dee3334d96af7",
+                  "type": "user_group",
+                  "user_group": {
+                    "id": "63c8fb32729dee3334d96af7",
+                    "url": "https://{rest_api_root}/v2/directory/groups/63c8fb32729dee3334d96af7",
+                    "name": "Open Team"
+                  }
+                }
+              ],
+              "created_at": 1583290300,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "updated_at": 1583290300,
+              "updated_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "is_archived": 0,
+              "is_deleted": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

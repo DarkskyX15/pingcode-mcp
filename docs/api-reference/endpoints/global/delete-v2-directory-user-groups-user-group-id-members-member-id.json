@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-directory-user-groups-user-group-id-members-member-id",
+  "meta": {
+    "name": "在团队中移除一个成员",
+    "method": "DELETE",
+    "path": "/v2/directory/user_groups/{user_group_id}/members/{member_id}",
+    "group": "团队",
+    "groupPath": [
+      "全局",
+      "组织",
+      "团队"
+    ],
+    "area": "全局",
+    "tags": [
+      "团队"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:global:team"
+      ]
+    },
+    "description": "用于从指定团队中移除一个成员。",
+    "summary": "用于从指定团队中移除一个成员。",
+    "sourceFile": "src/modules/v2/pingcode/global/organization/group/member/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%9C%A8%E5%9B%A2%E9%98%9F%E4%B8%AD%E7%A7%BB%E9%99%A4%E4%B8%80%E4%B8%AA%E6%88%90%E5%91%98"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "user_group_id": {
+            "type": "string",
+            "description": "团队 id。"
+          },
+          "member_id": {
+            "type": "string",
+            "description": "团队成员的 id，即用户的 id。"
+          }
+        },
+        "required": [
+          "user_group_id",
+          "member_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "团队成员的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "团队成员的资源地址。"
+        },
+        "user_group": {
+          "type": "object",
+          "description": "所属团队的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "member_type": {
+          "type": "string",
+          "description": "团队成员的类型。",
+          "enum": [
+            "user"
+          ]
+        },
+        "user": {
+          "type": "object",
+          "description": "成员的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "role": {
+          "type": "string",
+          "description": "成员在团队中的角色。",
+          "enum": [
+            "manager",
+            "member"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "user_group",
+        "member_type",
+        "user",
+        "role"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "a0417f68e846aae315c85d24643678a9",
+          "url": "https://{rest_api_root}/v2/directory/user_groups/64ca0f67cb78a0a80e1a999e/members/a0417f68e846aae315c85d24643678a9",
+          "user_group": {
+            "id": "64ca0f67cb78a0a80e1a999e",
+            "url": "https://{rest_api_root}/v2/directory/user_groups/64ca0f67cb78a0a80e1a999e",
+            "name": "PingCode"
+          },
+          "member_type": "user",
+          "user": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "role": "manager"
+        }
+      }
+    ]
+  }
+}

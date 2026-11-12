@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-ticket-state-plans-ticket-state-plan-id",
+  "meta": {
+    "name": "获取一个工单状态方案",
+    "method": "GET",
+    "path": "/v2/ship/ticket_state_plans/{ticket_state_plan_id}",
+    "group": "工单配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "工单配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "工单配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:configuration"
+      ]
+    },
+    "description": "用于按 id 获取工单状态方案全量信息。",
+    "summary": "用于按 id 获取工单状态方案全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/ticket/state-plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%8D%95%E7%8A%B6%E6%80%81%E6%96%B9%E6%A1%88"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ticket_state_plan_id": {
+            "type": "string",
+            "description": "工单状态方案的 id。"
+          }
+        },
+        "required": [
+          "ticket_state_plan_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工单状态方案的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工单状态方案的资源地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "产品的引用结构数据。该方案是此产品的本地化方案。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "product"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例（全局方案）：",
+        "type": "json",
+        "value": {
+          "id": "63feb3da9cc1ead1d2be93f4",
+          "url": "https://{rest_api_root}/v2/ship/ticket_state_plans/63feb3da9cc1ead1d2be93f4",
+          "product": null
+        }
+      },
+      {
+        "name": "响应示例（产品本地化方案）：",
+        "type": "json",
+        "value": {
+          "id": "63feb3da9cc1ead1d2be93f5",
+          "url": "https://{rest_api_root}/v2/ship/ticket_state_plans/63feb3da9cc1ead1d2be93f5",
+          "product": {
+            "id": "6422711c3f12e6c1e46d40e9",
+            "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9",
+            "identifier": "SLC",
+            "name": "示例产品",
+            "is_archived": 0,
+            "is_deleted": 0
+          }
+        }
+      }
+    ]
+  }
+}

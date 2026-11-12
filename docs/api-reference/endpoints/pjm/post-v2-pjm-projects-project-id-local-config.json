@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-projects-project-id-local-config",
+  "meta": {
+    "name": "开启项目本地配置",
+    "method": "POST",
+    "path": "/v2/pjm/projects/{project_id}/local_config",
+    "group": "项目",
+    "groupPath": [
+      "项目管理",
+      "项目"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "项目"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:project"
+      ]
+    },
+    "description": "用于为指定项目开启本地配置。",
+    "summary": "用于为指定项目开启本地配置。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/project/local-config/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%BC%80%E5%90%AF%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%85%8D%E7%BD%AE"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "项目的 id。"
+          }
+        },
+        "required": [
+          "project_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "项目的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "项目的地址。"
+        },
+        "template_type": {
+          "type": "string",
+          "description": "项目类型。"
+        },
+        "template": {
+          "type": "object",
+          "description": "项目流程模版的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_system": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "scope_type": {
+          "type": "string",
+          "description": "项目的所属类型。"
+        },
+        "scope_id": {
+          "type": "string",
+          "description": "项目的所属 id。"
+        },
+        "name": {
+          "type": "string",
+          "description": "项目的名称。"
+        },
+        "color": {
+          "type": "string",
+          "description": "项目的主题色。"
+        },
+        "identifier": {
+          "type": "string",
+          "description": "项目的标识。"
+        },
+        "visibility": {
+          "type": "string",
+          "description": "项目的可见性。"
+        },
+        "description": {
+          "type": "string",
+          "description": "项目的描述。"
+        },
+        "is_local_configure": {
+          "type": "number",
+          "description": "是否已启用本地配置。"
+        },
+        "created_at": {
+          "type": "number",
+          "description": "项目的创建时间。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "项目的创建人。"
+        },
+        "updated_at": {
+          "type": "number",
+          "description": "项目的更新时间。"
+        },
+        "updated_by": {
+          "type": "object",
+          "description": "项目的更新人。"
+        },
+        "is_archived": {
+          "type": "number",
+          "description": "是否已归档。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "template_type",
+        "template",
+        "scope_type",
+        "scope_id",
+        "name",
+        "color",
+        "identifier",
+        "visibility",
+        "description",
+        "is_local_configure",
+        "created_at",
+        "created_by",
+        "updated_at",
+        "updated_by",
+        "is_archived",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5eb623f6a70571487ea47000",
+          "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000",
+          "template_type": "scrum",
+          "template": {
+            "id": "5fa690f1ae0571487ea49030",
+            "url": "https://{rest_api_root}/v2/pjm/project_templates/5fa690f1ae0571487ea49030",
+            "name": "Scrum 项目流程",
+            "type": "scrum",
+            "is_system": 1
+          },
+          "scope_type": "user_group",
+          "scope_id": "63c8fb32729dee3334d96af7",
+          "name": "Scrum 项目",
+          "color": "#F693E7",
+          "identifier": "SCR",
+          "visibility": "private",
+          "description": "这是一个 scrum 类型的项目",
+          "is_local_configure": 1,
+          "created_at": 1583290300,
+          "updated_at": 1583290300,
+          "is_archived": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

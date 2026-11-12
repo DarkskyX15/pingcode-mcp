@@ -1,0 +1,1103 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-workitems-workitem-id",
+  "meta": {
+    "name": "获取一个工作项",
+    "method": "GET",
+    "path": "/v2/pjm/workitems/{workitem_id}",
+    "group": "工作项",
+    "groupPath": [
+      "项目管理",
+      "工作项"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:workitem"
+      ]
+    },
+    "description": "用于按 id、short_id 或 whole_identifier 获取工作项全量信息。  \n 默认不含已删除/已归档项。",
+    "summary": "用于按 id、short_id 或 whole_identifier 获取工作项全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/work-item/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E5%B7%A5%E4%BD%9C%E9%A1%B9"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "workitem_id": {
+            "type": "string",
+            "description": "工作项的 id、short_id 或 whole_identifier。"
+          }
+        },
+        "required": [
+          "workitem_id"
+        ]
+      }
+    },
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "include_public_image_token": {
+            "type": "string",
+            "description": "包含获取图片资源 token 的属性。使用','分割，最多 32 个，支持 `description` 和自定义多行文本类型的属性。参数示例 `description,properties.prop_b`。"
+          },
+          "include_deleted": {
+            "type": "boolean",
+            "description": "是否包含已删除的工作项。该值默认为 `false`。"
+          },
+          "include_archived": {
+            "type": "boolean",
+            "description": "是否包含已归档的工作项。该值默认为 `false`。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工作项的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工作项的地址。"
+        },
+        "short_id": {
+          "type": "string",
+          "description": "工作项的短 id。"
+        },
+        "html_url": {
+          "type": "string",
+          "description": "工作项的 html 地址。"
+        },
+        "project": {
+          "type": "object",
+          "description": "工作项所属的项目。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "template_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "identifier": {
+          "type": "number",
+          "description": "工作项的编号。"
+        },
+        "whole_identifier": {
+          "type": "string",
+          "description": "工作项的完整编号。"
+        },
+        "title": {
+          "type": "string",
+          "description": "工作项的标题。"
+        },
+        "type": {
+          "type": "object",
+          "description": "工作项类型的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "group": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "start": {
+          "type": "object",
+          "description": "工作项的开始时间。",
+          "properties": {
+            "date": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "with_time": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "due": {
+          "type": "object",
+          "description": "工作项的结束时间。",
+          "properties": {
+            "date": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "with_time": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "parent_id": {
+          "type": "string",
+          "description": "工作项的父工作项 id。"
+        },
+        "parent": {
+          "type": "object",
+          "description": "工作项的父工作项。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "whole_identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "start": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "due": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "parent_id": {
+              "type": "null",
+              "x-inferred-from-example": true
+            },
+            "properties": {
+              "type": "object",
+              "properties": {
+                "prop_a": {
+                  "type": "string",
+                  "x-inferred-from-example": true
+                },
+                "prop_b": {
+                  "type": "string",
+                  "x-inferred-from-example": true
+                },
+                "risk": {
+                  "type": "null",
+                  "x-inferred-from-example": true
+                },
+                "business_value": {
+                  "type": "null",
+                  "x-inferred-from-example": true
+                },
+                "effort": {
+                  "type": "null",
+                  "x-inferred-from-example": true
+                },
+                "backlog_type": {
+                  "type": "null",
+                  "x-inferred-from-example": true
+                },
+                "backlog_from": {
+                  "type": "null",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "assignee": {
+          "type": "object",
+          "description": "工作项的负责人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "state": {
+          "type": "object",
+          "description": "工作项的状态。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "color": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "priority": {
+          "type": "object",
+          "description": "工作项的优先级。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "color": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "releases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "start": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "published_at": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "stage": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "color": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "工作项所属的发布列表。",
+          "x-inferred-from-example": true
+        },
+        "sprint": {
+          "type": "object",
+          "description": "工作项所属的迭代。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "start": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "due": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "status": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "board": {
+          "type": "object",
+          "description": "工作项所属的看板。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "workitem_type_ids": {
+              "type": "array",
+              "x-inferred-from-example": true,
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "entry": {
+          "type": "object",
+          "description": "工作项所属的看板栏。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "entry_status": {
+          "type": "number",
+          "description": "工作项所在看板栏的分区。`1`：进行中（doing），`2`：已完成（done）。该字段只有项目类型为 `kanban` 和 `hybrid` 时有效，且看板栏开启拆分时有意义。",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "entry_position": {
+          "type": "number",
+          "description": "工作项在看板栏中的位置。仅看板/混合项目时有意义。"
+        },
+        "swimlane": {
+          "type": "object",
+          "description": "工作项的所属的泳道。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "phase": {
+          "type": "object",
+          "description": "工作项的所属计划。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "whole_identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "start": {
+              "type": "null",
+              "x-inferred-from-example": true
+            },
+            "due": {
+              "type": "null",
+              "x-inferred-from-example": true
+            },
+            "parent_id": {
+              "type": "null",
+              "x-inferred-from-example": true
+            },
+            "properties": {
+              "type": "null",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "description": {
+          "type": "string",
+          "description": "工作项的描述。"
+        },
+        "completed_at": {
+          "type": "number",
+          "description": "工作项的完成时间。"
+        },
+        "properties": {
+          "type": "object",
+          "description": "工作项的自定义属性，以键值对形式组织。包括用户自定义属性（如 `prop_a`、`prop_b`）以及部分系统内置属性（如 `story_points`、`estimated_workload`、`remaining_workload`、`bug_type`、`solution`、`risk` 等）。",
+          "properties": {
+            "story_points": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "estimated_workload": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "remaining_workload": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "prop_a": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "prop_b": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "risk": {
+              "type": "null",
+              "x-inferred-from-example": true
+            },
+            "backlog_type": {
+              "type": "null",
+              "x-inferred-from-example": true
+            },
+            "backlog_from": {
+              "type": "null",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "entity_properties": {
+          "type": "object",
+          "description": "以键值型数据结构组织的实体扩展属性的集合。",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "x-dynamic-key": "$property_key",
+          "x-dynamic-key-description": "工作项上的实体扩展属性。`$property_key` 为占位符，实际属性名随请求变化，并非固定字段，对应实体扩展属性的 `property_key`。"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "工作项的标签列表。",
+          "x-inferred-from-example": true
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "工作项的关注人列表。",
+          "x-inferred-from-example": true
+        },
+        "public_image_token": {
+          "type": "string",
+          "description": "工作项描述和自定义多行文本类型属性里获取图片资源 token。获取一个工作项和获取工作项列表参数 `include_public_image_token` 值有效时返回。"
+        },
+        "created_at": {
+          "type": "number",
+          "description": "工作项的创建时间。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "工作项的创建人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "updated_at": {
+          "type": "number",
+          "description": "工作项的更新时间。"
+        },
+        "updated_by": {
+          "type": "object",
+          "description": "工作项的更新人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_archived": {
+          "type": "number",
+          "description": "是否已归档。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "short_id",
+        "html_url",
+        "project",
+        "identifier",
+        "whole_identifier",
+        "title",
+        "type",
+        "start",
+        "due",
+        "parent_id",
+        "parent",
+        "assignee",
+        "state",
+        "priority",
+        "releases",
+        "sprint",
+        "board",
+        "entry",
+        "entry_status",
+        "entry_position",
+        "swimlane",
+        "phase",
+        "description",
+        "completed_at",
+        "properties",
+        "entity_properties",
+        "tags",
+        "participants",
+        "public_image_token",
+        "created_at",
+        "created_by",
+        "updated_at",
+        "updated_by",
+        "is_archived",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "6efca131b06329c524cdd2fb",
+          "url": "https://{rest_api_root}/v2/pjm/workitems/6efca131b06329c524cdd2fb",
+          "short_id": "eqWqLmTO",
+          "html_url": "https://yctech.pingcode.com/pjm/workitems/eqWqLmTO",
+          "project": {
+            "id": "5eb623f6a70571487ea47004",
+            "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47004",
+            "identifier": "HBR",
+            "name": "Hybrid 项目",
+            "template_type": "hybrid",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "identifier": 1,
+          "whole_identifier": "HBR-1",
+          "title": "这是一个用户故事",
+          "type": {
+            "id": "630da48bc9443b1aa94ce3ea",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_types/630da48bc9443b1aa94ce3ea",
+            "name": "用户故事",
+            "group": "requirement"
+          },
+          "start": {
+            "date": 1583290309,
+            "with_time": 1
+          },
+          "due": {
+            "date": 1583290347,
+            "with_time": 1
+          },
+          "parent_id": "5edfa3b67463c1ee626c0980",
+          "parent": {
+            "id": "5edfa3b67463c1ee626c0980",
+            "url": "https://{rest_api_root}/v2/pjm/workitems/5edfa3b67463c1ee626c0980",
+            "short_id": "c9WqLmTO",
+            "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+            "whole_identifier": "HBR-2",
+            "title": "这是一个特性",
+            "start": {
+              "date": 1583290309,
+              "with_time": 1
+            },
+            "due": {
+              "date": 1583290347,
+              "with_time": 1
+            },
+            "parent_id": null,
+            "properties": {
+              "prop_a": "prop_a_value",
+              "prop_b": "prop_b_value",
+              "risk": null,
+              "business_value": null,
+              "effort": null,
+              "backlog_type": null,
+              "backlog_from": null
+            }
+          },
+          "assignee": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "releases": [
+            {
+              "id": "5eb623487ea47001f6a70571",
+              "url": "https://{rest_api_root}/v2/pjm/releases/5eb623487ea47001f6a70582",
+              "name": "1.0.1",
+              "start": {
+                "date": 1565255712,
+                "with_time": 0
+              },
+              "published_at": {
+                "date": 1565255879,
+                "with_time": 0
+              },
+              "stage": {
+                "id": "5f44a8f8bb347b14b49624a1",
+                "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a1",
+                "name": "未开始",
+                "type": "pending",
+                "color": "#FA8888"
+              }
+            }
+          ],
+          "sprint": {
+            "id": "5ecf7b74eaab845a2aa53139",
+            "url": "https://{rest_api_root}/v2/pjm/sprints/5ecf7b74eaab845a2aa53139",
+            "name": "Sprint 1",
+            "start": {
+              "date": 1589791860,
+              "with_time": 0
+            },
+            "due": {
+              "date": 1589791860,
+              "with_time": 0
+            },
+            "status": "completed"
+          },
+          "state": {
+            "id": "5c9b35de90ad7153c2062f18",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_states/5c9b35de90ad7153c2062f18",
+            "name": "新建",
+            "type": "pending",
+            "color": "#ff7575"
+          },
+          "priority": {
+            "id": "5eb623f6a70571487ea47111",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_priorities/5eb623f6a70571487ea47111",
+            "name": "最高",
+            "color": "#FF7575"
+          },
+          "board": {
+            "id": "5eb623f6a70571487ea47333",
+            "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47333",
+            "name": "kanban",
+            "workitem_type_ids": [
+              "5eb623f6a70571487ea47101",
+              "5eb623f6a70571487ea47102",
+              "5eb623f6a70571487ea47103",
+              "5eb623f6a70571487ea47104"
+            ]
+          },
+          "entry": {
+            "id": "5ee1c4fac5b3c51206f0a862",
+            "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47333/entries/5ee1c4fac5b3c51206f0a862",
+            "name": "需求池"
+          },
+          "entry_status": 1,
+          "entry_position": 1,
+          "swimlane": {
+            "id": "5ee1c4fac5b3c51206f0a867",
+            "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47333/swimlanes/5ee1c4fac5b3c51206f0a867",
+            "name": "默认泳道"
+          },
+          "phase": {
+            "id": "63761fee31caaf77189816b5",
+            "url": "https://{rest_api_root}/v2/pjm/workitems/63761fee31caaf77189816b5",
+            "short_id": "pHase001",
+            "html_url": "https://yctech.pingcode.com/pjm/workitems/pHase001",
+            "whole_identifier": "WTF-1",
+            "title": "这是一个阶段",
+            "start": null,
+            "due": null,
+            "parent_id": null,
+            "properties": null
+          },
+          "description": "<p>这是一个用户故事的描述<p><img src=\"https://atlas.pingcode.com/files/public/689a9d124df436ef91923a3a\" originUrl=\"https://atlas.pingcode.com/files/public/689a9d124df436ef91923a3a\" alt=\"图片.png\" size=\"35460\" style=\"text-align: center;\" />",
+          "completed_at": 1583290347,
+          "properties": {
+            "story_points": 1,
+            "estimated_workload": 1,
+            "remaining_workload": 1,
+            "prop_a": "prop_a_value",
+            "prop_b": "prop_b_value",
+            "risk": null,
+            "backlog_type": null,
+            "backlog_from": null
+          },
+          "tags": [
+            {
+              "id": "5e6b35de50ef8153c2062f70",
+              "url": "https://{rest_api_root}/v2/pjm/tags/5e6b35de50ef8153c2062f70",
+              "name": "标签-1"
+            }
+          ],
+          "entity_properties": {
+            "entity_property_key_a": {
+              "score": 95,
+              "risk": "low"
+            },
+            "entity_property_key_b": "123456"
+          },
+          "participants": [
+            {
+              "id": "a0417f68e846aae315c85d24643678a9",
+              "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=workitem&principal_id=5edca112b06305c524cad2fa",
+              "type": "user",
+              "user": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            }
+          ],
+          "public_image_token": "-fkvANQ2dcVECK6Xg45L3kG8VCbOTK8NrNckGkxljRY",
+          "created_at": 1583290300,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "updated_at": 1583290300,
+          "updated_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "is_archived": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

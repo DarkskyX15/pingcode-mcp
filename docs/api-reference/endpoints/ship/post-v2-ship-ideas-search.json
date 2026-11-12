@@ -1,0 +1,907 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-ship-ideas-search",
+  "meta": {
+    "name": "搜索需求列表",
+    "method": "POST",
+    "path": "/v2/ship/ideas/search",
+    "group": "需求",
+    "groupPath": [
+      "产品管理",
+      "需求"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:idea"
+      ]
+    },
+    "description": "用于按类 MongoDB 结构化条件搜索需求。  \n 默认不含已删除/已归档项。",
+    "summary": "用于按类 MongoDB 结构化条件搜索需求。",
+    "sourceFile": "src/modules/v2/pingcode/ship/idea/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%90%9C%E7%B4%A2%E9%9C%80%E6%B1%82%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "description": "搜索模式。`query` 表示基于 `payload.filter` 的结构化条件查询。",
+            "enum": [
+              "query"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "description": "搜索参数。",
+            "properties": {
+              "filter": {
+                "type": "object",
+                "description": "过滤条件。 过滤时使用类 MongoDB 的查询语法，可通过属性名、操作符和对应值进行过滤。 引用类型（含数组引用类型）使用 `{属性名}.id` 作为属性名，例如 `product.id`、`tags.id`、`participants.id`。 自定义属性使用 `properties.{属性 key}` 作为属性名，例如 `properties.prop_a`。 文本类型（如 `title`、`description`，以及自定义单行文本、多行文本、链接类型）的操作符： `exists`、`contains`。 数字类型（如 `identifier`、`score`、`effort`、`rate`）的操作符： `exists`、`eq`、`ne`、`gt`、`lt`、`gte`、`lte`。 时间类型（如 `created_at`、`updated_at`、`completed_at`、以及自定义日期）的操作符： `exists`、`gt`、`lt`、`gte`、`lte`、`between`（值为 `[起始时间戳, 结束时间戳]`；过滤时以「天」为单位。 选项类型（自定义下拉单选、下拉多选、级联单选、级联多选）的操作符： `exists`、`in`、`nin`。 引用类型（如 `product.id`、`state.id`、`priority.id`、`assignee.id`、`company.id`、`tags.id`）的操作符： `exists`、`in`、`nin`。 每个属性仅支持一个操作符。 暂不支持使用逻辑运算符。 内置属性暂不支持过滤：`id`、`url`、`whole_identifier`、`short_id`、`html_url`、`public_image_token`、`is_archived`、`is_deleted`。",
+                "properties": {
+                  "title": {
+                    "type": "object",
+                    "properties": {
+                      "contains": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "assignee.id": {
+                    "type": "object",
+                    "properties": {
+                      "nin": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "product.id": {
+                    "type": "object",
+                    "properties": {
+                      "in": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "tags.id": {
+                    "type": "object",
+                    "properties": {
+                      "in": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "participants.id": {
+                    "type": "object",
+                    "properties": {
+                      "in": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "created_at": {
+                    "type": "object",
+                    "properties": {
+                      "gte": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "keywords": {
+                "type": "string",
+                "description": "关键字。支持需求编号和需求标题。"
+              },
+              "include_public_image_token": {
+                "type": "string",
+                "description": "包含获取图片资源 token 的属性。使用 `,` 分割，最多 32 个，支持 `description` 和自定义多行文本类型的属性。"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "每页条数，取值范围 1-100。",
+                "default": 30
+              },
+              "page_index": {
+                "type": "number",
+                "description": "页码，从 0 开始。",
+                "default": 0
+              }
+            }
+          }
+        },
+        "required": [
+          "mode",
+          "payload"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "mode": "query",
+            "payload": {
+              "filter": {
+                "title": {
+                  "contains": "账号"
+                },
+                "assignee.id": {
+                  "nin": [
+                    "315c85d24643678a9a0417f68e846aae"
+                  ]
+                },
+                "product.id": {
+                  "in": [
+                    "6422711c3f12e6c1e46d40e9"
+                  ]
+                },
+                "tags.id": {
+                  "in": [
+                    "63eca881a0a13a3efc8d49f1"
+                  ]
+                },
+                "participants.id": {
+                  "in": [
+                    "a0417f68e846aae315c85d24643678a9"
+                  ]
+                },
+                "created_at": {
+                  "gte": 1730000000
+                }
+              },
+              "keywords": "SLC-1",
+              "include_public_image_token": "description",
+              "page_size": 10,
+              "page_index": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "product": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "is_archived": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "is_deleted": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "identifier": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "whole_identifier": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "title": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "assignee": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "state": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "priority": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "color": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "plan": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "suite": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "plan_at": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "to": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "granularity": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "real_at": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "to": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "granularity": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "score": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "rate": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "description": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "backlog_from": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "backlog_type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "public_image_token": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "entity_properties": {
+                "type": "object",
+                "properties": {
+                  "entity_property_key_a": {
+                    "type": "object",
+                    "properties": {
+                      "score": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "risk": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "entity_property_key_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "tags": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "participants": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "type": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "display_name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    },
+                    "user_group": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "completed_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "completed_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "created_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "updated_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "updated_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_archived": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "is_deleted": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "需求全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 10,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "64b4d70ba368e6594360ea24",
+              "url": "https://{rest_api_root}/v2/ship/ideas/64b4d70ba368e6594360ea24",
+              "short_id": "Ogf1EYey",
+              "html_url": "https://yctech.pingcode.com/ship/ideas/Ogf1EYey",
+              "product": {
+                "id": "6422711c3f12e6c1e46d40e9",
+                "url": "http://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9",
+                "identifier": "SLC",
+                "name": "示例产品",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "identifier": 1,
+              "whole_identifier": "SLC-1",
+              "title": "示例需求",
+              "assignee": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "state": {
+                "id": "63e1bf51898a0be5a2d21b2a",
+                "url": "https://{rest_api_root}/v2/ship/idea_states/63e1bf51898a0be5a2d21b2a",
+                "name": "待评审",
+                "type": "pending"
+              },
+              "priority": {
+                "id": "5cb9466afda1ce4ca0090005",
+                "url": "https://{rest_api_root}/v2/ship/idea_priorities/5cb9466afda1ce4ca0090005",
+                "name": "P0",
+                "color": "#FF7575"
+              },
+              "plan": {
+                "id": "63bb744414bd13c9def24ce4",
+                "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9/idea_plans/63bb744414bd13c9def24ce4",
+                "name": "账号管理"
+              },
+              "suite": {
+                "id": "63bb744414bd13c9def24ce4",
+                "url": "https://{rest_api_root}/v2/ship/idea_suites/63bb744414bd13c9def24ce4",
+                "name": "需求模块",
+                "type": "module"
+              },
+              "plan_at": {
+                "from": {
+                  "date": 1690732800,
+                  "with_time": 0
+                },
+                "to": {
+                  "date": 1691337599,
+                  "with_time": 0
+                },
+                "granularity": "day"
+              },
+              "real_at": {
+                "from": {
+                  "date": 1690732800,
+                  "with_time": 0
+                },
+                "to": {
+                  "date": 1691337599,
+                  "with_time": 0
+                },
+                "granularity": "day"
+              },
+              "score": 0,
+              "rate": 60,
+              "description": "这是一段描述",
+              "properties": {
+                "backlog_from": "5cb7e6e2fda1ce4ca0000001",
+                "backlog_type": "5cb7e763fda1ce4ca0010002"
+              },
+              "public_image_token": "-fkvANQ2dcVECK6Xg45L3kG8VCbOTK8NrNckGkxljQd",
+              "entity_properties": {
+                "entity_property_key_a": {
+                  "score": 95,
+                  "risk": "low"
+                },
+                "entity_property_key_b": "123456"
+              },
+              "tags": [
+                {
+                  "id": "63eca881a0a13a3efc8d49f1",
+                  "url": "https://{rest_api_root}/v2/ship/tags/63eca881a0a13a3efc8d49f1",
+                  "name": "已确认"
+                }
+              ],
+              "participants": [
+                {
+                  "id": "a0417f68e846aae315c85d24643678a9",
+                  "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=idea&principal_id=64b4d70ba368e6594360ea24",
+                  "type": "user",
+                  "user": {
+                    "id": "a0417f68e846aae315c85d24643678a9",
+                    "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                    "name": "john",
+                    "display_name": "John",
+                    "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+                  }
+                },
+                {
+                  "id": "63c8fb32729dee3334d96af7",
+                  "url": "https://{rest_api_root}/v2/participants/63c8fb32729dee3334d96af7?principal_type=idea&principal_id=64b4d70ba368e6594360ea24",
+                  "type": "user_group",
+                  "user_group": {
+                    "id": "63c8fb32729dee3334d96af7",
+                    "url": "https://{rest_api_root}/v2/directory/groups/63c8fb32729dee3334d96af7",
+                    "name": "Open Team"
+                  }
+                }
+              ],
+              "completed_at": 1689573131,
+              "completed_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "created_at": 1689573131,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "updated_at": 1689579131,
+              "updated_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "is_archived": 0,
+              "is_deleted": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

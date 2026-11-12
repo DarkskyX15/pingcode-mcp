@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-auth-token",
+  "meta": {
+    "name": "获取企业令牌",
+    "method": "GET",
+    "path": "/v2/auth/token",
+    "group": "客户端凭据",
+    "groupPath": [
+      "鉴权",
+      "客户端凭据"
+    ],
+    "area": "鉴权",
+    "tags": [
+      "客户端凭据"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [],
+      "scopes": []
+    },
+    "description": "客户端凭据模式（`OAuth2 Client Credentials`）是最简单、直接的授权方式。通过该方式获取的访问令牌（`access_token`）不区分用户身份，在 PingCode 中被称为企业令牌。企业令牌拥有系统管理员权限，主要用于访问、操作全局数据，请谨慎保管。  \n 获取企业令牌需提供 `client_id` 和 `client_secret`。您可前往 PingCode 企业后台的凭据管理页面创建应用、配置数据范围，即可获取这两个参数。调用接口时，只需在 HTTP 请求的请求头中添加 `Authorization: Bearer {access_token}`，就能访问受保护数据。  \n 注：`access_token` 有效期为 30 天；删除应用或重置应用密钥（`Secret`），都会导致当前令牌立即失效。",
+    "summary": "客户端凭据模式（OAuth2 Client Credentials）是最简单、直接的授权方式。通过该方式获取的访问令牌（access_token）不区分用户身份，在 PingCode 中被称为企业令牌。企业令牌拥有系统管理员权限，主要用于访问、操作全局数据，请谨慎保管。",
+    "sourceFile": "src/modules/v2/pingcode/authorization/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%BC%81%E4%B8%9A%E4%BB%A4%E7%89%8C",
+    "originalUrl": "/v2/auth/token?grant_type=client_credentials",
+    "queryDefaults": [
+      {
+        "name": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "type": "string",
+            "description": "授权类型，这里固定为：`client_credentials`。",
+            "enum": [
+              "client_credentials"
+            ]
+          },
+          "client_id": {
+            "type": "string",
+            "description": "PingCode 应用的 Client ID"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "PingCode 应用的 Secret"
+          }
+        },
+        "required": [
+          "grant_type",
+          "client_id",
+          "client_secret"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "description": "令牌"
+        },
+        "token_type": {
+          "type": "string",
+          "description": "令牌类型"
+        },
+        "expires_in": {
+          "type": "string",
+          "description": "过期时间"
+        }
+      },
+      "required": [
+        "access_token",
+        "token_type",
+        "expires_in"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "access_token": "e7321ca8-f724-4abd-9169-d76d095c6acf",
+          "token_type": "Bearer",
+          "expires_in": 1577808000
+        }
+      }
+    ]
+  }
+}

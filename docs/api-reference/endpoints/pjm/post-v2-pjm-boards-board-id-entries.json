@@ -1,0 +1,255 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-boards-board-id-entries",
+  "meta": {
+    "name": "创建一个看板栏",
+    "method": "POST",
+    "path": "/v2/pjm/boards/{board_id}/entries",
+    "group": "看板",
+    "groupPath": [
+      "项目管理",
+      "看板"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "看板"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:board"
+      ]
+    },
+    "description": "用于创建一个看板栏。",
+    "summary": "用于创建一个看板栏。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/kanban/board/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9C%8B%E6%9D%BF%E6%A0%8F"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "board_id": {
+            "type": "string",
+            "description": "看板的 id。"
+          }
+        },
+        "required": [
+          "board_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "看板栏的名字。"
+          },
+          "is_split": {
+            "type": "boolean",
+            "description": "是否将看板栏拆分为进行中和已完成。"
+          },
+          "wip_limit": {
+            "type": "number",
+            "description": "在制品数量。"
+          },
+          "dod": {
+            "type": "string",
+            "description": "完成的定义。"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "一个看板栏",
+            "is_split": true,
+            "wip_limit": 1,
+            "dod": "Unit test passed"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "看板栏的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "看板栏的地址。"
+        },
+        "project": {
+          "type": "object",
+          "description": "所属项目的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "template_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "board": {
+          "type": "object",
+          "description": "所属看板的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "workitem_type_ids": {
+              "type": "array",
+              "x-inferred-from-example": true,
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "看板栏的名称。"
+        },
+        "is_system": {
+          "type": "number",
+          "description": "是否为系统内置看板栏。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_split": {
+          "type": "boolean",
+          "description": "是否将看板栏拆分为进行中和已完成。"
+        },
+        "wip_limit": {
+          "type": "number",
+          "description": "在制品数量。"
+        },
+        "dod": {
+          "type": "string",
+          "description": "完成的定义。"
+        },
+        "is_deleted": {
+          "type": "number",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "project",
+        "board",
+        "name",
+        "is_system",
+        "is_split",
+        "wip_limit",
+        "dod"
+      ],
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5ab623f6a70571487ea45634",
+          "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47222/entries/5ab623f6a70571487ea45634",
+          "project": {
+            "id": "5eb623f6a70571487ea41919",
+            "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea41919",
+            "identifier": "KANBAN",
+            "name": "kanban",
+            "template_type": "kanban",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "board": {
+            "id": "5eb623f6a70571487ea47222",
+            "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47222",
+            "name": "kanban",
+            "workitem_type_ids": [
+              "630da48bc9443b1aa94ce3ea",
+              "630da48bc9443b1aa94ce3eb",
+              "630da48bc9443b1aa94ce3ec"
+            ]
+          },
+          "name": "一个看板栏",
+          "is_system": 0,
+          "is_split": true,
+          "wip_limit": 1,
+          "dod": "Unit test passed",
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

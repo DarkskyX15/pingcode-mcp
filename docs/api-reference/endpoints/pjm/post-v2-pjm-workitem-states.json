@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-workitem-states",
+  "meta": {
+    "name": "创建一个工作项状态",
+    "method": "POST",
+    "path": "/v2/pjm/workitem_states",
+    "group": "工作项配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "工作项配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:configuration"
+      ]
+    },
+    "description": "用于创建一个工作项状态。",
+    "summary": "用于创建一个工作项状态。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/work-item-config/state/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B7%A5%E4%BD%9C%E9%A1%B9%E7%8A%B6%E6%80%81"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "工作项状态的名称。在一个企业中这个名称是唯一的。"
+          },
+          "type": {
+            "type": "string",
+            "description": "工作项状态的类型。",
+            "enum": [
+              "pending",
+              "in_progress",
+              "completed",
+              "closed"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "新建",
+            "type": "pending"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工作项状态的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工作项状态的地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "工作项状态的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "工作项状态的类型。",
+          "enum": [
+            "pending",
+            "in_progress",
+            "completed",
+            "closed"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "description": "工作项状态的颜色。"
+        },
+        "is_system": {
+          "type": "number",
+          "description": "是否为系统内置状态。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "type",
+        "color",
+        "is_system"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5c9b35de90ad7153c2062f18",
+          "url": "https://{rest_api_root}/v2/pjm/workitem_states/5c9b35de90ad7153c2062f18",
+          "name": "新建",
+          "type": "pending",
+          "color": "#ff7575",
+          "is_system": 0
+        }
+      }
+    ]
+  }
+}

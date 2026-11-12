@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-ticket-channels-ticket-channel-id",
+  "meta": {
+    "name": "获取一个工单渠道",
+    "method": "GET",
+    "path": "/v2/ship/ticket_channels/{ticket_channel_id}",
+    "group": "产品",
+    "groupPath": [
+      "产品管理",
+      "产品"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "产品"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:configuration"
+      ]
+    },
+    "description": "用于按 id 获取工单渠道全量信息。",
+    "summary": "用于按 id 获取工单渠道全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/ship/product/channel/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%8D%95%E6%B8%A0%E9%81%93"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ticket_channel_id": {
+            "type": "string",
+            "description": "工单渠道的 id。"
+          }
+        },
+        "required": [
+          "ticket_channel_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工单渠道的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工单渠道的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "工单渠道的名称。"
+        },
+        "product": {
+          "type": "object",
+          "description": "工单渠道关联产品的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "description": {
+          "type": "string",
+          "description": "工单渠道的描述。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "product",
+        "description"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63eca881a0a13a3efc8d49ed",
+          "url": "https://{rest_api_root}/v2/ship/ticket_channels/63eca881a0a13a3efc8d49ed",
+          "name": "客户反馈 Web 渠道",
+          "product": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e6",
+            "identifier": "SLC",
+            "name": "示例产品",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "description": "收集客户反馈意见的 Web 渠道"
+        }
+      }
+    ]
+  }
+}

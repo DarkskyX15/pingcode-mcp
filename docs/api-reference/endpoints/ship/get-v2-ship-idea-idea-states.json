@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-idea-idea-states",
+  "meta": {
+    "name": "获取可用的需求状态列表",
+    "method": "GET",
+    "path": "/v2/ship/idea/idea_states",
+    "group": "需求",
+    "groupPath": [
+      "产品管理",
+      "需求"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:idea"
+      ]
+    },
+    "description": "用于分页获取产品中的需求状态。",
+    "summary": "用于分页获取产品中的需求状态。",
+    "sourceFile": "src/modules/v2/pingcode/ship/idea/state/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E5%8F%AF%E7%94%A8%E7%9A%84%E9%9C%80%E6%B1%82%E7%8A%B6%E6%80%81%E5%88%97%E8%A1%A8",
+    "originalUrl": "/v2/ship/idea/idea_states?product_id={product_id}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "产品的 id。"
+          }
+        },
+        "required": [
+          "product_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "color": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "需求状态全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "63e1bf51898a0be5a2d21b2a",
+              "url": "https://{rest_api_root}/v2/ship/idea_states/63e1bf51898a0be5a2d21b2a",
+              "name": "待评审",
+              "type": "pending",
+              "color": "#56ABFB"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

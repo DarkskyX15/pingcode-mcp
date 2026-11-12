@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-wiki-pages-page-id-content",
+  "meta": {
+    "name": "获取一个文档正文",
+    "method": "GET",
+    "path": "/v2/wiki/pages/{page_id}/content",
+    "group": "页面",
+    "groupPath": [
+      "知识管理",
+      "页面"
+    ],
+    "area": "知识管理",
+    "tags": [
+      "页面"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:wiki:page"
+      ]
+    },
+    "description": "用于查看文档正文。",
+    "summary": "用于查看文档正文。",
+    "sourceFile": "src/modules/v2/pingcode/wiki/page/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E6%96%87%E6%A1%A3%E6%AD%A3%E6%96%87"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "page_id": {
+            "type": "string",
+            "description": "页面的 id。"
+          }
+        },
+        "required": [
+          "page_id"
+        ]
+      }
+    },
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "format_type": {
+            "type": "string",
+            "description": "正文格式。",
+            "enum": [
+              "text",
+              "markdown",
+              "html",
+              "block"
+            ],
+            "default": "text"
+          },
+          "version_id": {
+            "type": "string",
+            "description": "页面版本的 id。默认值为页面当前版本的 id。"
+          },
+          "include_public_image_token": {
+            "type": "string",
+            "description": "包含获取图片资源 token 的属性。仅支持 `content`，参数示例 `content`。仅当 `format_type` 为 `markdown`、`html` 或 `block` 时有效。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "文档正文的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "文档正文的资源地址。"
+        },
+        "format_type": {
+          "type": "string",
+          "description": "正文格式。",
+          "enum": [
+            "text",
+            "markdown",
+            "html",
+            "block"
+          ]
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "x-pingcode-type": "String/Object"
+          },
+          "description": "正文内容。`format_type` 为 `text`/`markdown`/`html` 时为字符串；为 `block` 时为块文档数组。"
+        },
+        "public_image_token": {
+          "type": "string",
+          "description": "正文内图片资源的公开预览 token。传参 `include_public_image_token=content` 且 `format_type` 为 `markdown`、`html` 或 `block` 时返回。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "format_type",
+        "content"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "65093a8e4d4c8ca623da8fcd",
+          "url": "https://{rest_api_root}/v2/wiki/pages/65093a8e4d4c8ca623da8fcd/content?include_public_image_token=content",
+          "format_type": "html",
+          "content": "空间是记录信息和知识的页面集合，通过组织页面层级将知识系统化、结构化，便于团队沉淀经验、共享资源，实现知识增值，加快知识流动，在知识管理层面助力企业更快更好的发布产品。 PingCode 空间支持以下特性： 页面支持插入多种元素以及关联页面，满足编写需要 编辑过程自动保存草稿，无需担心内容丢失 提供丰富的模板，使用模板保持页面的一致性，让空间更加规范 使用锁定功能锁定页面最终版本 删除的页面放进回收站，随时恢复 树状页面结构，直接拖动页面编排目录，让知识管理更方便高效 通过设置成员角色来进行权限控制 通过页面评论实现成员沟通交流，形成反馈闭环  【PingCode 空间】当前处于不断迭代过程中，更多功能即将呈现，敬请期待~",
+          "public_image_token": "N96GlJ4AMQoBCw9pZQ2EMl-AprLN_V_DYlghupBNkJA"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-ces-find",
+  "meta": {
+    "name": "查询自定义实体",
+    "method": "POST",
+    "path": "/v2/nexus/ces/find",
+    "group": "CES",
+    "groupPath": [
+      "存储",
+      "CES"
+    ],
+    "area": "存储",
+    "tags": [
+      "CES"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:storage:app"
+      ]
+    },
+    "description": "查询自定义实体。",
+    "summary": "查询自定义实体。",
+    "sourceFile": "src/modules/v2/nexus/storage/ces/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%9F%A5%E8%AF%A2%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "entity_name": {
+            "type": "string",
+            "description": "自定义实体的名字。"
+          },
+          "condition": {
+            "type": "object",
+            "description": "查询条件，参考 [ConditionBuilder](https://open.pingcode.com/reference/functions/storage/ces-condition-builder)。",
+            "properties": {
+              "name": {
+                "type": "object",
+                "properties": {
+                  "eq": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "options": {
+            "type": "object",
+            "description": "可选配置项，参考 [CesFindOptions](https://open.pingcode.com/reference/functions/storage/ces-find-options)。",
+            "properties": {
+              "skip": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "limit": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "sort": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "property_key": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "order": {
+                      "type": "number",
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "hint": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "projection": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    }
+                  ],
+                  "x-inferred-from-example": true
+                }
+              },
+              "includes": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "type": "boolean",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "entity_name",
+          "condition"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "entity_name": "user",
+            "condition": {
+              "name": {
+                "eq": "john"
+              }
+            },
+            "options": {
+              "skip": 0,
+              "limit": 10,
+              "sort": [
+                {
+                  "property_key": "age",
+                  "order": 1
+                }
+              ],
+              "hint": "age_1",
+              "projection": [
+                "name",
+                "age"
+              ],
+              "includes": {
+                "metadata": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "name": "john",
+            "age": 10,
+            "_created_at": 1778897962,
+            "_created_by": "01110010000000000000000000000000",
+            "_updated_at": 1781078029853,
+            "_updated_by": "01110010000000000000000000000000"
+          },
+          {
+            "name": "tom",
+            "age": 12,
+            "_created_at": 1678897962,
+            "_created_by": "01110010000000000000000000000000",
+            "_updated_at": 1681078029853,
+            "_updated_by": "01110010000000000000000000000000"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-pjm-workitem-types-workitem-type-id",
+  "meta": {
+    "name": "部分更新一个工作项类型",
+    "method": "PATCH",
+    "path": "/v2/pjm/workitem_types/{workitem_type_id}",
+    "group": "工作项配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "工作项配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:configuration"
+      ]
+    },
+    "description": "用于部分更新一个工作项类型。",
+    "summary": "用于部分更新一个工作项类型。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/work-item-config/work-item-type/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E5%B7%A5%E4%BD%9C%E9%A1%B9%E7%B1%BB%E5%9E%8B"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "workitem_type_id": {
+            "type": "string",
+            "description": "工作项类型的 id。"
+          }
+        },
+        "required": [
+          "workitem_type_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "工作项类型的名称。在一个企业中这个名称是唯一的。"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "非功能性需求"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工作项类型的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工作项类型的地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "工作项类型的名称。"
+        },
+        "group": {
+          "type": "string",
+          "description": "工作项类型的分组。",
+          "enum": [
+            "requirement",
+            "task",
+            "bug",
+            "issue",
+            "plan"
+          ]
+        },
+        "icon": {
+          "type": "string",
+          "description": "工作项类型的图标。"
+        },
+        "color": {
+          "type": "string",
+          "description": "工作项类型的颜色。"
+        },
+        "is_system": {
+          "type": "number",
+          "description": "是否为系统内置工作项类型。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "group",
+        "icon",
+        "color",
+        "is_system",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "630da48bc9443b1aa94ce3df",
+          "url": "https://{rest_api_root}/v2/pjm/workitem_types/630da48bc9443b1aa94ce3df",
+          "name": "非功能性需求",
+          "group": "requirement",
+          "icon": "story",
+          "color": "#56ABFB",
+          "is_system": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

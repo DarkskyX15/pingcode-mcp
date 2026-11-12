@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "put-v2-testhub-testruns-testrun-id",
+  "meta": {
+    "name": "全量更新一个执行用例",
+    "method": "PUT",
+    "path": "/v2/testhub/testruns/{testrun_id}",
+    "group": "计划",
+    "groupPath": [
+      "测试管理",
+      "计划"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "计划"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:testplan"
+      ]
+    },
+    "description": "用于全量更新执行用例的执行结果与步骤。",
+    "summary": "用于全量更新执行用例的执行结果与步骤。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/run/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%85%A8%E9%87%8F%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E6%89%A7%E8%A1%8C%E7%94%A8%E4%BE%8B"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "testrun_id": {
+            "type": "string",
+            "description": "执行用例的 id。"
+          }
+        },
+        "required": [
+          "testrun_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "status_id": {
+            "type": "string",
+            "description": "执行用例执行结果的 id。"
+          },
+          "remark": {
+            "type": "string",
+            "description": "执行用例执行结果的备注。"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "执行用例步骤的列表。"
+          },
+          "executor_id": {
+            "type": "string",
+            "description": "执行人的 id。不传默认执行人为空。"
+          }
+        },
+        "required": [
+          "status_id",
+          "steps"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    }
+  }
+}

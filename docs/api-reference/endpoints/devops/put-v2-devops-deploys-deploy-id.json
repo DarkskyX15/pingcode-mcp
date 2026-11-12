@@ -1,0 +1,324 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "put-v2-devops-deploys-deploy-id",
+  "meta": {
+    "name": "全量更新一个部署",
+    "method": "PUT",
+    "path": "/v2/devops/deploys/{deploy_id}",
+    "group": "部署",
+    "groupPath": [
+      "DevOps_数据集成",
+      "交付",
+      "部署"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "部署"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:deploy"
+      ]
+    },
+    "description": "用于全量更新一条部署记录。",
+    "summary": "用于全量更新一条部署记录。",
+    "sourceFile": "src/modules/v2/pingcode/devops/release/deploy.facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%85%A8%E9%87%8F%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E9%83%A8%E7%BD%B2"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "deploy_id": {
+            "type": "string",
+            "description": "部署的 id。"
+          }
+        },
+        "required": [
+          "deploy_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "部署的状态。",
+            "enum": [
+              "not_deployed",
+              "deployed"
+            ]
+          },
+          "env_id": {
+            "type": "string",
+            "description": "环境的 id。"
+          },
+          "release_name": {
+            "type": "string",
+            "description": "版本发布的名称。"
+          },
+          "release_url": {
+            "type": "string",
+            "description": "版本发布的地址。如果为空，在 PingCode 中不显示相关跳转链接。"
+          },
+          "start_at": {
+            "type": "number",
+            "description": "部署开始的时间。"
+          },
+          "end_at": {
+            "type": "number",
+            "description": "部署结束的时间。"
+          },
+          "duration": {
+            "type": "number",
+            "description": "部署持续的时间。单位为秒。"
+          },
+          "workitem_identifiers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "PingCode 工作项编号的列表。通过该参数将部署与一个或多个工作项关联。",
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "status",
+          "env_id",
+          "release_name",
+          "start_at",
+          "end_at",
+          "duration"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "status": "deployed",
+            "env_id": "564587fe700d43b81b080123",
+            "release_name": "1.1.0",
+            "release_url": "https://your-release-host/release",
+            "start_at": 1583143467,
+            "end_at": 1583143667,
+            "duration": 200,
+            "workitem_identifiers": [
+              "PLM-001"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "部署的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "部署的资源地址。"
+        },
+        "status": {
+          "type": "string",
+          "description": "部署的状态。",
+          "enum": [
+            "not_deployed",
+            "deployed"
+          ]
+        },
+        "release_name": {
+          "type": "string",
+          "description": "发布的名称。"
+        },
+        "environment": {
+          "type": "object",
+          "description": "环境的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "release_url": {
+          "type": "string",
+          "description": "版本发布的地址。"
+        },
+        "start_at": {
+          "type": "number",
+          "description": "部署开始的时间。"
+        },
+        "end_at": {
+          "type": "number",
+          "description": "部署结束的时间。"
+        },
+        "duration": {
+          "type": "number",
+          "description": "部署持续的时间，单位为秒。"
+        },
+        "workitems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "identifier": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "title": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "start": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "due": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "parent_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "prop_a": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "prop_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "部署关联的 PingCode 工作项列表。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "status",
+        "release_name",
+        "environment",
+        "release_url",
+        "start_at",
+        "end_at",
+        "duration",
+        "workitems"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "564587fe700d43b81b080339",
+          "url": "https://{rest_api_root}/v2/devops/deploys/564587fe700d43b81b080339",
+          "status": "deployed",
+          "release_name": "1.1.0",
+          "environment": {
+            "id": "564587fe700d43b81b080123",
+            "url": "https://{rest_api_root}/v2/devops/environments/564587fe700d43b81b080123",
+            "name": "Production"
+          },
+          "release_url": "https://your-release-host/release",
+          "start_at": 1583143467,
+          "end_at": 1583143667,
+          "duration": 200,
+          "workitems": [
+            {
+              "id": "564587fe700d43b81b080ab8",
+              "url": "https://{rest_api_root}/v2/pjm/workitems/564587fe700d43b81b080ab8",
+              "short_id": "c9WqLmTO",
+              "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+              "identifier": "PLM-001",
+              "title": "这是一个用户故事",
+              "start": {
+                "date": 1583290309,
+                "with_time": 1
+              },
+              "due": {
+                "date": 1583290347,
+                "with_time": 1
+              },
+              "parent_id": "5edca524cad2fa112b06105c",
+              "properties": {
+                "prop_a": "prop_a_value",
+                "prop_b": "prop_b_value"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

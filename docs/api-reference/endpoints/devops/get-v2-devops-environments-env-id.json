@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-devops-environments-env-id",
+  "meta": {
+    "name": "获取一个环境",
+    "method": "GET",
+    "path": "/v2/devops/environments/{env_id}",
+    "group": "环境",
+    "groupPath": [
+      "DevOps_数据集成",
+      "交付",
+      "环境"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "环境"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:read:devops:deploy"
+      ]
+    },
+    "description": "用于按 id 获取一个部署环境。",
+    "summary": "用于按 id 获取一个部署环境。",
+    "sourceFile": "src/modules/v2/pingcode/devops/release/env.facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E7%8E%AF%E5%A2%83"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "env_id": {
+            "type": "string",
+            "description": "环境的 id。"
+          }
+        },
+        "required": [
+          "env_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "环境的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "环境的资源地址。"
+        },
+        "html_url": {
+          "type": "string",
+          "description": "环境的真实地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "环境的名称。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "html_url",
+        "name"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "564587fe700d43b81b080123",
+          "url": "https://{rest_api_root}/v2/devops/environments/564587fe700d43b81b080123",
+          "html_url": "https://your-environment-url",
+          "name": "Production"
+        }
+      }
+    ]
+  }
+}

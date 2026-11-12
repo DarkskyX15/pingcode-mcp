@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-idea-state-plans-idea-state-plan-id-idea-state-flows-idea-state-flow-id",
+  "meta": {
+    "name": "获取需求状态方案中的一个状态流转",
+    "method": "GET",
+    "path": "/v2/ship/idea_state_plans/{idea_state_plan_id}/idea_state_flows/{idea_state_flow_id}",
+    "group": "需求配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "需求配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:configuration"
+      ]
+    },
+    "description": "用于按 id 获取需求状态方案中的一个状态流转。",
+    "summary": "用于按 id 获取需求状态方案中的一个状态流转。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/idea/state-flow/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E9%9C%80%E6%B1%82%E7%8A%B6%E6%80%81%E6%96%B9%E6%A1%88%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E7%8A%B6%E6%80%81%E6%B5%81%E8%BD%AC"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "idea_state_plan_id": {
+            "type": "string",
+            "description": "需求状态方案的 id。"
+          },
+          "idea_state_flow_id": {
+            "type": "string",
+            "description": "需求状态流转的 id。"
+          }
+        },
+        "required": [
+          "idea_state_plan_id",
+          "idea_state_flow_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "需求状态流转的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "需求状态流转的资源地址。"
+        },
+        "state_plan": {
+          "type": "object",
+          "description": "需求状态方案的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "from_state": {
+          "type": "object",
+          "description": "起始需求状态的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "to_state": {
+          "type": "object",
+          "description": "目标需求状态的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "state_plan",
+        "from_state",
+        "to_state"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63feb3da9cc1ead1d2be93fd",
+          "url": "https://{rest_api_root}/v2/ship/idea_state_plans/63feb3da9cc1ead1d2be93f4/idea_state_flows/63feb3da9cc1ead1d2be93fd",
+          "state_plan": {
+            "id": "63feb3da9cc1ead1d2be93f4",
+            "url": "https://{rest_api_root}/v2/ship/idea_state_plans/63feb3da9cc1ead1d2be93f4"
+          },
+          "from_state": {
+            "id": "63bb744214bd13c9def24ca5",
+            "url": "https://{rest_api_root}/v2/ship/idea_states/63bb744214bd13c9def24ca5",
+            "name": "已计划",
+            "type": "in_progress"
+          },
+          "to_state": {
+            "id": "63bb744214bd13c9def24ca2",
+            "url": "https://{rest_api_root}/v2/ship/idea_states/63bb744214bd13c9def24ca2",
+            "name": "待处理",
+            "type": "pending"
+          }
+        }
+      }
+    ]
+  }
+}

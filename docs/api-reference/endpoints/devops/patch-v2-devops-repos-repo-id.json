@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-devops-repos-repo-id",
+  "meta": {
+    "name": "部分更新一个代码仓库",
+    "method": "PATCH",
+    "path": "/v2/devops/repos/{repo_id}",
+    "group": "代码仓库",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "代码仓库"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "代码仓库"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:code"
+      ]
+    },
+    "description": "用于部分更新一个代码仓库。",
+    "summary": "用于部分更新一个代码仓库。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "repo_id": {
+            "type": "string",
+            "description": "代码仓库的 id。"
+          }
+        },
+        "required": [
+          "repo_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "代码仓库的名称。"
+          },
+          "full_name": {
+            "type": "string",
+            "description": "代码仓库的全称。同一代码托管平台下，代码仓库的全称是唯一的。"
+          },
+          "description": {
+            "type": "string",
+            "description": "代码仓库的简介。"
+          },
+          "is_fork": {
+            "type": "boolean",
+            "description": "是否是 fork 仓库。"
+          },
+          "is_private": {
+            "type": "boolean",
+            "description": "是否是私有仓库。"
+          },
+          "owner_name": {
+            "type": "string",
+            "description": "代码仓库拥有者的用户名。"
+          },
+          "html_url": {
+            "type": "string",
+            "description": "代码仓库在代码托管平台上的地址。如果为空，在 PingCode 中不显示相关跳转链接。"
+          },
+          "branches_url": {
+            "type": "string",
+            "description": "代码仓库的分支地址，使用 `{branch}` 表示分支名。如果为空，在 PingCode 中不显示相关跳转链接。"
+          },
+          "commits_url": {
+            "type": "string",
+            "description": "代码仓库的提交地址，使用 `{sha}` 表示提交的 SHA 值。如果为空，在 PingCode 中不显示相关跳转链接。"
+          },
+          "compare_url": {
+            "type": "string",
+            "description": "代码仓库的分支对比地址，使用 `{base}` 和 `{head}` 表示基准分支名和需要进行对比的分支名。如果为空，在 PingCode 中不显示相关跳转链接。"
+          },
+          "pulls_url": {
+            "type": "string",
+            "description": "代码仓库的拉取请求地址，使用 `{number}` 表示拉取请求的编号。如果为空，在 PingCode 中不显示相关跳转链接。"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "ngx-planet",
+            "full_name": "worktile/ngx-planet",
+            "description": "A powerful, reliable, fully-featured and production ready Micro Frontend library for Angular",
+            "is_fork": false,
+            "is_private": false,
+            "owner_name": "terry",
+            "html_url": "https://github.com/worktile/ngx-planet",
+            "branches_url": "https://github.com/worktile/ngx-planet/tree/{branch}",
+            "commits_url": "https://github.com/worktile/ngx-planet/commit/{sha}",
+            "compare_url": "https://github.com/worktile/ngx-planet/compare/{base}...{head}",
+            "pulls_url": "https://github.com/worktile/ngx-planet/pull/{number}"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "代码仓库的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "代码仓库的资源地址。"
+        },
+        "html_url": {
+          "type": "string",
+          "description": "代码仓库的地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "托管平台的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "代码仓库的名称。"
+        },
+        "full_name": {
+          "type": "string",
+          "description": "代码仓库的全称。"
+        },
+        "created_at": {
+          "type": "number",
+          "description": "代码仓库的创建时间。"
+        },
+        "owner": {
+          "type": "object",
+          "description": "代码仓库拥有者的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_fork": {
+          "type": "boolean",
+          "description": "代码仓库是否是 fork 仓库。"
+        },
+        "is_private": {
+          "type": "boolean",
+          "description": "代码仓库是否是私有仓库。"
+        },
+        "description": {
+          "type": "string",
+          "description": "代码仓库的描述。"
+        },
+        "branches_url": {
+          "type": "string",
+          "description": "代码仓库的分支地址模板。"
+        },
+        "commits_url": {
+          "type": "string",
+          "description": "代码仓库的提交地址模板。"
+        },
+        "compare_url": {
+          "type": "string",
+          "description": "代码仓库的分支对比地址模板。"
+        },
+        "pulls_url": {
+          "type": "string",
+          "description": "代码仓库的拉取请求地址模板。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "html_url",
+        "product",
+        "name",
+        "full_name",
+        "created_at",
+        "owner",
+        "is_fork",
+        "is_private",
+        "description",
+        "branches_url",
+        "commits_url",
+        "compare_url",
+        "pulls_url"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "564587fe700d43b81b080766",
+          "url": "https://{rest_api_root}/v2/devops/repos/564587fe700d43b81b080766",
+          "html_url": "https://github.com/worktile/ngx-planet",
+          "product": {
+            "id": "564587fe700d43b81b080765",
+            "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+            "name": "Github",
+            "type": "github"
+          },
+          "name": "ngx-planet",
+          "full_name": "worktile/ngx-planet",
+          "created_at": 1403018919,
+          "owner": {
+            "id": "5666aea91f99e33cb7c44964",
+            "url": "https://{rest_api_root}/v2/devops/users/5666aea91f99e33cb7c44964",
+            "name": "terry"
+          },
+          "is_fork": false,
+          "is_private": false,
+          "description": "A powerful, reliable, fully-featured and production ready Micro Frontend library for Angular",
+          "branches_url": "https://github.com/worktile/ngx-planet/tree/{branch}",
+          "commits_url": "https://github.com/worktile/ngx-planet/commit/{sha}",
+          "compare_url": "https://github.com/worktile/ngx-planet/compare/{base}...{head}",
+          "pulls_url": "https://github.com/worktile/ngx-planet/pull/{number}"
+        }
+      }
+    ]
+  }
+}

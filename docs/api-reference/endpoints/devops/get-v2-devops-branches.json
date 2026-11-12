@@ -1,0 +1,327 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-devops-branches",
+  "meta": {
+    "name": "获取代码分支列表",
+    "method": "GET",
+    "path": "/v2/devops/branches",
+    "group": "代码分支",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "代码分支"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "代码分支"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:read:devops:code"
+      ]
+    },
+    "description": "用于分页获取指定仓库的代码分支列表。",
+    "summary": "用于分页获取指定仓库的代码分支列表。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%BB%A3%E7%A0%81%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8",
+    "originalUrl": "/v2/devops/branches?product_id={product_id}&repo_id={repo_id}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "代码托管平台的 id。"
+          },
+          "repo_id": {
+            "type": "string",
+            "description": "代码仓库的 id。"
+          },
+          "name": {
+            "type": "string",
+            "description": "分支的名称。"
+          },
+          "workitem_id": {
+            "type": "string",
+            "description": "工作项的 id。"
+          }
+        },
+        "required": [
+          "product_id",
+          "repo_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "product": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "repository": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "full_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "created_at": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "sender": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_default": {
+                "type": "boolean",
+                "x-inferred-from-example": true
+              },
+              "workitems": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "short_id": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "html_url": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "identifier": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "start": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "number",
+                          "x-inferred-from-example": true
+                        },
+                        "with_time": {
+                          "type": "number",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    },
+                    "due": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "number",
+                          "x-inferred-from-example": true
+                        },
+                        "with_time": {
+                          "type": "number",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    },
+                    "parent_id": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "properties": {
+                      "type": "object",
+                      "properties": {
+                        "prop_a": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "prop_b": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "代码分支全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "564587fe700d43b81b080767",
+              "url": "https://{rest_api_root}/v2/devops/branches/564587fe700d43b81b080767",
+              "product": {
+                "id": "564587fe700d43b81b080765",
+                "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+                "name": "Github",
+                "type": "github"
+              },
+              "repository": {
+                "id": "564587fe700d43b81b080766",
+                "url": "https://{rest_api_root}/v2/devops/repos/564587fe700d43b81b080766",
+                "name": "ngx-planet",
+                "full_name": "worktile/ngx-planet",
+                "created_at": 1403018919
+              },
+              "name": "terry/#PLM-001",
+              "created_at": 1403018919,
+              "sender": {
+                "id": "5666aea91f99e33cb7c44964",
+                "url": "https://{rest_api_root}/v2/devops/users/5666aea91f99e33cb7c44964",
+                "name": "terry"
+              },
+              "is_default": false,
+              "workitems": [
+                {
+                  "id": "564587fe700d43b81b080ab8",
+                  "url": "https://{rest_api_root}/v2/pjm/workitems/564587fe700d43b81b080ab8",
+                  "short_id": "c9WqLmTO",
+                  "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+                  "identifier": "PLM-001",
+                  "title": "这是一个用户故事",
+                  "start": {
+                    "date": 1583290309,
+                    "with_time": 1
+                  },
+                  "due": {
+                    "date": 1583290347,
+                    "with_time": 1
+                  },
+                  "parent_id": "5edca524cad2fa112b06105c",
+                  "properties": {
+                    "prop_a": "prop_a_value",
+                    "prop_b": "prop_b_value"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

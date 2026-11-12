@@ -1,0 +1,265 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-idea-properties",
+  "meta": {
+    "name": "获取全部需求属性列表",
+    "method": "GET",
+    "path": "/v2/ship/idea_properties",
+    "group": "需求配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "需求配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:configuration"
+      ]
+    },
+    "description": "用于分页获取企业内全部需求属性。",
+    "summary": "用于分页获取企业内全部需求属性。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/idea/property/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E5%85%A8%E9%83%A8%E9%9C%80%E6%B1%82%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8"
+  },
+  "request": {},
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "options": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "x-inferred-from-example": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        },
+                        "text": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        },
+                        "color": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  {
+                    "type": "null",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "is_removable": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "is_name_editable": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "is_options_editable": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "全部需求属性的全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 2,
+          "values": [
+            {
+              "id": "backlog_type",
+              "url": "https://{rest_api_root}/v2/ship/idea_properties/backlog_type",
+              "name": "需求类型",
+              "type": "select",
+              "options": [
+                {
+                  "id": "5cb7e763fda1ce4ca0010002",
+                  "text": "功能需求",
+                  "color": "#FF7575"
+                },
+                {
+                  "id": "5cb7e763fda1ce4ca0010004",
+                  "text": "体验优化",
+                  "color": "#FF7575"
+                }
+              ],
+              "is_removable": 0,
+              "is_name_editable": 0,
+              "is_options_editable": 0
+            },
+            {
+              "id": "identifier",
+              "url": "https://{rest_api_root}/v2/ship/idea_properties/identifier",
+              "name": "编号",
+              "type": "text",
+              "options": null,
+              "is_removable": 0,
+              "is_name_editable": 0,
+              "is_options_editable": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

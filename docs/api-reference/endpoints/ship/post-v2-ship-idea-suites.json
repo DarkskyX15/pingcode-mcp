@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-ship-idea-suites",
+  "meta": {
+    "name": "创建一个需求模块",
+    "method": "POST",
+    "path": "/v2/ship/idea_suites",
+    "group": "产品",
+    "groupPath": [
+      "产品管理",
+      "产品"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "产品"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:product"
+      ]
+    },
+    "description": "用于创建一个需求模块。",
+    "summary": "用于创建一个需求模块。",
+    "sourceFile": "src/modules/v2/pingcode/ship/product/suite/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E6%A8%A1%E5%9D%97"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "产品的 id。"
+          },
+          "name": {
+            "type": "string",
+            "description": "模块名称。需求模块为树形结构，同一层次下的名称不能重复。"
+          },
+          "type": {
+            "type": "string",
+            "description": "模块类型。允许值分别表示子产品和模块。",
+            "enum": [
+              "product",
+              "module"
+            ]
+          },
+          "parent_id": {
+            "type": "string",
+            "description": "父模块的 id。"
+          }
+        },
+        "required": [
+          "product_id",
+          "name",
+          "type"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "product_id": "6422711c3f12e6c1e46d40e6",
+            "name": "技术支持确认",
+            "type": "module",
+            "parent_id": "63bb744414bd13c9def24ce3"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "需求模块的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "需求模块的资源地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "所属产品的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "需求模块的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "需求模块的类型。",
+          "enum": [
+            "product",
+            "module"
+          ]
+        },
+        "parent": {
+          "type": "object",
+          "description": "父级需求模块的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "product",
+        "name",
+        "type",
+        "parent"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63eca881a0a13a3efc8d49f0",
+          "url": "https://{rest_api_root}/v2/ship/idea_suites/63eca881a0a13a3efc8d49f0",
+          "product": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e6",
+            "identifier": "SLC",
+            "name": "示例产品",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "name": "技术支持确认",
+          "type": "module",
+          "parent": {
+            "id": "63bb744414bd13c9def24ce3",
+            "url": "https://{rest_api_root}/v2/ship/idea_suites/63bb744414bd13c9def24ce3",
+            "name": "父级产品模块",
+            "type": "module"
+          }
+        }
+      }
+    ]
+  }
+}

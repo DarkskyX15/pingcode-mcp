@@ -1,0 +1,256 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-relations-relation-id",
+  "meta": {
+    "name": "获取一个关联",
+    "method": "GET",
+    "path": "/v2/relations/{relation_id}",
+    "group": "关联",
+    "groupPath": [
+      "全局",
+      "通用",
+      "关联"
+    ],
+    "area": "全局",
+    "tags": [
+      "关联"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": []
+    },
+    "description": "用于按 id 获取关联全量信息。",
+    "summary": "用于按 id 获取关联全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/relation/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E5%85%B3%E8%81%94"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "relation_id": {
+            "type": "string",
+            "description": "关联的 id。"
+          }
+        },
+        "required": [
+          "relation_id"
+        ]
+      }
+    },
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "include_deleted": {
+            "type": "boolean",
+            "description": "是否包含已删除的关联。该值默认为`false`。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "关联的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "关联的资源地址。"
+        },
+        "principal_type": {
+          "type": "string",
+          "description": "关联主体的类型。",
+          "enum": [
+            "idea",
+            "ticket",
+            "workitem",
+            "testplan",
+            "testrun",
+            "testcase",
+            "page"
+          ]
+        },
+        "principal": {
+          "type": "object",
+          "description": "关联的主体。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "whole_identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "start": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "due": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "parent_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "properties": {
+              "type": "object",
+              "properties": {
+                "prop_a": {
+                  "type": "string",
+                  "x-inferred-from-example": true
+                },
+                "prop_b": {
+                  "type": "string",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "target_type": {
+          "type": "string",
+          "description": "关联的目标类型。",
+          "enum": [
+            "ticket",
+            "workitem",
+            "testcase",
+            "idea",
+            "page"
+          ]
+        },
+        "target": {
+          "type": "object",
+          "description": "关联的目标。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "whole_identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "principal_type",
+        "principal",
+        "target_type",
+        "target"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "653b1b4a3113be5bb040e4c5",
+          "url": "https://{rest_api_root}/v2/relations/653b1b4a3113be5bb040e4c5",
+          "principal_type": "workitem",
+          "principal": {
+            "id": "5edca524cad2fa1125cb0630",
+            "url": "https://{rest_api_root}/v2/pjm/workitems/5edca524cad2fa1125cb0630",
+            "short_id": "c9WqLmTO",
+            "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+            "whole_identifier": "SCR-5",
+            "title": "这是一个缺陷",
+            "start": {
+              "date": 1583290309,
+              "with_time": 0
+            },
+            "due": {
+              "date": 1583290347,
+              "with_time": 0
+            },
+            "parent_id": "5edca524cad2fa112b06105c",
+            "properties": {
+              "prop_a": "prop_a_value",
+              "prop_b": "prop_b_value"
+            }
+          },
+          "target_type": "idea",
+          "target": {
+            "id": "64b4d70ba368e6594360ea24",
+            "url": "https://{rest_api_root}/v2/ship/ideas/64b4d70ba368e6594360ea24",
+            "short_id": "Ogf1EYey",
+            "html_url": "https://yctech.pingcode.com/ship/ideas/Ogf1EYey",
+            "whole_identifier": "SLC-1",
+            "title": "示例需求"
+          }
+        }
+      }
+    ]
+  }
+}

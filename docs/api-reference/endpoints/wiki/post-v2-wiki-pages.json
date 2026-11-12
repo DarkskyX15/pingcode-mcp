@@ -1,0 +1,496 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-wiki-pages",
+  "meta": {
+    "name": "创建一个页面",
+    "method": "POST",
+    "path": "/v2/wiki/pages",
+    "group": "页面",
+    "groupPath": [
+      "知识管理",
+      "页面"
+    ],
+    "area": "知识管理",
+    "tags": [
+      "页面"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:wiki:page"
+      ]
+    },
+    "description": "用于创建一个页面。",
+    "summary": "用于创建一个页面。",
+    "sourceFile": "src/modules/v2/pingcode/wiki/page/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "space_id": {
+            "type": "string",
+            "description": "空间的 id。"
+          },
+          "name": {
+            "type": "string",
+            "description": "页面的名称。"
+          },
+          "parent_id": {
+            "type": "string",
+            "description": "父页面的 id。"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object"
+                }
+              ],
+              "x-pingcode-type": "String/Object"
+            },
+            "description": "页面的内容。`format_type` 为 `text`/`markdown`/`html` 时为字符串；为 `block` 时为块文档数组（与「获取一个文档正文」返回的 `block` 结构一致）。"
+          },
+          "format_type": {
+            "type": "string",
+            "description": "页面内容的格式。content 和 format_type 字段必须同时传递。",
+            "enum": [
+              "text",
+              "markdown",
+              "html",
+              "block"
+            ]
+          }
+        },
+        "required": [
+          "space_id",
+          "name"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "space_id": "63e1bf51760505c8795ebcc8",
+            "name": "示例页面",
+            "parent_id": "63e1bf51760505c8795ebcce",
+            "content": "空间是记录信息和知识的页面集合，通过组织页面层级将知识系统化、结构化，便于团队沉淀经验、共享资源，实现知识增值，加快知识流动，在知识管理层面助力企业更快更好的发布产品。 PingCode 空间支持以下特性： 页面支持插入多种元素以及关联页面，满足编写需要 编辑过程自动保存草稿，无需担心内容丢失 提供丰富的模板，使用模板保持页面的一致性，让空间更加规范 使用锁定功能锁定页面最终版本 删除的页面放进回收站，随时恢复 树状页面结构，直接拖动页面编排目录，让知识管理更方便高效 通过设置成员角色来进行权限控制 通过页面评论实现成员沟通交流，形成反馈闭环  【PingCode 空间】当前处于不断迭代过程中，更多功能即将呈现，敬请期待~",
+            "format_type": "text"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "页面的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "页面的资源地址。"
+        },
+        "short_id": {
+          "type": "string",
+          "description": "页面的短 id。"
+        },
+        "html_url": {
+          "type": "string",
+          "description": "页面的 html 地址。"
+        },
+        "space": {
+          "type": "object",
+          "description": "所属空间的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "页面的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "页面的类型。",
+          "enum": [
+            "document",
+            "group"
+          ]
+        },
+        "parent": {
+          "type": "object",
+          "description": "父页面的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "icon": {
+          "type": "string",
+          "description": "页面的图标。"
+        },
+        "reading": {
+          "type": "number",
+          "description": "页面的阅读量。"
+        },
+        "published_at": {
+          "type": "number",
+          "description": "页面的发布时间，单位为秒。"
+        },
+        "published_by": {
+          "type": "object",
+          "description": "发布人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "页面标签列表。"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "页面关注人列表。",
+          "x-inferred-from-example": true
+        },
+        "entity_properties": {
+          "type": "object",
+          "description": "以键值型数据结构组织的实体扩展属性的集合。",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "x-dynamic-key": "$property_key",
+          "x-dynamic-key-description": "页面上的实体扩展属性。`$property_key` 为占位符，实际属性名随请求变化，并非固定字段，对应实体扩展属性的 `property_key`。"
+        },
+        "position": {
+          "type": "number",
+          "description": "页面在同级中的排序位置。"
+        },
+        "created_at": {
+          "type": "number",
+          "description": "创建时间，单位为秒。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "创建人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "updated_at": {
+          "type": "number",
+          "description": "更新时间，单位为秒。"
+        },
+        "updated_by": {
+          "type": "object",
+          "description": "更新人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_locked": {
+          "type": "number",
+          "description": "是否锁定页面。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_archived": {
+          "type": "number",
+          "description": "是否已归档。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "short_id",
+        "html_url",
+        "space",
+        "name",
+        "type",
+        "icon",
+        "reading",
+        "published_at",
+        "published_by",
+        "tags",
+        "participants",
+        "entity_properties",
+        "position",
+        "created_at",
+        "created_by",
+        "updated_at",
+        "updated_by",
+        "is_locked",
+        "is_archived",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63e1bf51760505c8795ebccc",
+          "url": "https://{rest_api_root}/v2/wiki/pages/63e1bf51760505c8795ebccc",
+          "short_id": "5-x6NN",
+          "html_url": "https://yctech.pingcode.com/wiki/pages/5-x6NN",
+          "space": {
+            "id": "63e1bf51760505c8795ebcc8",
+            "url": "https://{rest_api_root}/v2/wiki/spaces/63e1bf51760505c8795ebcc8",
+            "name": "示例空间",
+            "identifier": "DEMO",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "name": "示例页面",
+          "type": "document",
+          "parent": {
+            "id": "63e1bf51760505c8795ebcce",
+            "url": "https://{rest_api_root}/v2/wiki/pages/63e1bf51760505c8795ebcce",
+            "short_id": "c-x6NN",
+            "html_url": "https://yctech.pingcode.com/wiki/pages/c-x6NN",
+            "name": "模板",
+            "type": "document"
+          },
+          "icon": "file-fill",
+          "reading": 0,
+          "published_at": 1675738962,
+          "published_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "tags": [],
+          "participants": [
+            {
+              "id": "a0417f68e846aae315c85d24643678a9",
+              "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=page&principal_id=63e1bf51760505c8795ebccc",
+              "type": "user",
+              "user": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            }
+          ],
+          "entity_properties": {
+            "entity_property_key_a": {
+              "score": 95,
+              "risk": "low"
+            },
+            "entity_property_key_b": "123456"
+          },
+          "position": 65536,
+          "created_at": 1675738962,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "updated_at": 1675738962,
+          "updated_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "is_locked": 0,
+          "is_archived": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

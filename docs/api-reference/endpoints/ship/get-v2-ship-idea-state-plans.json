@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-idea-state-plans",
+  "meta": {
+    "name": "获取需求状态方案列表",
+    "method": "GET",
+    "path": "/v2/ship/idea_state_plans",
+    "group": "需求配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "需求配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:configuration"
+      ]
+    },
+    "description": "用于分页获取企业内全部需求状态方案。",
+    "summary": "用于分页获取企业内全部需求状态方案。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/idea/state-plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E9%9C%80%E6%B1%82%E7%8A%B6%E6%80%81%E6%96%B9%E6%A1%88%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "for_product_id": {
+            "type": "string",
+            "description": "产品的 id。只返回该产品正在使用的需求状态方案。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "product": {
+                "anyOf": [
+                  {
+                    "type": "null",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      "url": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      "identifier": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      "name": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      "is_archived": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "is_deleted": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "需求状态方案全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 2,
+          "values": [
+            {
+              "id": "63feb3da9cc1ead1d2be93f4",
+              "url": "https://{rest_api_root}/v2/ship/idea_state_plans/63feb3da9cc1ead1d2be93f4",
+              "product": null
+            },
+            {
+              "id": "63feb3da9cc1ead1d2be93f5",
+              "url": "https://{rest_api_root}/v2/ship/idea_state_plans/63feb3da9cc1ead1d2be93f5",
+              "product": {
+                "id": "6422711c3f12e6c1e46d40e9",
+                "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9",
+                "identifier": "SLC",
+                "name": "示例产品",
+                "is_archived": 0,
+                "is_deleted": 0
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

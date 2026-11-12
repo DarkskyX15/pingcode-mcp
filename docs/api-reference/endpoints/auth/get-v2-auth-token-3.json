@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-auth-token-3",
+  "meta": {
+    "name": "获取用户令牌",
+    "method": "GET",
+    "path": "/v2/auth/token",
+    "group": "授权码",
+    "groupPath": [
+      "鉴权",
+      "授权码"
+    ],
+    "area": "鉴权",
+    "tags": [
+      "授权码"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [],
+      "scopes": []
+    },
+    "description": "用于获取用户令牌。  \n 注：`access_token` 有效期为 30 天；删除应用或重置应用密钥（`Secret`），都会导致当前令牌立即失效。",
+    "summary": "用于获取用户令牌。",
+    "sourceFile": "src/modules/v2/pingcode/authorization/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%BB%A4%E7%89%8C",
+    "originalUrl": "/v2/auth/token?grant_type=authorization_code",
+    "queryDefaults": [
+      {
+        "name": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "type": "string",
+            "description": "授权类型，这里固定为：`authorization_code`。",
+            "enum": [
+              "authorization_code"
+            ]
+          },
+          "client_id": {
+            "type": "string",
+            "description": "PingCode 应用的 Client ID"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "PingCode 应用的 Secret"
+          },
+          "code": {
+            "type": "string",
+            "description": "用户授权后，在回调地址中拿到的 `code` 值。"
+          }
+        },
+        "required": [
+          "grant_type",
+          "client_id",
+          "client_secret",
+          "code"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "description": "令牌"
+        },
+        "refresh_token": {
+          "type": "string",
+          "description": "刷新令牌"
+        },
+        "token_type": {
+          "type": "string",
+          "description": "令牌类型"
+        },
+        "expires_in": {
+          "type": "string",
+          "description": "过期时间"
+        }
+      },
+      "required": [
+        "access_token",
+        "refresh_token",
+        "token_type",
+        "expires_in"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "access_token": "e7321ca8-f724-4abd-9169-d76d095c6acf",
+          "refresh_token": "f724-4abd-9169-e7321ca8-d76d095c6acf",
+          "token_type": "Bearer",
+          "expires_in": 1577808000
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-pjm-tags-tag-id",
+  "meta": {
+    "name": "部分更新一个项目标签",
+    "method": "PATCH",
+    "path": "/v2/pjm/tags/{tag_id}",
+    "group": "项目配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "项目配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "项目配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:configuration"
+      ]
+    },
+    "description": "用于部分更新一个项目标签。",
+    "summary": "用于部分更新一个项目标签。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/project-config/tag/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%A0%87%E7%AD%BE"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "tag_id": {
+            "type": "string",
+            "description": "标签的 id。"
+          }
+        },
+        "required": [
+          "tag_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "标签的名称。在一个企业中这个名称是唯一的。"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "标签-2"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "项目标签的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "项目标签的地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "项目标签的名称。"
+        },
+        "color": {
+          "type": "string",
+          "description": "项目标签的颜色。"
+        },
+        "project": {
+          "type": "object",
+          "description": "项目的引用结构数据。该标签是此项目的本地标签。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "template_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "color",
+        "project"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5e6b35de50ef8153c2062f70",
+          "url": "https://{rest_api_root}/v2/pjm/tags/5e6b35de50ef8153c2062f70",
+          "name": "标签-2",
+          "color": "#56ABFB",
+          "project": {
+            "id": "5eb623f6a70571487ea41919",
+            "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea41919",
+            "identifier": "KB",
+            "name": "看板项目",
+            "template_type": "kanban",
+            "is_archived": 0,
+            "is_deleted": 0
+          }
+        }
+      }
+    ]
+  }
+}

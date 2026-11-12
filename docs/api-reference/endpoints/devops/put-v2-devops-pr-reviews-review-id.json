@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "put-v2-devops-pr-reviews-review-id",
+  "meta": {
+    "name": "全量更新一个代码评审",
+    "method": "PUT",
+    "path": "/v2/devops/pr_reviews/{review_id}",
+    "group": "代码评审",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "代码评审"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "代码评审"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:code"
+      ]
+    },
+    "description": "用于全量更新一个代码评审。",
+    "summary": "用于全量更新一个代码评审。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/pullrequest.facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%85%A8%E9%87%8F%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "review_id": {
+            "type": "string",
+            "description": "代码评审的 id。"
+          }
+        },
+        "required": [
+          "review_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "reviewer_name": {
+            "type": "string",
+            "description": "评审人的用户名。"
+          },
+          "status": {
+            "type": "string",
+            "description": "代码评审的状态。",
+            "enum": [
+              "comment",
+              "approved",
+              "request_changes"
+            ]
+          },
+          "submitted_at": {
+            "type": "number",
+            "description": "提交的时间。"
+          },
+          "description": {
+            "type": "string",
+            "description": "代码评审的描述。"
+          },
+          "html_url": {
+            "type": "string",
+            "description": "代码评审的地址。如果为空，在 PingCode 中不显示相关跳转链接。"
+          }
+        },
+        "required": [
+          "reviewer_name",
+          "status",
+          "submitted_at"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "raw": "同「获取一个代码评审」响应结构。"
+      }
+    ]
+  }
+}

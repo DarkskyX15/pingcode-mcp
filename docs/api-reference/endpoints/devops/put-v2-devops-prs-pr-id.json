@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "put-v2-devops-prs-pr-id",
+  "meta": {
+    "name": "全量更新一个拉取请求",
+    "method": "PUT",
+    "path": "/v2/devops/prs/{pr_id}",
+    "group": "拉取请求",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "拉取请求"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "拉取请求"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:code"
+      ]
+    },
+    "description": "用于全量更新一个拉取请求。",
+    "summary": "用于全量更新一个拉取请求。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/pullrequest.facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%85%A8%E9%87%8F%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E6%8B%89%E5%8F%96%E8%AF%B7%E6%B1%82"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "pr_id": {
+            "type": "string",
+            "description": "拉取请求的 id。"
+          }
+        },
+        "required": [
+          "pr_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "拉取请求的标题。"
+          },
+          "creator_name": {
+            "type": "string",
+            "description": "拉取请求创建者的用户名。"
+          },
+          "source_branch_id": {
+            "type": "string",
+            "description": "源分支的 id。"
+          },
+          "target_branch_id": {
+            "type": "string",
+            "description": "目标分支的 id。"
+          },
+          "status": {
+            "type": "string",
+            "description": "拉取请求的状态。",
+            "enum": [
+              "open",
+              "closed",
+              "merged",
+              "abandoned"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "拉取请求的描述。"
+          },
+          "merged_at": {
+            "type": "number",
+            "description": "拉取请求合并的时间。当拉取请求状态为 `merged` 时，该值为必填。"
+          },
+          "merged_commit_sha": {
+            "type": "string",
+            "description": "源分支最后一次提交的 SHA 值。当拉取请求状态为 `merged` 时，该值为必填。"
+          },
+          "merged_by_name": {
+            "type": "string",
+            "description": "拉取请求合并者的用户名。当拉取请求状态为 `merged` 时，该值为必填。"
+          },
+          "comments_count": {
+            "type": "number",
+            "description": "拉取请求的评论数量。"
+          },
+          "review_comments_count": {
+            "type": "number",
+            "description": "代码评审的评论数量。"
+          },
+          "commits_count": {
+            "type": "number",
+            "description": "代码的提交数量。"
+          },
+          "additions_count": {
+            "type": "number",
+            "description": "新增文件的数量。"
+          },
+          "deletions_count": {
+            "type": "number",
+            "description": "删除文件的数量。"
+          },
+          "changed_files_count": {
+            "type": "number",
+            "description": "更改文件的数量。"
+          },
+          "workitem_identifiers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "PingCode 工作项编号的列表。通过该参数将拉取请求与一个或多个工作项关联。"
+          }
+        },
+        "required": [
+          "title",
+          "creator_name",
+          "source_branch_id",
+          "target_branch_id",
+          "status"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "raw": "同「获取一个拉取请求」响应结构。"
+      }
+    ]
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-nos-create-upload-url",
+  "meta": {
+    "name": "创建一个上传地址",
+    "method": "POST",
+    "path": "/v2/nexus/nos/create_upload_url",
+    "group": "NOS",
+    "groupPath": [
+      "存储",
+      "NOS"
+    ],
+    "area": "存储",
+    "tags": [
+      "NOS"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:storage:app"
+      ]
+    },
+    "description": "创建上传文件的 URL 地址。",
+    "summary": "创建上传文件的 URL 地址。",
+    "sourceFile": "src/modules/v2/nexus/storage/nos/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%B8%8A%E4%BC%A0%E5%9C%B0%E5%9D%80"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "对象文件的 `key`，不同对象 `key` 的值不能相同。"
+          },
+          "size": {
+            "type": "number",
+            "description": "对象文件的大小，单位为字节。"
+          },
+          "checksum": {
+            "type": "string",
+            "description": "对象文件的签名字符串。"
+          },
+          "checksum_type": {
+            "type": "string",
+            "description": "对象文件的签名方式。",
+            "enum": [
+              "SHA1",
+              "SHA256",
+              "CRC32",
+              "CRC32C"
+            ]
+          },
+          "options": {
+            "type": "object",
+            "description": "可选配置项。",
+            "properties": {
+              "overwrite": {
+                "type": "boolean",
+                "description": "是否允许覆盖同 `key` 对象文件。默认值为 `false`，当 `key` 已经存在时，直接报错。当值为 `true` 时表示会覆盖旧的对象文件。"
+              }
+            }
+          }
+        },
+        "required": [
+          "key",
+          "size",
+          "checksum",
+          "checksum_type"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "key": "nos/demo.png",
+            "size": 1048576,
+            "checksum": "a591a6d40bf420404a011733cfb762b0b96589e1",
+            "checksum_type": "SHA1",
+            "options": {
+              "overwrite": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "x-inferred-from-example": true
+        }
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "url": "https://{nos_api_root}/api/upload/ef7123649a6a49c895945ebef251dc30?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        }
+      }
+    ]
+  }
+}

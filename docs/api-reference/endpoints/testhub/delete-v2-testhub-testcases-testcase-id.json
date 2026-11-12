@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-testhub-testcases-testcase-id",
+  "meta": {
+    "name": "删除一个用例",
+    "method": "DELETE",
+    "path": "/v2/testhub/testcases/{testcase_id}",
+    "group": "用例",
+    "groupPath": [
+      "测试管理",
+      "用例"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "用例"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:testcase"
+      ]
+    },
+    "description": "用于按 id 删除一个用例。",
+    "summary": "用于按 id 删除一个用例。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/case/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BE%8B"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "testcase_id": {
+            "type": "string",
+            "description": "测试用例的 id。"
+          }
+        },
+        "required": [
+          "testcase_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    }
+  }
+}

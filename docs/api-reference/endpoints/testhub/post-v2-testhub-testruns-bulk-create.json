@@ -1,0 +1,357 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-testhub-testruns-bulk-create",
+  "meta": {
+    "name": "批量创建执行用例",
+    "method": "POST",
+    "path": "/v2/testhub/testruns/bulk/create",
+    "group": "计划",
+    "groupPath": [
+      "测试管理",
+      "计划"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "计划"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:testplan"
+      ]
+    },
+    "description": "用于批量创建执行用例，单次最多支持 100 条。接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。响应按请求条目顺序返回对应结果，通过 `state`（`success` / `failure`）判断操作结果，失败时通过 `message` 返回失败原因。",
+    "summary": "用于批量创建执行用例，单次最多支持 100 条。接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。响应按请求条目顺序返回对应结果，通过 state（success / failure）判断操作结果，失败时通过 message 返回失败原因。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/run/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E6%89%A7%E8%A1%8C%E7%94%A8%E4%BE%8B"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "testruns": {
+            "type": "object",
+            "items": {
+              "type": "object"
+            },
+            "description": "创建单个执行用例必要参数的数组。数组长度不超过 100。",
+            "properties": {
+              "library_id": {
+                "type": "string",
+                "description": "执行用例所属测试库的 id。"
+              },
+              "testplan_id": {
+                "type": "string",
+                "description": "执行用例所属测试计划的 id。"
+              },
+              "testcase_id": {
+                "type": "string",
+                "description": "测试用例的 id。"
+              },
+              "executor_id": {
+                "type": "string",
+                "description": "执行人的 id。"
+              }
+            },
+            "required": [
+              "library_id",
+              "testplan_id",
+              "testcase_id"
+            ]
+          }
+        },
+        "required": [
+          "testruns"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "testruns": [
+              {
+                "library_id": "5eb623f6a70571487ea47000",
+                "testplan_id": "5eb6a70571487623fea47000",
+                "testcase_id": "5edca524cad2fa112b06305c",
+                "executor_id": "a0417f68e846aae315c85d24643678a9"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "description": "操作状态。",
+            "enum": [
+              "success",
+              "failure"
+            ]
+          },
+          "testrun": {
+            "type": "object",
+            "description": "执行用例的全量结构数据。操作成功时返回。",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "status": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "library": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "is_archived": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "is_deleted": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "testplan": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "short_id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "html_url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "status": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "start_at": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "end_at": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "testcase": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "short_id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "html_url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "whole_identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "title": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "test_type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "latest_executed_status": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_archived": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "is_deleted": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "失败原因。操作失败时返回。"
+          }
+        },
+        "required": [
+          "state"
+        ]
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "state": "success",
+            "testrun": {
+              "id": "547000eb6a70571487623fea",
+              "url": "https://{rest_api_root}/v2/testhub/testruns/547000eb6a70571487623fea",
+              "short_id": "Aq1u38yX",
+              "html_url": "https://yctech.pingcode.com/testhub/runs/Aq1u38yX",
+              "status": "not_start",
+              "library": {
+                "id": "5eb623f6a70571487ea47000",
+                "url": "https://{rest_api_root}/v2/testhub/libraries/5eb623f6a70571487ea47000",
+                "identifier": "CSK",
+                "name": "测试库",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "testplan": {
+                "id": "5eb6a70571487623fea47000",
+                "url": "https://{rest_api_root}/v2/testhub/testplans/5eb6a70571487623fea47000",
+                "short_id": "7nNkViOD",
+                "html_url": "https://yctech.pingcode.com/testhub/libraries/CSK/plans/7nNkViOD/runs",
+                "name": "测试计划",
+                "status": "in_progress",
+                "start_at": {
+                  "date": 1589791860,
+                  "with_time": 1
+                },
+                "end_at": {
+                  "date": 1589791870,
+                  "with_time": 1
+                }
+              },
+              "testcase": {
+                "id": "5edca524cad2fa112b06305c",
+                "url": "https://{rest_api_root}/v2/testhub/testcases/5edca524cad2fa112b06305c",
+                "short_id": "fdUw3C",
+                "html_url": "https://yctech.pingcode.com/testhub/cases/fdUw3C",
+                "whole_identifier": "CSK-10",
+                "title": "这是一个测试用例",
+                "test_type": "automation"
+              },
+              "latest_executed_status": {
+                "id": "68d117800d5dd2484a198265",
+                "url": "https://{rest_api_root}/v2/testhub/testrun_statuses/68d117800d5dd2484a198265",
+                "name": "未测"
+              },
+              "is_archived": 0,
+              "is_deleted": 0
+            }
+          },
+          {
+            "state": "failure",
+            "message": "测试用例不存在"
+          }
+        ]
+      }
+    ]
+  }
+}

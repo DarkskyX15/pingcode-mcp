@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-workitem-property-plans-workitem-property-plan-id-workitem-properties",
+  "meta": {
+    "name": "向工作项属性方案中添加一个属性",
+    "method": "POST",
+    "path": "/v2/pjm/workitem_property_plans/{workitem_property_plan_id}/workitem_properties",
+    "group": "工作项配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "工作项配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:configuration"
+      ]
+    },
+    "description": "用于向工作项属性方案中添加一个属性。",
+    "summary": "用于向工作项属性方案中添加一个属性。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/work-item-config/property-plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%90%91%E5%B7%A5%E4%BD%9C%E9%A1%B9%E5%B1%9E%E6%80%A7%E6%96%B9%E6%A1%88%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "workitem_property_plan_id": {
+            "type": "string",
+            "description": "工作项属性方案的 id。"
+          }
+        },
+        "required": [
+          "workitem_property_plan_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "property_id": {
+            "type": "string",
+            "description": "工作项属性的 id。"
+          }
+        },
+        "required": [
+          "property_id"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "property_id": "severity"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "资源的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "资源的地址。"
+        },
+        "property_plan": {
+          "type": "object",
+          "description": "工作项属性方案的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "property": {
+          "type": "object",
+          "description": "属性的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "property_plan",
+        "property"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "severity",
+          "url": "https://{rest_api_root}/v2/pjm/workitem_property_plans/5f8a21f18ef715265de90c21/workitem_properties/severity",
+          "property_plan": {
+            "id": "5f8a21f18ef715265de90c21",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_property_plans/5f8a21f18ef715265de90c21"
+          },
+          "property": {
+            "id": "severity",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_properties/severity",
+            "name": "严重程度",
+            "type": "select"
+          }
+        }
+      }
+    ]
+  }
+}

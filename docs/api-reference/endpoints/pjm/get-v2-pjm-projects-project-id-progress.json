@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-projects-project-id-progress",
+  "meta": {
+    "name": "获取一个项目进度",
+    "method": "GET",
+    "path": "/v2/pjm/projects/{project_id}/progress",
+    "group": "项目",
+    "groupPath": [
+      "项目管理",
+      "项目"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "项目"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:project"
+      ]
+    },
+    "description": "用于按项目 id 获取工作项进度统计。",
+    "summary": "用于按项目 id 获取工作项进度统计。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/project/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "项目的 id。"
+          }
+        },
+        "required": [
+          "project_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "workitem": {
+          "type": "object",
+          "description": "项目工作项进度统计。",
+          "properties": {
+            "total": {
+              "type": "number",
+              "description": "工作项总数。"
+            },
+            "pending_count": {
+              "type": "number",
+              "description": "待处理工作项数量。"
+            },
+            "in_progress_count": {
+              "type": "number",
+              "description": "进行中工作项数量。"
+            },
+            "completed_count": {
+              "type": "number",
+              "description": "已完成工作项数量。"
+            }
+          },
+          "required": [
+            "total",
+            "pending_count",
+            "in_progress_count",
+            "completed_count"
+          ]
+        }
+      },
+      "required": [
+        "workitem"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "workitem": {
+            "total": 4,
+            "pending_count": 1,
+            "in_progress_count": 2,
+            "completed_count": 1
+          }
+        }
+      }
+    ]
+  }
+}

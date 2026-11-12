@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-devops-environments",
+  "meta": {
+    "name": "创建一个环境",
+    "method": "POST",
+    "path": "/v2/devops/environments",
+    "group": "环境",
+    "groupPath": [
+      "DevOps_数据集成",
+      "交付",
+      "环境"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "环境"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:deploy"
+      ]
+    },
+    "description": "用于创建一个环境。  \n 企业内实际的部署环境，用于在 PingCode 中显示各个环境的部署信息。",
+    "summary": "用于创建一个环境。",
+    "sourceFile": "src/modules/v2/pingcode/devops/release/env.facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%8E%AF%E5%A2%83"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "环境的名称。同一团队内，环境的名称是唯一的。"
+          },
+          "html_url": {
+            "type": "string",
+            "description": "环境的地址。如果为空，在 PingCode 中不显示相关跳转链接。"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "Production",
+            "html_url": "https://your-environment-url"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "环境的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "环境的资源地址。"
+        },
+        "html_url": {
+          "type": "string",
+          "description": "环境的真实地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "环境的名称。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "html_url",
+        "name"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "564587fe700d43b81b080123",
+          "url": "https://{rest_api_root}/v2/devops/environments/564587fe700d43b81b080123",
+          "html_url": "https://your-environment-url",
+          "name": "Production"
+        }
+      }
+    ]
+  }
+}

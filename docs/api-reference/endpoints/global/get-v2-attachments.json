@@ -1,0 +1,211 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-attachments",
+  "meta": {
+    "name": "获取附件列表",
+    "method": "GET",
+    "path": "/v2/attachments",
+    "group": "附件",
+    "groupPath": [
+      "全局",
+      "通用",
+      "附件"
+    ],
+    "area": "全局",
+    "tags": [
+      "附件"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖附件所属主体的作用域"
+      ]
+    },
+    "description": "用于分页获取指定主体的附件列表。  \n 需通过 principal_type 指定所属主体。  \n 获取所属主体的评论附件时还需传 comment_id。",
+    "summary": "用于分页获取指定主体的附件列表。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/attachment/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E9%99%84%E4%BB%B6%E5%88%97%E8%A1%A8",
+    "originalUrl": "/v2/attachments?principal_type={principal_type}&principal_id={principal_id}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "principal_type": {
+            "type": "string",
+            "description": "附件主体的类型。例如： 在 `principal_type` 为 `workitem` 时，获取工作项的附件列表，此时要求作用域包括 `pcp:read:pjm:workitem`； 在 `principal_type` 为 `workitem_review（工作项评审）` 时，获取工作项评审的附件列表，此时要求作用域包括 `pcp:read:pjm:project`；",
+            "enum": [
+              "workitem",
+              "workitem_review",
+              "testcase",
+              "testcase_review",
+              "testrun",
+              "idea",
+              "idea_review",
+              "ticket",
+              "page"
+            ]
+          },
+          "principal_id": {
+            "type": "string",
+            "description": "附件主体的 id。"
+          },
+          "comment_id": {
+            "type": "string",
+            "description": "附件主体的评论 id。当需要获取评论附件时，需要传入该参数。"
+          }
+        },
+        "required": [
+          "principal_type",
+          "principal_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "object",
+          "items": {
+            "type": "object"
+          },
+          "description": "附件全量结构数据的数组。",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "附件的类型。",
+              "enum": [
+                "file",
+                "snippet",
+                "link",
+                "page"
+              ]
+            },
+            "link_url": {
+              "type": "string",
+              "description": "链接的地址。当附件的类型为 `link` 时返回。"
+            },
+            "short_id": {
+              "type": "string",
+              "description": "页面的短 id。当附件的类型为 `page` 时返回。"
+            },
+            "html_url": {
+              "type": "string",
+              "description": "页面的访问地址。当附件的类型为 `page` 时返回。"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 4,
+          "values": [
+            {
+              "id": "5da588ca84c7377a5d327e70",
+              "url": "https://{rest_api_root}/v2/attachments/5da588ca84c7377a5d327e70?principal_type=workitem&principal_id=5edca524cad2fa1125cb0630",
+              "title": "外部文档",
+              "type": "link",
+              "link_url": "https://example.com/docs",
+              "created_at": 1583290400,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            },
+            {
+              "id": "5da588ca84c7377a5d327e71",
+              "url": "https://{rest_api_root}/v2/attachments/5da588ca84c7377a5d327e71?principal_type=workitem&principal_id=5edca524cad2fa1125cb0630",
+              "title": "需求说明",
+              "type": "page",
+              "short_id": "AbCdEfGh",
+              "html_url": "https://yctech.pingcode.com/wiki/pages/AbCdEfGh",
+              "created_at": 1583290380,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            },
+            {
+              "id": "5da588ca84c7377a5d327e6d",
+              "url": "https://{rest_api_root}/v2/attachments/5da588ca84c7377a5d327e6d?principal_type=workitem&principal_id=5edca524cad2fa1125cb0630",
+              "title": "这是一个代码片段",
+              "size": 16,
+              "type": "snippet",
+              "format": "javascript",
+              "content": "const a = 'abc';",
+              "line": 1,
+              "created_at": 1583290347,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            },
+            {
+              "id": "5da588ca84c7377a5d327e6f",
+              "url": "https://{rest_api_root}/v2/attachments/5da588ca84c7377a5d327e6f?principal_type=workitem&principal_id=5edca524cad2fa1125cb0630",
+              "title": "这是一个图片类型的附件",
+              "size": 1024,
+              "type": "file",
+              "file_type": "image",
+              "ext": "png",
+              "download_url": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839b.png",
+              "created_at": 1583290340,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

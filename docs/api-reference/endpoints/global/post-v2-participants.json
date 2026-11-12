@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-participants",
+  "meta": {
+    "name": "添加一个关注人",
+    "method": "POST",
+    "path": "/v2/participants",
+    "group": "关注人",
+    "groupPath": [
+      "全局",
+      "通用",
+      "关注人"
+    ],
+    "area": "全局",
+    "tags": [
+      "关注人"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖关注人所属主体的作用域"
+      ]
+    },
+    "description": "用于向指定主体添加一个关注人。  \n 需通过 principal_type 指定所属主体。",
+    "summary": "用于向指定主体添加一个关注人。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/participant/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%85%B3%E6%B3%A8%E4%BA%BA"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "principal_type": {
+            "type": "string",
+            "description": "关注人主体的类型。例如： 在 `principal_type` 为 `workitem` 时，添加工作项的关注人，此时要求作用域包括 `pcp:write:pjm:workitem`； 在 `principal_type` 为 `workitem_review（工作项评审）` 时，添加工作项评审的关注人，此时要求作用域包括 `pcp:write:pjm:project`；",
+            "enum": [
+              "workitem",
+              "workitem_review",
+              "testcase",
+              "testcase_review",
+              "idea",
+              "idea_review",
+              "ticket",
+              "page"
+            ]
+          },
+          "principal_id": {
+            "type": "string",
+            "description": "关注人主体的 id。"
+          },
+          "type": {
+            "type": "string",
+            "description": "关注人的类型。",
+            "enum": [
+              "user",
+              "user_group"
+            ]
+          },
+          "participant_id": {
+            "type": "string",
+            "description": "关注人的 id。用户的 id 或者团队的 id。"
+          }
+        },
+        "required": [
+          "principal_type",
+          "type",
+          "participant_id"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例（工作项）：",
+          "type": "json",
+          "value": {
+            "principal_type": "workitem",
+            "principal_id": "63e1bf51760505c8795ebccc",
+            "type": "user",
+            "participant_id": "a0417f68e846aae315c85d24643678a9"
+          }
+        },
+        {
+          "name": "请求示例（产品需求评审）：",
+          "type": "json",
+          "value": {
+            "principal_type": "idea_review",
+            "principal_id": "6f168f764eba01a5278b87cd",
+            "type": "user",
+            "participant_id": "a0417f68e846aae315c85d24643678a9"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "关注人的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "关注人的资源地址。"
+        },
+        "type": {
+          "type": "string",
+          "description": "关注人的类型。",
+          "enum": [
+            "user",
+            "user_group"
+          ]
+        },
+        "user": {
+          "type": "object",
+          "description": "关注的用户。当 `type` 为 `user` 时返回。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "user_group": {
+          "type": "object",
+          "description": "关注的团队。当 `type` 为 `user_group` 时返回。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "type"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例（工作项）：",
+        "type": "json",
+        "value": {
+          "id": "a0417f68e846aae315c85d24643678a9",
+          "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=workitem&principal_id=63e1bf51760505c8795ebccc",
+          "type": "user",
+          "user": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          }
+        }
+      },
+      {
+        "name": "响应示例（产品需求评审）：",
+        "type": "json",
+        "value": {
+          "id": "a0417f68e846aae315c85d24643678a9",
+          "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=idea_review&principal_id=6f168f764eba01a5278b87cd",
+          "type": "user",
+          "user": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          }
+        }
+      }
+    ]
+  }
+}

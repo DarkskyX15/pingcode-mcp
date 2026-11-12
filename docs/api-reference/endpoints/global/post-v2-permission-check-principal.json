@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-permission-check-principal",
+  "meta": {
+    "name": "检查我的_Principal_权限",
+    "method": "POST",
+    "path": "/v2/permission/check/principal",
+    "group": "权限",
+    "groupPath": [
+      "全局",
+      "权限"
+    ],
+    "area": "全局",
+    "tags": [
+      "权限"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:permission"
+      ]
+    },
+    "description": "用于按指定权限点，批量检查当前用户在多个 Principal 上是否具备相应权限。  \n 响应体为对象，属性名为请求 `permissions` 中的权限点。  \n 每个属性值为对象，其中 `principal_ids` 为在该权限下有权限的 Principal 的 id 列表（无权限时为空数组）。",
+    "summary": "用于按指定权限点，批量检查当前用户在多个 Principal 上是否具备相应权限。",
+    "sourceFile": "src/modules/v2/pingcode/global/permission/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%A3%80%E6%9F%A5%E6%88%91%E7%9A%84_Principal_%E6%9D%83%E9%99%90"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "需要检查的权限点列表。",
+            "x-inferred-from-example": true
+          },
+          "type": {
+            "type": "string",
+            "description": "Principal 的类型。",
+            "enum": [
+              "idea",
+              "ticket",
+              "workitem",
+              "testcase",
+              "page"
+            ]
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Principal 的 id 列表。",
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "permissions",
+          "type",
+          "ids"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "permissions": [
+              "pca:testhub:testcase:create",
+              "pca:testhub:testcase:edit"
+            ],
+            "type": "testcase",
+            "ids": [
+              "5e05d8448f8461dada9ba29c",
+              "5e05d8448f8461dada9ba29d"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "x-dynamic-key": "$permission_key.principal_ids",
+      "x-dynamic-key-description": "有该权限的 Principal 的 id 列表。无权限时为空数组。"
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "$permission_key": {
+            "principal_ids": [
+              "5e05d8448f8461dada9ba29c"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

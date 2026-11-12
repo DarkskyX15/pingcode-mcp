@@ -1,0 +1,312 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-workitems-workitem-id-transition-histories",
+  "meta": {
+    "name": "获取工作项流转记录列表",
+    "method": "GET",
+    "path": "/v2/pjm/workitems/{workitem_id}/transition_histories",
+    "group": "工作项",
+    "groupPath": [
+      "项目管理",
+      "工作项"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:workitem"
+      ]
+    },
+    "description": "用于分页获取某工作项的流转记录。",
+    "summary": "用于分页获取某工作项的流转记录。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/work-item/transition-history/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E5%B7%A5%E4%BD%9C%E9%A1%B9%E6%B5%81%E8%BD%AC%E8%AE%B0%E5%BD%95%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "workitem_id": {
+            "type": "string",
+            "description": "工作项的 id。"
+          }
+        },
+        "required": [
+          "workitem_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "workitem": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "short_id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "html_url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "whole_identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "title": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "start": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "due": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "parent_id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "properties": {
+                    "type": "object",
+                    "properties": {
+                      "prop_a": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      "prop_b": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "from_state": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "color": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "to_state": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "color": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "created_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "工作项流转记录的全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "5e6b35de50ef8153c2062f70",
+              "url": "https://{rest_api_root}/v2/pjm/workitems/5edca524cad2fa1125cb0630/transition_histories/5e6b35de50ef8153c2062f70",
+              "workitem": {
+                "id": "5edca524cad2fa1125cb0630",
+                "url": "https://{rest_api_root}/v2/pjm/workitems/5edca524cad2fa1125cb0630",
+                "short_id": "c9WqLmTO",
+                "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+                "whole_identifier": "SCR-5",
+                "title": "这是一个缺陷",
+                "start": {
+                  "date": 1674493200,
+                  "with_time": 1
+                },
+                "due": {
+                  "date": 1674493200,
+                  "with_time": 1
+                },
+                "parent_id": "5edca524cad2fa112b05105c",
+                "properties": {
+                  "prop_a": "prop_a_value",
+                  "prop_b": "prop_b_value"
+                }
+              },
+              "from_state": {
+                "id": "5c9b35de90ad7153c2062f18",
+                "url": "https://{rest_api_root}/v2/pjm/workitem_states/5c9b35de90ad7153c2062f18",
+                "name": "新建",
+                "type": "pending",
+                "color": "#56ABFB"
+              },
+              "to_state": {
+                "id": "5ef85b1e9481936604da7f4c",
+                "url": "https://{rest_api_root}/v2/pjm/workitem_states/5ef85b1e9481936604da7f4c",
+                "name": "进行中",
+                "type": "in_progress",
+                "color": "#F6C659"
+              },
+              "created_at": 1674528614,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

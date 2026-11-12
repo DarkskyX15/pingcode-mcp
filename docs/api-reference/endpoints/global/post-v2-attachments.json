@@ -1,0 +1,234 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-attachments",
+  "meta": {
+    "name": "上传一个代码段",
+    "method": "POST",
+    "path": "/v2/attachments",
+    "group": "附件",
+    "groupPath": [
+      "全局",
+      "通用",
+      "附件"
+    ],
+    "area": "全局",
+    "tags": [
+      "附件"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖附件所属主体的作用域"
+      ]
+    },
+    "description": "用于向指定主体上传一个代码段。  \n 需通过 principal_type 指定所属主体。",
+    "summary": "用于向指定主体上传一个代码段。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/attachment/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E4%B8%8A%E4%BC%A0%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E6%AE%B5"
+  },
+  "request": {
+    "headers": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "content-type": {
+            "type": "string",
+            "description": "`application/json`。"
+          }
+        },
+        "required": [
+          "content-type"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "principal_type": {
+            "type": "string",
+            "description": "附件主体的类型。例如： 在 `principal_type` 为 `workitem` 时，向工作项上传代码段，此时要求作用域包括 `pcp:write:pjm:workitem`； 在 `principal_type` 为 `workitem_review（工作项评审）` 时，向工作项评审上传代码段，此时要求作用域包括 `pcp:write:pjm:project`；",
+            "enum": [
+              "workitem",
+              "workitem_review",
+              "testcase",
+              "testcase_review",
+              "testrun",
+              "idea",
+              "idea_review",
+              "ticket",
+              "page"
+            ]
+          },
+          "principal_id": {
+            "type": "string",
+            "description": "附件主体的 id。"
+          },
+          "comment_id": {
+            "type": "string",
+            "description": "附件主体的评论 id。当需要向附件主体的评论上传文件或者代码段时，需要传入该参数。"
+          },
+          "title": {
+            "type": "string",
+            "description": "代码段的标题。"
+          },
+          "format": {
+            "type": "string",
+            "description": "代码段的语言。",
+            "enum": [
+              "clike",
+              "css",
+              "dart",
+              "django",
+              "dockerfile",
+              "go",
+              "markdown",
+              "nginx",
+              "python",
+              "php",
+              "shell",
+              "sql",
+              "swift",
+              "html",
+              "javascript",
+              "jsx",
+              "pascal",
+              "sass",
+              "stylus",
+              "vue",
+              "yaml",
+              "haskell"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "description": "代码段的内容。"
+          }
+        },
+        "required": [
+          "principal_type",
+          "principal_id",
+          "title",
+          "format",
+          "content"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "principal_type": "workitem",
+            "principal_id": "5edca524cad2fa1125cb0630",
+            "comment_id": "59f72dfaeadb5b5197b7da6d",
+            "title": "这是一个代码片段",
+            "format": "javascript",
+            "content": "const a = 'abc';"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "url": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "title": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "size": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "type": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "format": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "content": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "line": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "created_at": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "created_by": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5da588ca84c7377a5d327e6d",
+          "url": "https://{rest_api_root}/v2/attachments/5da588ca84c7377a5d327e6d?principal_type=workitem&principal_id=5edca524cad2fa1125cb0630&comment_id=59f72dfaeadb5b5197b7da6d",
+          "title": "这是一个代码片段",
+          "size": 16,
+          "type": "snippet",
+          "format": "javascript",
+          "content": "const a = 'abc';",
+          "line": 1,
+          "created_at": 1583290347,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          }
+        }
+      }
+    ]
+  }
+}

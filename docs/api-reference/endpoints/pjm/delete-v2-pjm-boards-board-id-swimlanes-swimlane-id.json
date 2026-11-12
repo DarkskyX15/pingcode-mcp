@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-pjm-boards-board-id-swimlanes-swimlane-id",
+  "meta": {
+    "name": "删除一个泳道",
+    "method": "DELETE",
+    "path": "/v2/pjm/boards/{board_id}/swimlanes/{swimlane_id}",
+    "group": "看板",
+    "groupPath": [
+      "项目管理",
+      "看板"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "看板"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:board"
+      ]
+    },
+    "description": "用于删除一个泳道。",
+    "summary": "用于删除一个泳道。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/kanban/board/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E6%B3%B3%E9%81%93"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "board_id": {
+            "type": "string",
+            "description": "看板的 id。"
+          },
+          "swimlane_id": {
+            "type": "string",
+            "description": "泳道的 id。"
+          }
+        },
+        "required": [
+          "board_id",
+          "swimlane_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "泳道的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "泳道的地址。"
+        },
+        "project": {
+          "type": "object",
+          "description": "所属项目的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "template_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "board": {
+          "type": "object",
+          "description": "所属看板的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "workitem_type_ids": {
+              "type": "array",
+              "x-inferred-from-example": true,
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "泳道的名称。"
+        },
+        "is_system": {
+          "type": "number",
+          "description": "是否为系统内置泳道。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "project",
+        "board",
+        "name",
+        "is_system",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5bb623f6a70571487ea44357",
+          "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47223/swimlanes/5bb623f6a70571487ea44357",
+          "project": {
+            "id": "5eb623f6a70571487ea41919",
+            "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea41919",
+            "identifier": "KANBAN",
+            "name": "kanban",
+            "template_type": "kanban",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "board": {
+            "id": "5eb623f6a70571487ea47223",
+            "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47223",
+            "name": "默认看板",
+            "workitem_type_ids": [
+              "630da48bc9443b1aa94ce3ea",
+              "630da48bc9443b1aa94ce3eb",
+              "630da48bc9443b1aa94ce3ec"
+            ]
+          },
+          "name": "一个泳道",
+          "is_system": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

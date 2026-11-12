@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-realtime-sign-token",
+  "meta": {
+    "name": "签发实时消息令牌",
+    "method": "POST",
+    "path": "/v2/nexus/realtime/sign_token",
+    "group": "Realtime",
+    "groupPath": [
+      "实时消息",
+      "Realtime"
+    ],
+    "area": "实时消息",
+    "tags": [
+      "Realtime"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:realtime:app"
+      ]
+    },
+    "description": "为指定通道签发实时消息令牌，用于对订阅或发布权限做更精细的控制。参考 [realtime.signToken](https://open.pingcode.com/reference/functions/realtime/realtime#signtoken)。",
+    "summary": "为指定通道签发实时消息令牌，用于对订阅或发布权限做更精细的控制。参考 realtime.signToken。",
+    "sourceFile": "src/modules/v2/nexus/realtime/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E7%AD%BE%E5%8F%91%E5%AE%9E%E6%97%B6%E6%B6%88%E6%81%AF%E4%BB%A4%E7%89%8C"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "通道唯一标识名称。"
+          },
+          "claims": {
+            "type": "object",
+            "description": "签发 `token` 需要加密的数据对象。",
+            "properties": {
+              "workitemId": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "签发 `token` 时要确定的操作权限，默认值为 `['subscribe', 'publish']`。",
+            "enum": [
+              "subscribe",
+              "publish"
+            ],
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "channel",
+          "claims"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "channel": "workitem-updated",
+            "claims": {
+              "workitemId": "xxx"
+            },
+            "permissions": [
+              "subscribe"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "expires_at": {
+          "type": "number",
+          "x-inferred-from-example": true
+        }
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+          "expires_at": 1784025238000
+        }
+      }
+    ]
+  }
+}

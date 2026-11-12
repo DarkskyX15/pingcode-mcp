@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-testhub-testcase-suites-testcase-suite-id",
+  "meta": {
+    "name": "删除一个用例模块",
+    "method": "DELETE",
+    "path": "/v2/testhub/testcase_suites/{testcase_suite_id}",
+    "group": "测试库",
+    "groupPath": [
+      "测试管理",
+      "测试库"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "测试库"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:library"
+      ]
+    },
+    "description": "用于删除一个用例模块。  \n 请注意，删除一个模块会自动删除其所有的子模块。",
+    "summary": "用于删除一个用例模块。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/library/suite/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BE%8B%E6%A8%A1%E5%9D%97"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "testcase_suite_id": {
+            "type": "string",
+            "description": "测试模块的 id。"
+          }
+        },
+        "required": [
+          "testcase_suite_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "用例模块的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "用例模块的资源地址。"
+        },
+        "library": {
+          "type": "object",
+          "description": "所属测试库的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "用例模块的名称。"
+        },
+        "parent": {
+          "type": "object",
+          "description": "父测试模块的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "paths": {
+          "type": "string",
+          "description": "用例模块的路径，以`/`分隔。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "library",
+        "name",
+        "paths"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "55714870a70ea4eb623f6701",
+          "url": "https://{rest_api_root}/v2/testhub/testcase_suites/55714870a70ea4eb623f6701",
+          "library": {
+            "id": "5eb623f6a70571487ea47000",
+            "url": "https://{rest_api_root}/v2/testhub/libraries/5eb623f6a70571487ea47000",
+            "identifier": "CSK",
+            "name": "测试库",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "name": "注册",
+          "parent": {
+            "id": "5eb623f6a70571487ea46999",
+            "url": "https://{rest_api_root}/v2/testhub/testcase_suites/5eb623f6a70571487ea46999",
+            "name": "用户"
+          },
+          "paths": "首页/用户"
+        }
+      }
+    ]
+  }
+}

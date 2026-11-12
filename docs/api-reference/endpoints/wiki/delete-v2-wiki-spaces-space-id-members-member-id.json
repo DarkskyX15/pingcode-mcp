@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-wiki-spaces-space-id-members-member-id",
+  "meta": {
+    "name": "在空间中移除一个成员",
+    "method": "DELETE",
+    "path": "/v2/wiki/spaces/{space_id}/members/{member_id}",
+    "group": "空间",
+    "groupPath": [
+      "知识管理",
+      "空间"
+    ],
+    "area": "知识管理",
+    "tags": [
+      "空间"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:wiki:space"
+      ]
+    },
+    "description": "用于从指定空间中移除一个成员。",
+    "summary": "用于从指定空间中移除一个成员。",
+    "sourceFile": "src/modules/v2/pingcode/wiki/space/member/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%9C%A8%E7%A9%BA%E9%97%B4%E4%B8%AD%E7%A7%BB%E9%99%A4%E4%B8%80%E4%B8%AA%E6%88%90%E5%91%98"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "space_id": {
+            "type": "string",
+            "description": "空间的 id。"
+          },
+          "member_id": {
+            "type": "string",
+            "description": "企业成员或团队的 id。"
+          }
+        },
+        "required": [
+          "space_id",
+          "member_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "空间成员的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "空间成员的资源地址。"
+        },
+        "space": {
+          "type": "object",
+          "description": "所属空间的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "type": {
+          "type": "string",
+          "description": "空间成员的类型。",
+          "enum": [
+            "user",
+            "user_group"
+          ]
+        },
+        "user": {
+          "type": "object",
+          "description": "企业成员的引用结构数据。当 `type` 为 `user` 时，该字段返回。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "user_group": {
+          "type": "object",
+          "description": "团队的引用结构数据。当 `type` 为 `user_group` 时，该字段返回。"
+        },
+        "role": {
+          "type": "object",
+          "description": "成员角色的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "space",
+        "type",
+        "role"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "a0417f68e846aae315c85d24643678a9",
+          "url": "https://{rest_api_root}/v2/wiki/spaces/642fd641209b56920a6c6e5e/members/a0417f68e846aae315c85d24643678a9",
+          "space": {
+            "id": "642fd641209b56920a6c6e5e",
+            "url": "https://{rest_api_root}/v2/wiki/spaces/642fd641209b56920a6c6e5e",
+            "identifier": "DEMO",
+            "name": "示例空间",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "type": "user",
+          "user": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "role": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/directory/roles/6422711c3f12e6c1e46d40e6",
+            "name": "管理员"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-project-templates-template-id",
+  "meta": {
+    "name": "获取一个项目流程模版",
+    "method": "GET",
+    "path": "/v2/pjm/project_templates/{template_id}",
+    "group": "项目配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "项目配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "项目配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:configuration"
+      ]
+    },
+    "description": "用于按 id 获取项目流程模版全量信息。",
+    "summary": "用于按 id 获取项目流程模版全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/project-config/project-template/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E6%A8%A1%E7%89%88"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "description": "项目流程模版的 id。"
+          }
+        },
+        "required": [
+          "template_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "项目流程模版的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "项目流程模版的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "项目流程模版的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "项目流程模版的类型。",
+          "enum": [
+            "scrum",
+            "kanban",
+            "waterfall",
+            "hybrid"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "项目流程模版的描述。"
+        },
+        "is_system": {
+          "type": "number",
+          "description": "是否为系统内置模版。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "type",
+        "description",
+        "is_system"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5fa690f1ae0571487ea49030",
+          "url": "https://{rest_api_root}/v2/pjm/project_templates/5fa690f1ae0571487ea49030",
+          "name": "Scrum 项目流程",
+          "type": "scrum",
+          "description": "Scrum 项目流程模版",
+          "is_system": 1
+        }
+      }
+    ]
+  }
+}

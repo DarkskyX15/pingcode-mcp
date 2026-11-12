@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-boards-board-id-entries",
+  "meta": {
+    "name": "获取看板栏列表",
+    "method": "GET",
+    "path": "/v2/pjm/boards/{board_id}/entries",
+    "group": "看板",
+    "groupPath": [
+      "项目管理",
+      "看板"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "看板"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:board"
+      ]
+    },
+    "description": "用于分页获取某看板中的看板栏。默认不含已删除项。",
+    "summary": "用于分页获取某看板中的看板栏。默认不含已删除项。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/kanban/board/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E7%9C%8B%E6%9D%BF%E6%A0%8F%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "board_id": {
+            "type": "string",
+            "description": "看板的 id。"
+          }
+        },
+        "required": [
+          "board_id"
+        ]
+      }
+    },
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "include_deleted": {
+            "type": "boolean",
+            "description": "是否包含已删除的看板栏。该值默认为 `false`。仅当所属看板已被删除时，传 `true` 才能获取到该看板下已删除的看板栏；若仅删除了看板栏而看板仍存在，传 `true` 无法获取。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "object",
+          "items": {
+            "type": "object"
+          },
+          "description": "看板栏全量结构数据的数组。",
+          "properties": {
+            "is_deleted": {
+              "type": "number",
+              "description": "是否已删除。",
+              "enum": [
+                0,
+                1
+              ]
+            }
+          },
+          "required": [
+            "is_deleted"
+          ]
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "5ab623f6a70571487ea45634",
+              "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47222/entries/5ab623f6a70571487ea45634",
+              "project": {
+                "id": "5eb623f6a70571487ea41919",
+                "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea41919",
+                "identifier": "KANBAN",
+                "name": "kanban",
+                "template_type": "kanban",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "board": {
+                "id": "5eb623f6a70571487ea47222",
+                "url": "https://{rest_api_root}/v2/pjm/boards/5eb623f6a70571487ea47222",
+                "name": "kanban",
+                "workitem_type_ids": [
+                  "630da48bc9443b1aa94ce3ea",
+                  "630da48bc9443b1aa94ce3eb",
+                  "630da48bc9443b1aa94ce3ec"
+                ]
+              },
+              "name": "一个看板栏",
+              "is_system": 0,
+              "is_split": true,
+              "wip_limit": 1,
+              "dod": "Unit test passed",
+              "is_deleted": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

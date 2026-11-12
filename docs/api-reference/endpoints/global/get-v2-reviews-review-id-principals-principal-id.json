@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-reviews-review-id-principals-principal-id",
+  "meta": {
+    "name": "获取评审中的一个评审内容",
+    "method": "GET",
+    "path": "/v2/reviews/{review_id}/principals/{principal_id}",
+    "group": "评审",
+    "groupPath": [
+      "全局",
+      "通用",
+      "评审"
+    ],
+    "area": "全局",
+    "tags": [
+      "评审"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖评审所属主体的作用域"
+      ]
+    },
+    "description": "用于查看评审中的一个评审内容。  \n 需通过 principal_type 指定所属主体。",
+    "summary": "用于查看评审中的一个评审内容。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/review/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E8%AF%84%E5%AE%A1%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E8%AF%84%E5%AE%A1%E5%86%85%E5%AE%B9",
+    "originalUrl": "/v2/reviews/{review_id}/principals/{principal_id}?principal_type={principal_type}"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "review_id": {
+            "type": "string",
+            "description": "评审的 id。"
+          },
+          "principal_id": {
+            "type": "string",
+            "description": "评审内容的 id。"
+          }
+        },
+        "required": [
+          "review_id",
+          "principal_id"
+        ]
+      }
+    },
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "principal_type": {
+            "type": "string",
+            "description": "评审主体的类型。例如： 在 `principal_type` 为 `workitem` 时，获取工作项评审中的评审内容，此时要求作用域包括 `pcp:read:pjm:project`；",
+            "enum": [
+              "workitem",
+              "testcase",
+              "idea"
+            ]
+          }
+        },
+        "required": [
+          "principal_type"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "评审内容的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "评审内容的资源地址。"
+        },
+        "review": {
+          "type": "object",
+          "description": "所属评审的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "whole_identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "state": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "principal_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "principal_type": {
+          "type": "string",
+          "description": "评审内容的类型。",
+          "enum": [
+            "idea",
+            "workitem",
+            "testcase"
+          ]
+        },
+        "principal": {
+          "type": "object",
+          "description": "评审内容的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "whole_identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "review",
+        "principal_type",
+        "principal"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63bb744514bd13c9def24ceb",
+          "url": "https://{rest_api_root}/v2/reviews/68ccfe6b3eef8131da564e4a/principals/63bb744514bd13c9def24ceb?principal_type=idea",
+          "review": {
+            "id": "68ccfe6b3eef8131da564e4a",
+            "url": "https://{rest_api_root}/v2/reviews/68ccfe6b3eef8131da564e4a?principal_type=idea",
+            "short_id": "LK7Qy-NA",
+            "html_url": "https://yctech.pingcode.com/ship/reviews/LK7Qy-NA",
+            "whole_identifier": "SLC-R11",
+            "title": "这是一个需求评审",
+            "state": "pending",
+            "principal_type": "idea"
+          },
+          "principal_type": "idea",
+          "principal": {
+            "id": "63bb744514bd13c9def24ceb",
+            "url": "https://{rest_api_root}/v2/ship/ideas/63bb744514bd13c9def24ceb",
+            "short_id": "Omi8PFL0",
+            "html_url": "https://yctech.pingcode.com/ship/ideas/Omi8PFL0",
+            "whole_identifier": "SLC-1",
+            "title": "这是一个产品需求"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,832 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-ship-tickets-ticket-id",
+  "meta": {
+    "name": "部分更新一个工单",
+    "method": "PATCH",
+    "path": "/v2/ship/tickets/{ticket_id}",
+    "group": "工单",
+    "groupPath": [
+      "产品管理",
+      "工单"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "工单"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:ticket"
+      ]
+    },
+    "description": "用于部分更新一个工单。",
+    "summary": "用于部分更新一个工单。",
+    "sourceFile": "src/modules/v2/pingcode/ship/ticket/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%8D%95"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ticket_id": {
+            "type": "string",
+            "description": "工单 id。"
+          }
+        },
+        "required": [
+          "ticket_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "工单的标题，最大长度为 255。"
+          },
+          "description": {
+            "type": "string",
+            "description": "工单的描述。"
+          },
+          "type_id": {
+            "type": "string",
+            "description": "工单的类型 id，您可以在 “获取工单类型列表” API 获取。"
+          },
+          "state_id": {
+            "type": "string",
+            "description": "工单的状态 id，您可以在 “获取工单状态列表” API 获取。"
+          },
+          "assignee_id": {
+            "type": "string",
+            "description": "工单的负责人 id。"
+          },
+          "submitter_id": {
+            "type": "string",
+            "description": "工单的提交人 id，企业授权时，该值有效；个人鉴权时，指定无效。"
+          },
+          "solution_id": {
+            "type": "string",
+            "description": "工单的解决方案 id，您可以在 “获取工单解决方案列表” API 获取。"
+          },
+          "priority_id": {
+            "type": "string",
+            "description": "工单的优先级 id，您可以在 “获取工单优先级列表” API 获取。"
+          },
+          "company_id": {
+            "type": "string",
+            "description": "工单的客户 id，您可以在 “获取产品客户列表” API 获取。"
+          },
+          "properties": {
+            "type": "object",
+            "description": "工单的自定义属性。",
+            "additionalProperties": true,
+            "x-example-keys": {
+              "prop_a": {
+                "type": "object"
+              },
+              "prop_b": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "title": "希望新增支持第三方账号注册",
+            "description": "<p>希望支持其他更多第三方平台的账号注册，以便用第三方账号登录找回更换了手机号的账号，保障账号安全</p>",
+            "type_id": "63eca880a0a13a3efc8d49e0",
+            "state_id": "63eca880a0a13a3efc8d49e0",
+            "assignee_id": "a0417f68e846aae315c85d24643678a9",
+            "submitter_id": "a0417f68e846aae315c85d24643678a9",
+            "solution_id": "62f217ae16e3661a20124330",
+            "priority_id": "5cb9466afda1ce4ca0090004",
+            "company_id": "63eca881a0a13a3efc8d49fc",
+            "properties": {
+              "prop_a": "prop_a_value",
+              "prop_b": "prop_b_value"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工单的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工单的资源地址。"
+        },
+        "short_id": {
+          "type": "string",
+          "description": "工单的短 id。"
+        },
+        "html_url": {
+          "type": "string",
+          "description": "工单的 html 地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "工单的所属产品。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "identifier": {
+          "type": "number",
+          "description": "工单的编号。"
+        },
+        "whole_identifier": {
+          "type": "string",
+          "description": "工单的完整编号。"
+        },
+        "title": {
+          "type": "string",
+          "description": "工单的标题。"
+        },
+        "assignee": {
+          "type": "object",
+          "description": "工单的负责人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "state": {
+          "type": "object",
+          "description": "工单的状态。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "type": {
+          "type": "object",
+          "description": "工单的类型。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "company": {
+          "type": "object",
+          "description": "工单的客户。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "solution": {
+          "type": "object",
+          "description": "工单的解决方案。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "priority": {
+          "type": "object",
+          "description": "工单的优先级。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "color": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "channel": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "x-pingcode-type": "Object/String",
+          "description": "工单的渠道。外部渠道提交的工单的渠道是 Object 类型，内部工单的渠道是 `internal` 字符串。",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "description": {
+          "type": "string",
+          "description": "工单的描述。"
+        },
+        "properties": {
+          "type": "object",
+          "description": "工单的自定义属性。",
+          "properties": {
+            "prop_a": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "prop_b": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "estimated_at": {
+          "type": "object",
+          "description": "工单的预计时间。",
+          "properties": {
+            "from": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "to": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "with_time": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "granularity": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "工单的标签列表。"
+        },
+        "entity_properties": {
+          "type": "object",
+          "description": "以键值型数据结构组织的实体扩展属性的集合。",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "x-dynamic-key": "$property_key",
+          "x-dynamic-key-description": "工单上的实体扩展属性。`$property_key` 为占位符，实际属性名随请求变化，并非固定字段，对应实体扩展属性的 `property_key`。"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "user_group": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "工单的关注人列表。",
+          "x-inferred-from-example": true
+        },
+        "submitter": {
+          "type": "object",
+          "description": "工单的提交人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "completed_at": {
+          "type": "number",
+          "description": "工单的完成时间。"
+        },
+        "completed_by": {
+          "type": "object",
+          "description": "工单的完成人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "created_at": {
+          "type": "number",
+          "description": "工单的创建时间。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "工单的创建人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "updated_at": {
+          "type": "number",
+          "description": "工单的更新时间。"
+        },
+        "updated_by": {
+          "type": "object",
+          "description": "工单的更新人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_archived": {
+          "type": "number",
+          "description": "是否已归档。",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "short_id",
+        "html_url",
+        "product",
+        "identifier",
+        "whole_identifier",
+        "title",
+        "assignee",
+        "state",
+        "type",
+        "company",
+        "solution",
+        "priority",
+        "channel",
+        "description",
+        "properties",
+        "estimated_at",
+        "tags",
+        "entity_properties",
+        "participants",
+        "submitter",
+        "completed_at",
+        "completed_by",
+        "created_at",
+        "created_by",
+        "updated_at",
+        "updated_by",
+        "is_archived",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63eca888a0a13a3efc8d4a43",
+          "url": "https://{rest_api_root}/v2/ship/tickets/63eca888a0a13a3efc8d4a43",
+          "short_id": "pdMUgQzZ",
+          "html_url": "https://yctech.pingcode.com/ship/tickets/pdMUgQzZ",
+          "product": {
+            "id": "6422711c3f12e6c1e46d40e9",
+            "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9",
+            "identifier": "SLC",
+            "name": "示例产品",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "identifier": 1,
+          "whole_identifier": "SLC-T1",
+          "title": "希望新增支持第三方账号注册",
+          "assignee": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "state": {
+            "id": "63eca880a0a13a3efc8d49d9",
+            "url": "https://{rest_api_root}/v2/ship/ticket_states/63eca880a0a13a3efc8d49d9",
+            "name": "待处理",
+            "type": "pending"
+          },
+          "estimated_at": {
+            "from": {
+              "date": 1701619200,
+              "with_time": 0
+            },
+            "to": {
+              "date": 1702742399,
+              "with_time": 0
+            },
+            "granularity": "day"
+          },
+          "type": {
+            "id": "63eca880a0a13a3efc8d49e0",
+            "url": "https://{rest_api_root}/v2/ship/ticket_types/63eca880a0a13a3efc8d49e0",
+            "name": "需求"
+          },
+          "company": {
+            "id": "63eca881a0a13a3efc8d49fc",
+            "url": "https://{rest_api_root}/v2/ship/customers/63eca881a0a13a3efc8d49fc",
+            "name": "北京 XX 科技有限公司"
+          },
+          "solution": {
+            "id": "62f217ae16e3661a20124330",
+            "url": "https://{rest_api_root}/v2/ship/ticket_solutions/62f217ae16e3661a20124330",
+            "name": "进入需求池"
+          },
+          "priority": {
+            "id": "5cb9466afda1ce4ca0090004",
+            "url": "https://{rest_api_root}/v2/ship/ticket_priorities/5cb9466afda1ce4ca0090004",
+            "name": "P1",
+            "color": "#FF7575"
+          },
+          "channel": {
+            "id": "64550d9ec696b249b5fc607d",
+            "url": "https://{rest_api_root}/v2/ship/ticket_channels/64550d9ec696b249b5fc607d",
+            "name": "channel-1"
+          },
+          "description": "<p>希望支持其他更多第三方平台的账号注册，以便用第三方账号登录找回更换了手机号的账号，保障账号安全</p>",
+          "properties": {
+            "prop_a": "prop_a_value",
+            "prop_b": "prop_b_value"
+          },
+          "tags": [],
+          "entity_properties": {
+            "entity_property_key_a": {
+              "score": 95,
+              "risk": "low"
+            },
+            "entity_property_key_b": "123456"
+          },
+          "participants": [
+            {
+              "id": "a0417f68e846aae315c85d24643678a9",
+              "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=ticket&principal_id=63eca888a0a13a3efc8d4a43",
+              "type": "user",
+              "user": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            },
+            {
+              "id": "63c8fb32729dee3334d96af7",
+              "url": "https://{rest_api_root}/v2/participants/63c8fb32729dee3334d96af7?principal_type=ticket&principal_id=63eca888a0a13a3efc8d4a43",
+              "type": "user_group",
+              "user_group": {
+                "id": "63c8fb32729dee3334d96af7",
+                "url": "https://{rest_api_root}/v2/directory/groups/63c8fb32729dee3334d96af7",
+                "name": "Open Team"
+              }
+            }
+          ],
+          "submitter": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "completed_at": 1689579131,
+          "completed_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "created_at": 1676454024,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "updated_at": 1676455024,
+          "updated_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "is_archived": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

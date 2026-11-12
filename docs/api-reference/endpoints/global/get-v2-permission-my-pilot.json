@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-permission-my-pilot",
+  "meta": {
+    "name": "获取我的_Pilot_权限",
+    "method": "GET",
+    "path": "/v2/permission/my/pilot",
+    "group": "权限",
+    "groupPath": [
+      "全局",
+      "权限"
+    ],
+    "area": "全局",
+    "tags": [
+      "权限"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:permission"
+      ]
+    },
+    "description": "用于获取当前用户在指定 Pilot 上的权限。响应体为对象数组。",
+    "summary": "用于获取当前用户在指定 Pilot 上的权限。响应体为对象数组。",
+    "sourceFile": "src/modules/v2/pingcode/global/permission/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E6%88%91%E7%9A%84_Pilot_%E6%9D%83%E9%99%90",
+    "originalUrl": "/v2/permission/my/pilot?type={type}&id={id}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Pilot 的类型。",
+            "enum": [
+              "product",
+              "project",
+              "library",
+              "space"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "Pilot 的 id。"
+          }
+        },
+        "required": [
+          "type",
+          "id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "权限点。"
+          },
+          "has_permission": {
+            "type": "number",
+            "description": "是否有权限。`1` 表示有权限，`0` 表示无权限。",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        },
+        "required": [
+          "key",
+          "has_permission"
+        ]
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "key": "pca:pjm:task:create",
+            "has_permission": 1
+          },
+          {
+            "key": "pca:pjm:sprint:manage",
+            "has_permission": 1
+          }
+        ]
+      }
+    ]
+  }
+}

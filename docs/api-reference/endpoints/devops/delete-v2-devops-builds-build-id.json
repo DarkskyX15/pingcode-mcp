@@ -1,0 +1,255 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-devops-builds-build-id",
+  "meta": {
+    "name": "删除一条构建记录",
+    "method": "DELETE",
+    "path": "/v2/devops/builds/{build_id}",
+    "group": "构建记录",
+    "groupPath": [
+      "DevOps_数据集成",
+      "构建",
+      "构建记录"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "构建记录"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:build"
+      ]
+    },
+    "description": "",
+    "summary": "",
+    "sourceFile": "src/modules/v2/pingcode/devops/build/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%A0%E9%99%A4%E4%B8%80%E6%9D%A1%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "build_id": {
+            "type": "string",
+            "description": "构建的 id。"
+          }
+        },
+        "required": [
+          "build_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "构建记录的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "构建记录的资源地址。"
+        },
+        "identifier": {
+          "type": "string",
+          "description": "构建记录的编号。"
+        },
+        "name": {
+          "type": "string",
+          "description": "构建记录的名称。"
+        },
+        "job_url": {
+          "type": "string",
+          "description": "构建任务的地址。"
+        },
+        "provider": {
+          "type": "string",
+          "description": "构建工具的名称。",
+          "enum": [
+            "bamboo",
+            "bitbucket",
+            "jenkins",
+            "other"
+          ]
+        },
+        "result_overview": {
+          "type": "string",
+          "description": "构建结果的概述。"
+        },
+        "result_url": {
+          "type": "string",
+          "description": "构建结果的地址。"
+        },
+        "start_at": {
+          "type": "number",
+          "description": "构建开始的时间。"
+        },
+        "status": {
+          "type": "string",
+          "description": "构建的状态。",
+          "enum": [
+            "success",
+            "failure",
+            "unknown"
+          ]
+        },
+        "end_at": {
+          "type": "number",
+          "description": "构建结束的时间。"
+        },
+        "duration": {
+          "type": "number",
+          "description": "构建持续的时间，单位为秒。"
+        },
+        "workitems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "identifier": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "title": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "start": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "due": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "parent_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "prop_a": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "prop_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "构建关联的 PingCode 工作项列表。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "identifier",
+        "name",
+        "job_url",
+        "provider",
+        "result_overview",
+        "result_url",
+        "start_at",
+        "status",
+        "end_at",
+        "duration",
+        "workitems"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "564587fe700d43b81b080765",
+          "url": "https://{rest_api_root}/v2/devops/builds/564587fe700d43b81b080765",
+          "identifier": "131",
+          "name": "unit-test",
+          "job_url": "https://your-job-url",
+          "provider": "jenkins",
+          "result_overview": "1000 test cases pass",
+          "result_url": "https://your-result-url",
+          "start_at": 1583290309,
+          "status": "success",
+          "end_at": 1583290347,
+          "duration": 38,
+          "workitems": [
+            {
+              "id": "564587fe700d43b81b080ab8",
+              "url": "https://{rest_api_root}/v2/pjm/workitems/564587fe700d43b81b080ab8",
+              "short_id": "c9WqLmTO",
+              "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+              "identifier": "PLM-001",
+              "title": "这是一个用户故事",
+              "start": {
+                "date": 1583290309,
+                "with_time": 1
+              },
+              "due": {
+                "date": 1583290347,
+                "with_time": 1
+              },
+              "parent_id": "5edca524cad2fa112b06105c",
+              "properties": {
+                "prop_a": "prop_a_value",
+                "prop_b": "prop_b_value"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

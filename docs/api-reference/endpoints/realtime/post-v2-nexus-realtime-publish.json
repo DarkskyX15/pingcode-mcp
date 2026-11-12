@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-realtime-publish",
+  "meta": {
+    "name": "发布实时消息",
+    "method": "POST",
+    "path": "/v2/nexus/realtime/publish",
+    "group": "Realtime",
+    "groupPath": [
+      "实时消息",
+      "Realtime"
+    ],
+    "area": "实时消息",
+    "tags": [
+      "Realtime"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:realtime:app"
+      ]
+    },
+    "description": "将数据实时推送到通道中。参考 [realtime.publish](https://open.pingcode.com/reference/functions/realtime/realtime#publish)。",
+    "summary": "将数据实时推送到通道中。参考 realtime.publish。",
+    "sourceFile": "src/modules/v2/nexus/realtime/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%8F%91%E5%B8%83%E5%AE%9E%E6%97%B6%E6%B6%88%E6%81%AF"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "通道唯一标识名称。"
+          },
+          "payload": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object"
+              },
+              {
+                "type": "array"
+              }
+            ],
+            "x-pingcode-type": "String|Number|Boolean|Object|Array",
+            "description": "发布的数据内容。",
+            "type": "object",
+            "properties": {
+              "workitemId": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "field": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "extension_key": {
+            "type": "string",
+            "description": "扩展标识，对应 manifest 中扩展模块的 `key`。当 `options.scope` 为 `self`、`context` 时必填。参考 [Extensions](https://open.pingcode.com/reference/resource/extensions)。"
+          },
+          "extension_data": {
+            "type": "object",
+            "description": "扩展上下文数据，需与 `extension_key` 配套传入。当 `options.scope` 为 `self`、`context` 时必填。参考 [Extensions](https://open.pingcode.com/reference/resource/extensions)。",
+            "properties": {
+              "workitem": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "options": {
+            "type": "object",
+            "description": "发布行为的配置项。",
+            "properties": {
+              "scope": {
+                "type": "string",
+                "description": "消息广播的作用范围，默认值为 `self`。",
+                "enum": [
+                  "self",
+                  "global",
+                  "token",
+                  "context"
+                ]
+              },
+              "token": {
+                "type": "string",
+                "description": "鉴权 Token，仅在 `scope = token` 时传入；可通过`签发实时消息令牌`获取。"
+              },
+              "context": {
+                "type": "string",
+                "description": "业务实体上下文，仅在 `scope = context` 时传入。",
+                "enum": [
+                  "project",
+                  "workitem",
+                  "sprint",
+                  "product",
+                  "idea",
+                  "ticket",
+                  "space",
+                  "page",
+                  "library",
+                  "testcase",
+                  "testplan",
+                  "baseline",
+                  "release",
+                  "plan",
+                  "widget",
+                  "dashboard",
+                  "entry"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "channel",
+          "payload"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "channel": "workitem-updated",
+            "payload": {
+              "workitemId": "xxx",
+              "field": "title"
+            },
+            "extension_key": "workitem-panel",
+            "extension_data": {
+              "workitem": {
+                "id": "xxx"
+              }
+            },
+            "options": {
+              "scope": "self"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "message_id": {
+          "type": "string",
+          "x-inferred-from-example": true
+        }
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "message_id": "message-id-1"
+        }
+      }
+    ]
+  }
+}

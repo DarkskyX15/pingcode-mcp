@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-directory-departments-department-id",
+  "meta": {
+    "name": "获取一个部门",
+    "method": "GET",
+    "path": "/v2/directory/departments/{department_id}",
+    "group": "部门",
+    "groupPath": [
+      "全局",
+      "组织",
+      "部门"
+    ],
+    "area": "全局",
+    "tags": [
+      "部门"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:team"
+      ]
+    },
+    "description": "用于按 id 获取部门全量信息。",
+    "summary": "用于按 id 获取部门全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/global/organization/department/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E9%83%A8%E9%97%A8"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "department_id": {
+            "type": "string",
+            "description": "部门的 id。"
+          }
+        },
+        "required": [
+          "department_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "部门的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "部门的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "部门的名称。"
+        },
+        "manager": {
+          "type": "object",
+          "description": "部门的负责人。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "parent": {
+          "type": "object",
+          "description": "父部门。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "manager",
+        "parent"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "6422711c3f12e6c1e46d40e6",
+          "url": "https://{rest_api_root}/v2/directory/departments/6422711c3f12e6c1e46d40e6",
+          "name": "技术支持",
+          "manager": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "parent": {
+            "id": "6422711c3f12e6c1e46d40e2",
+            "url": "https://{rest_api_root}/v2/directory/departments/6422711c3f12e6c1e46d40e2",
+            "name": "技术中心"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-ship-idea-properties-idea-property-id",
+  "meta": {
+    "name": "部分更新一个需求属性",
+    "method": "PATCH",
+    "path": "/v2/ship/idea_properties/{idea_property_id}",
+    "group": "需求配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "需求配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:configuration"
+      ]
+    },
+    "description": "用于部分更新一个需求属性。",
+    "summary": "用于部分更新一个需求属性。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/idea/property/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "idea_property_id": {
+            "type": "string",
+            "description": "需求属性的 id。"
+          }
+        },
+        "required": [
+          "idea_property_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "需求属性的名称。在一个企业中这个名称是唯一的。"
+          },
+          "referred_object_type": {
+            "type": "string",
+            "description": "引用对象类型。创建 `referred_select,referred_multi_select` 属性时必填，更新已有引用选择属性时可用于调整引用对象类型。",
+            "enum": [
+              "product",
+              "project",
+              "library",
+              "space"
+            ]
+          },
+          "options": {
+            "type": "object",
+            "items": {
+              "type": "object"
+            },
+            "description": "选择项列表。`options` 是整体更新的。",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "选择项 id。该值在选择项中是唯一的。"
+              },
+              "text": {
+                "type": "string",
+                "description": "选择项内容。该值在选择项中是唯一的。"
+              },
+              "parent_id": {
+                "type": "string",
+                "description": "选择项父级 id。当属性类型为 `cascade_select,cascade_multi_select` 时，`parent_id` 参数有效，用于构建级联类型选择项之间的父子关系，最多存在 4 级。"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例（select）：",
+          "type": "json",
+          "value": {
+            "name": "严重程度-update",
+            "options": [
+              {
+                "id": "5efb1859110533727a82c603",
+                "text": "严重-update"
+              },
+              {
+                "text": "一般"
+              }
+            ]
+          }
+        },
+        {
+          "name": "请求示例（cascade_select）：",
+          "type": "json",
+          "value": {
+            "name": "级联单选-update",
+            "options": [
+              {
+                "id": "64b9f741eec7fd94e63b411e",
+                "text": "父-update"
+              },
+              {
+                "id": "64b9f741eec7fd94e63b411f",
+                "text": "子-update",
+                "parent_id": "64b9f741eec7fd94e63b411e"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "需求属性的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "需求属性的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "需求属性的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "需求属性的类型。"
+        },
+        "referred_object_type": {
+          "type": "string",
+          "description": "引用对象类型。"
+        },
+        "options": {
+          "type": "object",
+          "items": {
+            "type": "object"
+          },
+          "description": "下拉选项值。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "选择项 id。该值在选择项中是唯一的。"
+            },
+            "text": {
+              "type": "string",
+              "description": "选择项内容。该值在选择项中是唯一的。"
+            },
+            "color": {
+              "type": "string",
+              "description": "选择项颜色。"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "选择项父级 id。当属性类型为 `cascade_select` 或 `cascade_multi_select` 时返回，用于表示级联选择项的父子关系。"
+            }
+          },
+          "required": [
+            "id",
+            "text",
+            "color",
+            "parent_id"
+          ]
+        },
+        "is_removable": {
+          "type": "number",
+          "description": "是否允许删除。"
+        },
+        "is_name_editable": {
+          "type": "number",
+          "description": "是否允许修改名称。"
+        },
+        "is_options_editable": {
+          "type": "number",
+          "description": "是否允许修改下拉选项值。"
+        },
+        "select_all_level": {
+          "type": "boolean",
+          "description": "级联选择时是否允许选择全部层级。"
+        },
+        "display_all_level": {
+          "type": "boolean",
+          "description": "级联选择时是否展示全部层级。"
+        },
+        "display_separator": {
+          "type": "string",
+          "description": "级联选择时的层级分隔符。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "type",
+        "referred_object_type",
+        "options",
+        "is_removable",
+        "is_name_editable",
+        "is_options_editable",
+        "select_all_level",
+        "display_all_level",
+        "display_separator"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例（select）：",
+        "type": "json",
+        "value": {
+          "id": "severity-update",
+          "url": "https://{rest_api_root}/v2/ship/idea_properties/severity",
+          "name": "严重程度-update",
+          "type": "select",
+          "options": [
+            {
+              "id": "64b9f741eec7fd94e63b411e",
+              "text": "父",
+              "color": "#FF7575"
+            },
+            {
+              "id": "64b9f741eec7fd94e63b411f",
+              "text": "子",
+              "color": "#FF7575"
+            }
+          ],
+          "is_removable": 1,
+          "is_name_editable": 1,
+          "is_options_editable": 1,
+          "select_all_level": false,
+          "display_all_level": false,
+          "display_separator": null
+        }
+      },
+      {
+        "name": "响应示例（cascade_select）：",
+        "type": "json",
+        "value": {
+          "id": "jiliandanxuan",
+          "url": "https://{rest_api_root}/v2/ship/idea_properties/jiliandanxuan",
+          "name": "级联单选-update",
+          "type": "cascade_select",
+          "options": [
+            {
+              "id": "64b9f741eec7fd94e63b411e",
+              "text": "父-update",
+              "color": "#FF7575"
+            },
+            {
+              "id": "64b9f741eec7fd94e63b411f",
+              "text": "子-update",
+              "color": "#FF7575",
+              "parent_id": "64b9f741eec7fd94e63b411e"
+            }
+          ],
+          "is_removable": 1,
+          "is_name_editable": 1,
+          "is_options_editable": 1,
+          "select_all_level": false,
+          "display_all_level": false,
+          "display_separator": "/"
+        }
+      }
+    ]
+  }
+}

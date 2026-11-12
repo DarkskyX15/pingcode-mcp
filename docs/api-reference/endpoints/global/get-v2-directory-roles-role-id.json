@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-directory-roles-role-id",
+  "meta": {
+    "name": "获取一个角色",
+    "method": "GET",
+    "path": "/v2/directory/roles/{role_id}",
+    "group": "角色",
+    "groupPath": [
+      "全局",
+      "组织",
+      "角色"
+    ],
+    "area": "全局",
+    "tags": [
+      "角色"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:team"
+      ]
+    },
+    "description": "用于按 id 获取角色全量信息，含是否为系统内置。",
+    "summary": "用于按 id 获取角色全量信息，含是否为系统内置。",
+    "sourceFile": "src/modules/v2/pingcode/global/organization/role/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E8%A7%92%E8%89%B2"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "role_id": {
+            "type": "string",
+            "description": "角色的 id。"
+          }
+        },
+        "required": [
+          "role_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "角色的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "角色的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "角色的名称。"
+        },
+        "is_system": {
+          "type": "number",
+          "description": "角色是否为系统内置。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "is_system"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "6422711c3f12e6c1e46d40e6",
+          "url": "https://{rest_api_root}/v2/directory/roles/6422711c3f12e6c1e46d40e6",
+          "name": "管理员",
+          "is_system": 1
+        }
+      }
+    ]
+  }
+}

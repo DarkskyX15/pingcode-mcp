@@ -1,0 +1,922 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-ship-tickets-search",
+  "meta": {
+    "name": "搜索工单列表",
+    "method": "POST",
+    "path": "/v2/ship/tickets/search",
+    "group": "工单",
+    "groupPath": [
+      "产品管理",
+      "工单"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "工单"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:ticket"
+      ]
+    },
+    "description": "用于按类 MongoDB 结构化条件搜索工单。  \n 默认不含已删除/已归档项。",
+    "summary": "用于按类 MongoDB 结构化条件搜索工单。",
+    "sourceFile": "src/modules/v2/pingcode/ship/ticket/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%8D%95%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "description": "搜索模式。`query` 表示基于 `payload.filter` 的结构化条件查询。",
+            "enum": [
+              "query"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "description": "搜索参数。",
+            "properties": {
+              "filter": {
+                "type": "object",
+                "description": "过滤条件。 过滤时使用类 MongoDB 的查询语法，可通过属性名、操作符和对应值进行过滤。 引用类型（含数组引用类型）使用 `{属性名}.id` 作为属性名，例如 `product.id`、`tags.id`、`participants.id`。 自定义属性使用 `properties.{属性 key}` 作为属性名，例如 `properties.prop_a`。 文本类型（如 `title`、`description`，以及自定义单行文本、多行文本、链接类型）的操作符： `exists`、`contains`。 数字类型（如 `identifier`，以及自定义数字、进度、评分类型）的操作符： `exists`、`eq`、`ne`、`gt`、`lt`、`gte`、`lte`。 时间类型（如 `created_at`、`updated_at`、`completed_at`，以及自定义日期）的操作符： `exists`、`gt`、`lt`、`gte`、`lte`、`between`（值为 `[起始时间戳, 结束时间戳]`；过滤时以「天」为单位。 选项类型（自定义下拉单选、下拉多选、级联单选、级联多选）的操作符： `exists`、`in`、`nin`。 引用类型（如 `product.id`、`type.id`、`state.id`、`priority.id`、`assignee.id`、`submitter.id`、`company.id`、`solution.id`、`channel.id`、`tags.id`、`participants.id`）的操作符： `exists`、`in`、`nin`。 每个属性仅支持一个操作符。 暂不支持使用逻辑运算符。 内置属性暂不支持过滤：`id`、`url`、`whole_identifier`、`short_id`、`html_url`、`public_image_token`、`estimated_at`、`is_archived`、`is_deleted`。",
+                "properties": {
+                  "title": {
+                    "type": "object",
+                    "properties": {
+                      "contains": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "assignee.id": {
+                    "type": "object",
+                    "properties": {
+                      "nin": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "product.id": {
+                    "type": "object",
+                    "properties": {
+                      "in": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "tags.id": {
+                    "type": "object",
+                    "properties": {
+                      "in": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "participants.id": {
+                    "type": "object",
+                    "properties": {
+                      "in": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "created_at": {
+                    "type": "object",
+                    "properties": {
+                      "gte": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "keywords": {
+                "type": "string",
+                "description": "关键字。支持工单编号和工单标题。"
+              },
+              "include_public_image_token": {
+                "type": "string",
+                "description": "包含获取图片资源 token 的属性。使用 `,` 分割，最多 32 个，支持 `description` 和自定义多行文本类型的属性。"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "每页条数，取值范围 1-100。",
+                "default": 30
+              },
+              "page_index": {
+                "type": "number",
+                "description": "页码，从 0 开始。",
+                "default": 0
+              }
+            }
+          }
+        },
+        "required": [
+          "mode",
+          "payload"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "mode": "query",
+            "payload": {
+              "filter": {
+                "title": {
+                  "contains": "注册"
+                },
+                "assignee.id": {
+                  "nin": [
+                    "315c85d24643678a9a0417f68e846aae"
+                  ]
+                },
+                "product.id": {
+                  "in": [
+                    "6422711c3f12e6c1e46d40e9"
+                  ]
+                },
+                "tags.id": {
+                  "in": [
+                    "63eca881a0a13a3efc8d49f1"
+                  ]
+                },
+                "participants.id": {
+                  "in": [
+                    "a0417f68e846aae315c85d24643678a9"
+                  ]
+                },
+                "created_at": {
+                  "gte": 1730000000
+                }
+              },
+              "keywords": "SLC-T1",
+              "include_public_image_token": "description",
+              "page_size": 10,
+              "page_index": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "product": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "is_archived": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "is_deleted": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "identifier": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "whole_identifier": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "title": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "assignee": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "state": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "estimated_at": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "to": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "with_time": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "granularity": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "company": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "solution": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "priority": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "color": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "channel": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "description": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "prop_a": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "prop_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "tags": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "entity_properties": {
+                "type": "object",
+                "properties": {
+                  "entity_property_key_a": {
+                    "type": "object",
+                    "properties": {
+                      "score": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "risk": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "entity_property_key_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "participants": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "type": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "display_name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    },
+                    "user_group": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "public_image_token": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "submitter": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "completed_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "completed_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "created_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "updated_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "updated_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_archived": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "is_deleted": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "工单全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 10,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "63eca888a0a13a3efc8d4a43",
+              "url": "https://{rest_api_root}/v2/ship/tickets/63eca888a0a13a3efc8d4a43",
+              "short_id": "pdMUgQzZ",
+              "html_url": "https://yctech.pingcode.com/ship/tickets/pdMUgQzZ",
+              "product": {
+                "id": "6422711c3f12e6c1e46d40e9",
+                "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9",
+                "identifier": "SLC",
+                "name": "示例产品",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "identifier": 1,
+              "whole_identifier": "SLC-T1",
+              "title": "希望新增支持第三方账号注册",
+              "assignee": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "state": {
+                "id": "63eca880a0a13a3efc8d49d9",
+                "url": "https://{rest_api_root}/v2/ship/ticket_states/63eca880a0a13a3efc8d49d9",
+                "name": "待处理",
+                "type": "pending"
+              },
+              "estimated_at": {
+                "from": {
+                  "date": 1701619200,
+                  "with_time": 0
+                },
+                "to": {
+                  "date": 1702742399,
+                  "with_time": 0
+                },
+                "granularity": "day"
+              },
+              "type": {
+                "id": "63eca880a0a13a3efc8d49e0",
+                "url": "https://{rest_api_root}/v2/ship/ticket_types/63eca880a0a13a3efc8d49e0",
+                "name": "需求"
+              },
+              "company": {
+                "id": "63eca881a0a13a3efc8d49fc",
+                "url": "https://{rest_api_root}/v2/ship/customers/63eca881a0a13a3efc8d49fc",
+                "name": "北京 XX 科技有限公司"
+              },
+              "solution": {
+                "id": "62f217ae16e3661a20124330",
+                "url": "https://{rest_api_root}/v2/ship/ticket_solutions/62f217ae16e3661a20124330",
+                "name": "进入需求池"
+              },
+              "priority": {
+                "url": "https://{rest_api_root}/v2/ship/ticket_priorities/5cb9466afda1ce4ca0090004",
+                "id": "5cb9466afda1ce4ca0090004",
+                "name": "P1",
+                "color": "#FF7575"
+              },
+              "channel": {
+                "id": "64550d9ec696b249b5fc607d",
+                "url": "https://{rest_api_root}/v2/ship/ticket_channels/64550d9ec696b249b5fc607d",
+                "name": "channel-1"
+              },
+              "description": "<p>希望支持其他更多第三方平台的账号注册，以便用第三方账号登录找回更换了手机号的账号，保障账号安全</p>",
+              "properties": {
+                "prop_a": "prop_a_value",
+                "prop_b": "prop_b_value"
+              },
+              "tags": [
+                {
+                  "id": "63eca881a0a13a3efc8d49f1",
+                  "url": "https://{rest_api_root}/v2/ship/tags/63eca881a0a13a3efc8d49f1",
+                  "name": "已确认"
+                }
+              ],
+              "entity_properties": {
+                "entity_property_key_a": {
+                  "score": 95,
+                  "risk": "low"
+                },
+                "entity_property_key_b": "123456"
+              },
+              "participants": [
+                {
+                  "id": "a0417f68e846aae315c85d24643678a9",
+                  "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=ticket&principal_id=63eca888a0a13a3efc8d4a43",
+                  "type": "user",
+                  "user": {
+                    "id": "a0417f68e846aae315c85d24643678a9",
+                    "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                    "name": "john",
+                    "display_name": "John",
+                    "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+                  }
+                },
+                {
+                  "id": "63c8fb32729dee3334d96af7",
+                  "url": "https://{rest_api_root}/v2/participants/63c8fb32729dee3334d96af7?principal_type=ticket&principal_id=63eca888a0a13a3efc8d4a43",
+                  "type": "user_group",
+                  "user_group": {
+                    "id": "63c8fb32729dee3334d96af7",
+                    "url": "https://{rest_api_root}/v2/directory/groups/63c8fb32729dee3334d96af7",
+                    "name": "Open Team"
+                  }
+                }
+              ],
+              "public_image_token": "N96GlJ4AMQoBCw9pZQ2EMl-AprLN_V_DYlghupBNkJA",
+              "submitter": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "completed_at": 1689579131,
+              "completed_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "created_at": 1676454024,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "updated_at": 1676454024,
+              "updated_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "is_archived": 0,
+              "is_deleted": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

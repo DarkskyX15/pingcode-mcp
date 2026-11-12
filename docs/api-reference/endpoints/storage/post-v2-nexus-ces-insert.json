@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-ces-insert",
+  "meta": {
+    "name": "创建自定义实体",
+    "method": "POST",
+    "path": "/v2/nexus/ces/insert",
+    "group": "CES",
+    "groupPath": [
+      "存储",
+      "CES"
+    ],
+    "area": "存储",
+    "tags": [
+      "CES"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:storage:app"
+      ]
+    },
+    "description": "创建自定义实体。",
+    "summary": "创建自定义实体。",
+    "sourceFile": "src/modules/v2/nexus/storage/ces/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%9E%E4%BD%93"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "entity_name": {
+            "type": "string",
+            "description": "自定义实体的名字。"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    }
+                  ],
+                  "x-inferred-from-example": true
+                },
+                "age": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "x-inferred-from-example": true
+                    },
+                    {
+                      "type": "number",
+                      "x-inferred-from-example": true
+                    }
+                  ],
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "description": "自定义实体的值。",
+            "x-inferred-from-example": true
+          },
+          "options": {
+            "type": "object",
+            "description": "可选配置项，参考 [CesFindOptions](https://open.pingcode.com/reference/functions/storage/ces-find-options)。",
+            "properties": {
+              "ordered": {
+                "type": "boolean",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "entity_name",
+          "value"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "entity_name": "user",
+            "value": [
+              {
+                "name": "john",
+                "age": 10
+              },
+              {
+                "name": "tom",
+                "age": 12
+              }
+            ],
+            "options": {
+              "ordered": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "name": "john",
+            "age": 10
+          },
+          {
+            "name": "tom",
+            "age": 12
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-testhub-testcase-state-plans-testcase-state-plan-id-testcase-state-flows",
+  "meta": {
+    "name": "获取用例状态方案中的状态流转列表",
+    "method": "GET",
+    "path": "/v2/testhub/testcase_state_plans/{testcase_state_plan_id}/testcase_state_flows",
+    "group": "用例配置",
+    "groupPath": [
+      "测试管理",
+      "测试配置中心",
+      "用例配置"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "用例配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:testhub:configuration"
+      ]
+    },
+    "description": "用于分页获取用例状态方案中的状态流转。",
+    "summary": "用于分页获取用例状态方案中的状态流转。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/configuration/case/state-flow/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E7%94%A8%E4%BE%8B%E7%8A%B6%E6%80%81%E6%96%B9%E6%A1%88%E4%B8%AD%E7%9A%84%E7%8A%B6%E6%80%81%E6%B5%81%E8%BD%AC%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "testcase_state_plan_id": {
+            "type": "string",
+            "description": "用例状态方案的 id。"
+          }
+        },
+        "required": [
+          "testcase_state_plan_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "state_plan": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "from_state": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "to_state": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "用例状态方案中的状态流转全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "686f62038668bbae4f4dd0e1",
+              "url": "https://{rest_api_root}/v2/testhub/testcase_state_plans/686f62038668bbae4f4dd0d1/testcase_state_flows/686f62038668bbae4f4dd0e1",
+              "state_plan": {
+                "id": "686f62038668bbae4f4dd0d1",
+                "url": "https://{rest_api_root}/v2/testhub/testcase_state_plans/686f62038668bbae4f4dd0d1"
+              },
+              "from_state": {
+                "id": "686f62038668bbae4f4dd0c1",
+                "url": "https://{rest_api_root}/v2/testhub/testcase_states/686f62038668bbae4f4dd0c1",
+                "name": "设计",
+                "type": "pending"
+              },
+              "to_state": {
+                "id": "686f62038668bbae4f4dd0c2",
+                "url": "https://{rest_api_root}/v2/testhub/testcase_states/686f62038668bbae4f4dd0c2",
+                "name": "就绪",
+                "type": "completed"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

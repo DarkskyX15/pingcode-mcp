@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-workitem-state-plans-workitem-state-plan-id-workitem-state-flows",
+  "meta": {
+    "name": "向工作项状态方案中添加一个状态流转",
+    "method": "POST",
+    "path": "/v2/pjm/workitem_state_plans/{workitem_state_plan_id}/workitem_state_flows",
+    "group": "工作项配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "工作项配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:configuration"
+      ]
+    },
+    "description": "用于向工作项状态方案添加一条状态流转。",
+    "summary": "用于向工作项状态方案添加一条状态流转。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/work-item-config/flow/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%90%91%E5%B7%A5%E4%BD%9C%E9%A1%B9%E7%8A%B6%E6%80%81%E6%96%B9%E6%A1%88%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%8A%B6%E6%80%81%E6%B5%81%E8%BD%AC"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "workitem_state_plan_id": {
+            "type": "string",
+            "description": "工作项状态方案的 id。"
+          }
+        },
+        "required": [
+          "workitem_state_plan_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "from_state_id": {
+            "type": "string",
+            "description": "起始工作项状态的 id。"
+          },
+          "to_state_id": {
+            "type": "string",
+            "description": "目标工作项状态的 id。"
+          }
+        },
+        "required": [
+          "from_state_id",
+          "to_state_id"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "from_state_id": "5c9b35de90ad7153c2062f18",
+            "to_state_id": "5c9b35de90ad7153c2062f19"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "状态流转的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "状态流转的地址。"
+        },
+        "state_plan": {
+          "type": "object",
+          "description": "工作项状态方案的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "from_state": {
+          "type": "object",
+          "description": "起始工作项状态的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "color": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "to_state": {
+          "type": "object",
+          "description": "目标工作项状态的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "color": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "state_plan",
+        "from_state",
+        "to_state"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5cc2062f189b35de90ad7153",
+          "url": "https://{rest_api_root}/v2/pjm/workitem_state_plans/5c9b62f18ad715335de90c20/workitem_state_flows/5cc2062f189b35de90ad7153",
+          "state_plan": {
+            "id": "5c9b62f18ad715335de90c20",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_state_plans/5c9b62f18ad715335de90c20"
+          },
+          "from_state": {
+            "id": "5c9b35de90ad7153c2062f18",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_states/5c9b35de90ad7153c2062f18",
+            "name": "新建",
+            "type": "pending",
+            "color": "#ff7575"
+          },
+          "to_state": {
+            "id": "5c9b35de90ad7153c2062f19",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_states/5c9b35de90ad7153c2062f19",
+            "name": "进行中",
+            "type": "in_progress",
+            "color": "#56abfb"
+          }
+        }
+      }
+    ]
+  }
+}

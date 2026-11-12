@@ -1,0 +1,586 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-ship-ideas",
+  "meta": {
+    "name": "创建一个需求",
+    "method": "POST",
+    "path": "/v2/ship/ideas",
+    "group": "需求",
+    "groupPath": [
+      "产品管理",
+      "需求"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:idea"
+      ]
+    },
+    "description": "用于创建一个需求。",
+    "summary": "用于创建一个需求。",
+    "sourceFile": "src/modules/v2/pingcode/ship/idea/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "需求的产品 id。"
+          },
+          "title": {
+            "type": "string",
+            "description": "需求的标题，最大长度为 255。"
+          },
+          "assignee_id": {
+            "type": "string",
+            "description": "需求负责人的 id。"
+          },
+          "description": {
+            "type": "string",
+            "description": "需求的描述。"
+          },
+          "suite_id": {
+            "type": "string",
+            "description": "需求的产品模块 id。"
+          },
+          "priority_id": {
+            "type": "string",
+            "description": "需求优先级的 id，您可以在 `获取需求优先级列表` API 获取。"
+          },
+          "properties": {
+            "type": "object",
+            "description": "需求属性的键值对集合。要注意的是，当前产品的需求属性视图需要包含这些需求属性，例如需求属性视图中包含 `prop_a` 和 `prop_b`。",
+            "additionalProperties": true,
+            "x-example-keys": {
+              "prop_a": {
+                "type": "object"
+              },
+              "prop_b": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "required": [
+          "product_id",
+          "title"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "product_id": "6422711c3f12e6c1e46d40e9",
+            "title": "示例需求",
+            "assignee_id": "a0417f68e846aae315c85d24643678a9",
+            "description": "这是一段描述",
+            "suite_id": "63bb744414bd13c9def24ce4",
+            "priority_id": "5cb9466afda1ce4ca0090005",
+            "properties": {
+              "prop_a": "prop_a_value",
+              "prop_b": "prop_b_value"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "url": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "short_id": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "html_url": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "product": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "identifier": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "whole_identifier": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "title": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "assignee": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "state": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "priority": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "color": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "plan": {
+          "type": "null",
+          "x-inferred-from-example": true
+        },
+        "suite": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "plan_at": {
+          "type": "null",
+          "x-inferred-from-example": true
+        },
+        "real_at": {
+          "type": "null",
+          "x-inferred-from-example": true
+        },
+        "score": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "rate": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "description": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "backlog_from": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "backlog_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "prop_a": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "prop_b": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "entity_properties": {
+          "type": "object",
+          "properties": {
+            "entity_property_key_a": {
+              "type": "object",
+              "properties": {
+                "score": {
+                  "type": "number",
+                  "x-inferred-from-example": true
+                },
+                "risk": {
+                  "type": "string",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "entity_property_key_b": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "tags": {
+          "type": "array",
+          "x-inferred-from-example": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          }
+        },
+        "participants": {
+          "type": "array",
+          "x-inferred-from-example": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          }
+        },
+        "completed_at": {
+          "type": "null",
+          "x-inferred-from-example": true
+        },
+        "completed_by": {
+          "type": "null",
+          "x-inferred-from-example": true
+        },
+        "created_at": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "created_by": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "updated_at": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "updated_by": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_archived": {
+          "type": "number",
+          "x-inferred-from-example": true
+        },
+        "is_deleted": {
+          "type": "number",
+          "x-inferred-from-example": true
+        }
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "64b4d70ba368e6594360ea24",
+          "url": "https://{rest_api_root}/v2/ship/ideas/64b4d70ba368e6594360ea24",
+          "short_id": "Ogf1EYey",
+          "html_url": "https://yctech.pingcode.com/ship/ideas/Ogf1EYey",
+          "product": {
+            "id": "6422711c3f12e6c1e46d40e9",
+            "url": "http://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e9",
+            "identifier": "SLC",
+            "name": "示例产品",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "identifier": 1,
+          "whole_identifier": "SLC-1",
+          "title": "示例需求",
+          "assignee": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "state": {
+            "id": "63e1bf51898a0be5a2d21b2a",
+            "url": "https://{rest_api_root}/v2/ship/idea_states/63e1bf51898a0be5a2d21b2a",
+            "name": "待评审",
+            "type": "pending"
+          },
+          "priority": {
+            "id": "5cb9466afda1ce4ca0090001",
+            "url": "https://{rest_api_root}/v2/ship/idea_priorities/5cb9466afda1ce4ca0090001",
+            "name": "P4",
+            "color": "#FF7575"
+          },
+          "plan": null,
+          "suite": {
+            "id": "63bb744414bd13c9def24ce4",
+            "url": "https://{rest_api_root}/v2/ship/idea_suites/63bb744414bd13c9def24ce4",
+            "name": "需求模块",
+            "type": "module"
+          },
+          "plan_at": null,
+          "real_at": null,
+          "score": 0,
+          "rate": 0,
+          "description": "这是一段描述",
+          "properties": {
+            "backlog_from": "5cb7e6e2fda1ce4ca0000001",
+            "backlog_type": "5cb7e763fda1ce4ca0010002",
+            "prop_a": "prop_a_value",
+            "prop_b": "prop_b_value"
+          },
+          "entity_properties": {
+            "entity_property_key_a": {
+              "score": 95,
+              "risk": "low"
+            },
+            "entity_property_key_b": "123456"
+          },
+          "tags": [
+            {
+              "id": "63eca881a0a13a3efc8d49f1",
+              "url": "https://{rest_api_root}/v2/ship/tags/63eca881a0a13a3efc8d49f1",
+              "name": "已确认"
+            }
+          ],
+          "participants": [
+            {
+              "id": "a0417f68e846aae315c85d24643678a9",
+              "url": "https://{rest_api_root}/v2/participants/a0417f68e846aae315c85d24643678a9?principal_type=idea&principal_id=64b4d70ba368e6594360ea24",
+              "type": "user",
+              "user": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              }
+            }
+          ],
+          "completed_at": null,
+          "completed_by": null,
+          "created_at": 1689573131,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "updated_at": 1689573131,
+          "updated_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "is_archived": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

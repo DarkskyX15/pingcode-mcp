@@ -1,0 +1,40 @@
+{
+  "generator": "scripts/api-reference/generate.mjs",
+  "schemaVersion": "pingcode-endpoint/1",
+  "generatedAt": "2026-11-12T02:54:32.448Z",
+  "source": {
+    "apiDataUrl": "https://open.pingcode.com/api_data.js",
+    "apiProjectUrl": "https://open.pingcode.com/api_project.js",
+    "apiDataSha256": "7fea98c7c411a12b95f32b010549b83e4adf1ea7fd0facca1e723f36adb2b6f7",
+    "apiProjectSha256": "1ba201e048cc4cff180869500f358ab11d00d4370bcfe5dc07b9cf20f8768483",
+    "apidocGeneratedAt": "2026-11-10T06:43:32.707Z",
+    "apidocVersion": "0.20.1",
+    "fetched": false,
+    "generatedAt": "2026-11-12T02:54:32.448Z"
+  },
+  "stats": {
+    "records": 629,
+    "dedupedRecords": 582,
+    "duplicateRecords": 47,
+    "endpoints": 499,
+    "listed": 477,
+    "hidden": 22,
+    "groups": 80,
+    "areas": 12,
+    "methods": {
+      "POST": 121,
+      "GET": 267,
+      "DELETE": 52,
+      "PATCH": 49,
+      "PUT": 10
+    }
+  },
+  "outputs": {
+    "endpointFiles": 499,
+    "areaDocs": 11,
+    "guides": 2,
+    "catalogEntries": 499,
+    "openapiOperations": 496
+  },
+  "warnings": []
+}

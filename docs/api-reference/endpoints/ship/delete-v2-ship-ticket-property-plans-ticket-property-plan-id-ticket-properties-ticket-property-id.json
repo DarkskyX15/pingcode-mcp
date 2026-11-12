@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-ship-ticket-property-plans-ticket-property-plan-id-ticket-properties-ticket-property-id",
+  "meta": {
+    "name": "在工单属性方案中移除一个属性",
+    "method": "DELETE",
+    "path": "/v2/ship/ticket_property_plans/{ticket_property_plan_id}/ticket_properties/{ticket_property_id}",
+    "group": "工单配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "工单配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "工单配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:configuration"
+      ]
+    },
+    "description": "用于从工单属性方案中移除一个属性。",
+    "summary": "用于从工单属性方案中移除一个属性。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/ticket/property-plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%9C%A8%E5%B7%A5%E5%8D%95%E5%B1%9E%E6%80%A7%E6%96%B9%E6%A1%88%E4%B8%AD%E7%A7%BB%E9%99%A4%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ticket_property_plan_id": {
+            "type": "string",
+            "description": "工单属性方案的 id。"
+          },
+          "ticket_property_id": {
+            "type": "string",
+            "description": "工单属性的 id。"
+          }
+        },
+        "required": [
+          "ticket_property_plan_id",
+          "ticket_property_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "属性方案中工单属性关联的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "属性方案中工单属性关联的资源地址。"
+        },
+        "property_plan": {
+          "type": "object",
+          "description": "工单属性方案的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "property": {
+          "type": "object",
+          "description": "工单属性的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "property_plan",
+        "property"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "solution",
+          "url": "https://{rest_api_root}/v2/ship/ticket_property_plans/5f8a21f18ef715265de90c21/ticket_properties/solution",
+          "property_plan": {
+            "id": "5f8a21f18ef715265de90c21",
+            "url": "https://{rest_api_root}/v2/ship/ticket_property_plans/5f8a21f18ef715265de90c21"
+          },
+          "property": {
+            "id": "solution",
+            "url": "https://{rest_api_root}/v2/ship/ticket_properties/solution",
+            "name": "解决方案",
+            "type": "select"
+          }
+        }
+      }
+    ]
+  }
+}

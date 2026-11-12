@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-ideas-idea-id-transition-histories-transition-history-id",
+  "meta": {
+    "name": "获取一条需求流转记录",
+    "method": "GET",
+    "path": "/v2/ship/ideas/{idea_id}/transition_histories/{transition_history_id}",
+    "group": "需求",
+    "groupPath": [
+      "产品管理",
+      "需求"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:idea"
+      ]
+    },
+    "description": "用于按 id 获取一条需求流转记录全量信息。",
+    "summary": "用于按 id 获取一条需求流转记录全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/ship/idea/transition-history/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E6%9D%A1%E9%9C%80%E6%B1%82%E6%B5%81%E8%BD%AC%E8%AE%B0%E5%BD%95"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "idea_id": {
+            "type": "string",
+            "description": "需求的 id。"
+          },
+          "transition_history_id": {
+            "type": "string",
+            "description": "需求流转记录的 id。"
+          }
+        },
+        "required": [
+          "idea_id",
+          "transition_history_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "需求流转记录的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "需求流转记录的资源地址。"
+        },
+        "idea": {
+          "type": "object",
+          "description": "需求的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "short_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "html_url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "whole_identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "from_state": {
+          "type": "object",
+          "description": "流转前需求状态的引用结构数据。"
+        },
+        "to_state": {
+          "type": "object",
+          "description": "流转后需求状态的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "created_at": {
+          "type": "number",
+          "description": "创建时间，单位为秒。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "创建人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "idea",
+        "from_state",
+        "to_state",
+        "created_at",
+        "created_by"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "64c3676c983bb9481ee1eea5",
+          "url": "https://{rest_api_root}/v2/ship/ideas/64b4d70ba368e6594360ea24/transition_histories/64c3676c983bb9481ee1eea5",
+          "idea": {
+            "id": "64b4d70ba368e6594360ea24",
+            "url": "https://{rest_api_root}/v2/ship/ideas/64b4d70ba368e6594360ea24",
+            "short_id": "Ogf1EYey",
+            "html_url": "https://yctech.pingcode.com/ship/ideas/Ogf1EYey",
+            "whole_identifier": "SLC-1",
+            "title": "示例需求"
+          },
+          "from_state": null,
+          "to_state": {
+            "id": "63e1bf51898a0be5a2d21b29",
+            "url": "https://{rest_api_root}/v2/ship/idea_states/63e1bf51898a0be5a2d21b29",
+            "name": "待处理",
+            "type": "pending"
+          },
+          "created_at": 1674528614,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          }
+        }
+      }
+    ]
+  }
+}

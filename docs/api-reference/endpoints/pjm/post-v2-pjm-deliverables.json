@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-deliverables",
+  "meta": {
+    "name": "提交一个工作项交付物",
+    "method": "POST",
+    "path": "/v2/pjm/deliverables",
+    "group": "工作项",
+    "groupPath": [
+      "项目管理",
+      "工作项"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:workitem"
+      ]
+    },
+    "description": "用于向工作项交付目标提交一个交付物。  \n提交 `文件` 时使用 `multipart/form-data`；提交 `页面/链接` 时使用 `application/json`。",
+    "summary": "用于向工作项交付目标提交一个交付物。提交 文件 时使用 multipart/form-data；提交 页面/链接 时使用 application/json。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/work-item/deliverable/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%8F%90%E4%BA%A4%E4%B8%80%E4%B8%AA%E5%B7%A5%E4%BD%9C%E9%A1%B9%E4%BA%A4%E4%BB%98%E7%89%A9",
+    "originalUrl": "/v2/pjm/deliverables?deliverable_target_id={deliverable_target_id}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "deliverable_target_id": {
+            "type": "string",
+            "description": "工作项交付目标的 id。"
+          }
+        },
+        "required": [
+          "deliverable_target_id"
+        ]
+      }
+    },
+    "headers": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "content-type": {
+            "type": "string",
+            "description": "提交 `文件` 时为 `multipart/form-data`；提交 `页面/链接` 时为 `application/json`。"
+          }
+        },
+        "required": [
+          "content-type"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "multipart/form-data",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "content_type": {
+            "type": "string",
+            "description": "交付物的类型。提交 `页面/链接` 时使用此属性。",
+            "enum": [
+              "page",
+              "link"
+            ]
+          },
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "x-pingcode-type": "String/Object",
+            "description": "交付物内容。提交 `页面/链接` 时使用此属性。当类型为 `page` 时为页面 `id`；当类型为 `link` 时为包含 `name`、`href` 的对象。",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "href": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "description": "交付物文件。提交 `文件` 时使用此属性。"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例（页面）：",
+          "type": "json",
+          "value": {
+            "content_type": "page",
+            "content": "5da588ca84c7377a5d327e6c"
+          }
+        },
+        {
+          "name": "请求示例（链接）：",
+          "type": "json",
+          "value": {
+            "content_type": "link",
+            "content": {
+              "name": "PingCode",
+              "href": "https://www.pingcode.com"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "交付物的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "交付物的地址。"
+        },
+        "content_type": {
+          "type": "string",
+          "description": "交付物的类型。",
+          "enum": [
+            "file",
+            "page",
+            "link"
+          ]
+        },
+        "content": {
+          "type": "object",
+          "description": "交付物的内容。类型为 `file` 时为附件引用结构数据；类型为 `page` 时为包含 `id`、`version_id` 的对象；类型为 `link` 时为包含 `name`、`href` 的对象。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "title": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "size": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "version_id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "href": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "content_type",
+        "content"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例（文件）：",
+        "type": "json",
+        "value": {
+          "id": "63761fee31caaf7718981878",
+          "url": "https://{rest_api_root}/v2/pjm/deliverables/63761fee31caaf7718981878",
+          "content_type": "file",
+          "content": {
+            "id": "5da588ca84c7377a5d327e6c",
+            "url": "https://{rest_api_root}/v2/attachments/5da588ca84c7377a5d327e6c?principal_type=deliverable_target&principal_id=63761fee31caaf7718981876",
+            "title": "这是一个图片类型的附件",
+            "size": 1024,
+            "type": "file"
+          }
+        }
+      },
+      {
+        "name": "响应示例（页面）：",
+        "type": "json",
+        "value": {
+          "id": "63761fee31caaf7718981878",
+          "url": "https://{rest_api_root}/v2/pjm/deliverables/63761fee31caaf7718981878",
+          "content_type": "page",
+          "content": {
+            "id": "5da588ca84c7377a5d327e6c",
+            "version_id": "5da588ca84c7377a5d327e6d"
+          }
+        }
+      },
+      {
+        "name": "响应示例（链接）：",
+        "type": "json",
+        "value": {
+          "id": "63761fee31caaf7718981878",
+          "url": "https://{rest_api_root}/v2/pjm/deliverables/63761fee31caaf7718981878",
+          "content_type": "link",
+          "content": {
+            "name": "PingCode",
+            "href": "https://www.pingcode.com"
+          }
+        }
+      }
+    ]
+  }
+}

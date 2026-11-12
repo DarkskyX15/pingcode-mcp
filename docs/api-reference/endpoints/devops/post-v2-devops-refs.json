@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-devops-refs",
+  "meta": {
+    "name": "创建一个提交引用",
+    "method": "POST",
+    "path": "/v2/devops/refs",
+    "group": "提交引用",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "提交引用"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "提交引用"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:code"
+      ]
+    },
+    "description": "用于创建一个提交引用。  \n 提交引用是提交与分支的一种关联关系，一个提交可以与多个分支关联，一个分支也可以与多个提交关联。当提交与分支关联后，提交会自动与由此分支发起的拉取请求关联，当拉取请求合并后，这些关联的提交将自动被标记为“已合并”状态。",
+    "summary": "用于创建一个提交引用。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%8F%90%E4%BA%A4%E5%BC%95%E7%94%A8"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "代码托管平台的 id。"
+          },
+          "repo_id": {
+            "type": "string",
+            "description": "代码仓库的 id。"
+          },
+          "sha": {
+            "type": "string",
+            "description": "提交的 SHA 值。"
+          },
+          "meta_type": {
+            "type": "string",
+            "description": "引用实体的类型。",
+            "enum": [
+              "branch"
+            ]
+          },
+          "meta_id": {
+            "type": "string",
+            "description": "引用实体的 id，例如：`branch_id`。"
+          }
+        },
+        "required": [
+          "product_id",
+          "repo_id",
+          "sha",
+          "meta_type",
+          "meta_id"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "product_id": "564587fe700d43b81b080765",
+            "repo_id": "564587fe700d43b81b080766",
+            "sha": "96a024347146ebdc5f481f45e6e6871e0c43af5f",
+            "meta_type": "branch",
+            "meta_id": "564587fe700d43b81b080767"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "提交引用的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "提交引用的资源地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "托管平台的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "repository": {
+          "type": "object",
+          "description": "代码仓库的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "full_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "created_at": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "commit": {
+          "type": "object",
+          "description": "提交的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "sha": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "message": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "committer_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "committed_at": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "meta": {
+          "type": "object",
+          "description": "提交引用实体的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "product",
+        "repository",
+        "commit",
+        "meta"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5e451b7dd704c212f7de8b4f",
+          "url": "https://{rest_api_root}/v2/devops/refs/5e451b7dd704c212f7de8b4f",
+          "product": {
+            "id": "564587fe700d43b81b080765",
+            "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+            "name": "Github",
+            "type": "github"
+          },
+          "repository": {
+            "id": "564587fe700d43b81b080766",
+            "url": "https://{rest_api_root}/v2/devops/repos/564587fe700d43b81b080766",
+            "name": "ngx-planet",
+            "full_name": "worktile/ngx-planet",
+            "created_at": 1403018919
+          },
+          "commit": {
+            "id": "5e3bb2128cfda459bbafa3fb",
+            "url": "https://{rest_api_root}/v2/devops/commits/5e3bb2128cfda459bbafa3fb",
+            "sha": "96a024347146ebdc5f481f45e6e6871e0c43af5f",
+            "message": "feat(scope): #PLM-001 initialization code structure",
+            "committer_name": "terry",
+            "committed_at": 1403018919
+          },
+          "meta": {
+            "id": "564587fe700d43b81b080767",
+            "url": "https://{rest_api_root}/v2/devops/branches/564587fe700d43b81b080767",
+            "name": "terry/#PLM-001",
+            "type": "branch"
+          }
+        }
+      }
+    ]
+  }
+}

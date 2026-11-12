@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-testhub-testcase-states-testcase-state-id",
+  "meta": {
+    "name": "获取一个用例状态",
+    "method": "GET",
+    "path": "/v2/testhub/testcase_states/{testcase_state_id}",
+    "group": "用例配置",
+    "groupPath": [
+      "测试管理",
+      "测试配置中心",
+      "用例配置"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "用例配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:testhub:configuration"
+      ]
+    },
+    "description": "用于按 id 获取用例状态全量信息。",
+    "summary": "用于按 id 获取用例状态全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/configuration/case/state/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BE%8B%E7%8A%B6%E6%80%81"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "testcase_state_id": {
+            "type": "string",
+            "description": "用例状态的 id。"
+          }
+        },
+        "required": [
+          "testcase_state_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "用例状态的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "用例状态的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "用例状态的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "用例状态的类型。",
+          "enum": [
+            "pending",
+            "completed",
+            "closed"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "description": "用例状态的颜色。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "type",
+        "color"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "686f62038668bbae4f4dd0c1",
+          "url": "https://{rest_api_root}/v2/testhub/testcase_states/686f62038668bbae4f4dd0c1",
+          "name": "设计",
+          "type": "pending",
+          "color": "#56ABFB"
+        }
+      }
+    ]
+  }
+}

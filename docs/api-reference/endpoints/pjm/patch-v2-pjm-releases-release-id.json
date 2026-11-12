@@ -1,0 +1,643 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-pjm-releases-release-id",
+  "meta": {
+    "name": "部分更新一个发布",
+    "method": "PATCH",
+    "path": "/v2/pjm/releases/{release_id}",
+    "group": "发布",
+    "groupPath": [
+      "项目管理",
+      "发布"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "发布"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:release"
+      ]
+    },
+    "description": "用于部分更新一个发布。",
+    "summary": "用于部分更新一个发布。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/release/release/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E5%8F%91%E5%B8%83"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "release_id": {
+            "type": "string",
+            "description": "发布的 id。"
+          }
+        },
+        "required": [
+          "release_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "发布的名称。同一项目下该名称是唯一的。"
+          },
+          "start": {
+            "type": "object",
+            "description": "发布的开始时间。",
+            "properties": {
+              "date": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "with_time": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "published_at": {
+            "type": "object",
+            "description": "发布的时间。",
+            "properties": {
+              "date": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "with_time": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "assignee_id": {
+            "type": "string",
+            "description": "负责人的 id。"
+          },
+          "stage_id": {
+            "type": "string",
+            "description": "发布阶段的 id。"
+          },
+          "stage_operated_at": {
+            "type": "number",
+            "description": "发布阶段的日期。需要和 stage_id 一起传递。"
+          },
+          "category_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "发布类别 id 数组。",
+            "x-inferred-from-example": true
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "1.0.0",
+            "start": {
+              "date": 1565193600,
+              "with_time": 0
+            },
+            "published_at": {
+              "date": 1566403200,
+              "with_time": 0
+            },
+            "assignee_id": "a0417f68e846aae315c85d24643678a9",
+            "stage_id": "5f44a8f8bb347b14b49624a1",
+            "stage_operated_at": 1565366400,
+            "category_ids": [
+              "676a460a0fd987b7ea320889"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "发布的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "发布的地址。"
+        },
+        "project": {
+          "type": "object",
+          "description": "发布所属项目的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "template_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "发布的名称。"
+        },
+        "start": {
+          "type": "object",
+          "description": "发布的开始时间。",
+          "properties": {
+            "date": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "with_time": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "published_at": {
+          "type": "object",
+          "description": "发布的时间。",
+          "properties": {
+            "date": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "with_time": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "stage": {
+          "type": "object",
+          "description": "发布的当前阶段。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "color": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "assignee": {
+          "type": "object",
+          "description": "发布负责人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "stage_transitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "stage": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          },
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          }
+                        ],
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          },
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          }
+                        ],
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          },
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          }
+                        ],
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          },
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          }
+                        ],
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "color": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          },
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          }
+                        ],
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "operated_at": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "null",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "null",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "发布的阶段流转列表。",
+          "x-inferred-from-example": true
+        },
+        "progress": {
+          "type": "number",
+          "description": "发布的进度。"
+        },
+        "changelog": {
+          "type": "string",
+          "description": "发布的发布日志。"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "发布的类别列表。",
+          "x-inferred-from-example": true
+        },
+        "created_at": {
+          "type": "number",
+          "description": "发布的创建时间。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "发布创建人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "updated_at": {
+          "type": "number",
+          "description": "发布的更新时间。"
+        },
+        "updated_by": {
+          "type": "object",
+          "description": "发布更新人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "project",
+        "name",
+        "start",
+        "published_at",
+        "stage",
+        "assignee",
+        "stage_transitions",
+        "progress",
+        "changelog",
+        "categories",
+        "created_at",
+        "created_by",
+        "updated_at",
+        "updated_by",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5eb623f6a70571487ea47001",
+          "url": "https://{rest_api_root}/v2/pjm/releases/5eb623f6a70571487ea47001",
+          "project": {
+            "id": "5eb623f6a70571487ea47000",
+            "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000",
+            "identifier": "SCR",
+            "template_type": "scrum",
+            "name": "Scrum 项目",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "name": "1.0.0",
+          "start": {
+            "date": 1565193600,
+            "with_time": 0
+          },
+          "published_at": {
+            "date": 1566403200,
+            "with_time": 0
+          },
+          "stage": {
+            "id": "5f44a8f8bb347b14b49624a1",
+            "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a1",
+            "name": "未开始",
+            "type": "pending",
+            "color": "#FA8888"
+          },
+          "assignee": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "stage_transitions": [
+            {
+              "stage": {
+                "id": "5f44a8f8bb347b14b49624a1",
+                "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a1",
+                "name": "未开始",
+                "type": "pending",
+                "color": "#FA8888"
+              },
+              "operated_at": 1565366400
+            },
+            {
+              "stage": {
+                "id": "5f44a8f8bb347b14b49624a2",
+                "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a2",
+                "name": "进行中",
+                "type": "in_progress",
+                "color": "#56ABFB"
+              },
+              "operated_at": null
+            },
+            {
+              "stage": {
+                "id": "5f44a8f8bb347b14b49624a3",
+                "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a3",
+                "name": "已发布",
+                "type": "published",
+                "color": "#73D897"
+              },
+              "operated_at": null
+            }
+          ],
+          "progress": 0,
+          "changelog": "发布日志",
+          "categories": [
+            {
+              "id": "676a460a0fd987b7ea320889",
+              "url": "https://{rest_api_root}/v2/categories/676a460a0fd987b7ea320889?entity_type=release",
+              "name": "私有部署发布"
+            }
+          ],
+          "created_at": 1565366200,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "updated_at": 1565366200,
+          "updated_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

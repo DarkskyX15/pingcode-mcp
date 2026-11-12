@@ -1,0 +1,303 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-ship-customers-customer-id",
+  "meta": {
+    "name": "部分更新一个客户",
+    "method": "PATCH",
+    "path": "/v2/ship/customers/{customer_id}",
+    "group": "产品",
+    "groupPath": [
+      "产品管理",
+      "产品"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "产品"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:product"
+      ]
+    },
+    "description": "用于部分更新一个客户。",
+    "summary": "用于部分更新一个客户。",
+    "sourceFile": "src/modules/v2/pingcode/ship/customer/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E5%AE%A2%E6%88%B7"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "type": "string",
+            "description": "客户的 id。"
+          }
+        },
+        "required": [
+          "customer_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "客户的名称。"
+          },
+          "assignee_id": {
+            "type": "string",
+            "description": "客户的负责人 id。"
+          },
+          "scale": {
+            "type": "number",
+            "description": "客户的规模。"
+          },
+          "description": {
+            "type": "string",
+            "description": "客户的描述。"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "上海 XX 新零售有限公司",
+            "assignee_id": "a0417f68e846aae315c85d24643678a9",
+            "scale": 200,
+            "description": "上海 XX 新零售有限公司的描述"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "客户的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "客户的资源地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "客户关联产品的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "客户的名称。"
+        },
+        "assignee": {
+          "type": "object",
+          "description": "客户负责人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "scale": {
+          "type": "number",
+          "description": "客户的规模。"
+        },
+        "description": {
+          "type": "string",
+          "description": "客户的描述。"
+        },
+        "created_at": {
+          "type": "number",
+          "description": "创建时间，单位为秒。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "创建人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "updated_at": {
+          "type": "number",
+          "description": "更新时间，单位为秒。"
+        },
+        "updated_by": {
+          "type": "object",
+          "description": "更新人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "is_archived": {
+          "type": "number",
+          "description": "是否已归档。"
+        },
+        "is_deleted": {
+          "type": "number",
+          "description": "是否已删除。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "product",
+        "name",
+        "assignee",
+        "scale",
+        "description",
+        "created_at",
+        "created_by",
+        "updated_at",
+        "updated_by",
+        "is_archived",
+        "is_deleted"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "64dd899e3f6383ba72ec2a0d",
+          "url": "https://{rest_api_root}/v2/ship/customers/64dd899e3f6383ba72ec2a0d",
+          "product": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e6",
+            "identifier": "SLC",
+            "name": "示例产品",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "name": "上海 XX 新零售有限公司",
+          "assignee": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "scale": 200,
+          "description": "上海 XX 新零售有限公司的描述",
+          "created_at": 1692240286,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "updated_at": 1692241286,
+          "updated_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "is_archived": 0,
+          "is_deleted": 0
+        }
+      }
+    ]
+  }
+}

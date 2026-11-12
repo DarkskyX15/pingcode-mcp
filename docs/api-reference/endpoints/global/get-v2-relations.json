@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-relations",
+  "meta": {
+    "name": "获取关联列表",
+    "method": "GET",
+    "path": "/v2/relations",
+    "group": "关联",
+    "groupPath": [
+      "全局",
+      "通用",
+      "关联"
+    ],
+    "area": "全局",
+    "tags": [
+      "关联"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖关联主体和关联目标的作用域"
+      ]
+    },
+    "description": "用于获取关联列表。  \n 主体类型与目标类型需搭配使用。  \n 工作项与工作项的关联请使用工作项内部关联接口。",
+    "summary": "用于获取关联列表。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/relation/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E5%85%B3%E8%81%94%E5%88%97%E8%A1%A8",
+    "originalUrl": "/v2/relations?principal_type={principal_type}&principal_id={principal_id}&target_type={target_type}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "principal_type": {
+            "type": "string",
+            "description": "关联主体的类型。",
+            "enum": [
+              "idea",
+              "ticket",
+              "workitem",
+              "testplan",
+              "testrun",
+              "testcase",
+              "page"
+            ]
+          },
+          "principal_id": {
+            "type": "string",
+            "description": "关联主体的 id。"
+          },
+          "target_type": {
+            "type": "string",
+            "description": "关联的目标类型。",
+            "enum": [
+              "idea",
+              "ticket",
+              "workitem",
+              "testcase",
+              "page"
+            ]
+          }
+        },
+        "required": [
+          "principal_type",
+          "principal_id",
+          "target_type"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "principal_type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "principal": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "short_id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "html_url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "whole_identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "title": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "target_type": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "target": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "short_id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "html_url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "whole_identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "title": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "关联全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "64b4d70ba368e6594360ea79",
+              "url": "https://{rest_api_root}/v2/relations/64b4d70ba368e6594360ea79",
+              "principal_type": "idea",
+              "principal": {
+                "id": "64b4d70ba368e6594360ea24",
+                "url": "https://{rest_api_root}/v2/ship/ideas/64b4d70ba368e6594360ea24",
+                "short_id": "Ogf1EYey",
+                "html_url": "https://yctech.pingcode.com/ship/ideas/Ogf1EYey",
+                "whole_identifier": "SLC-1",
+                "title": "示例需求"
+              },
+              "target_type": "ticket",
+              "target": {
+                "id": "63eca888a0a13a3efc8d4a43",
+                "url": "https://{rest_api_root}/v2/ship/tickets/63eca888a0a13a3efc8d4a43",
+                "short_id": "pdMUgQzZ",
+                "html_url": "https://yctech.pingcode.com/ship/tickets/pdMUgQzZ",
+                "whole_identifier": "SLC-T1",
+                "title": "希望新增支持第三方账号注册"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,374 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-projects-project-id-members",
+  "meta": {
+    "name": "获取项目中的成员列表",
+    "method": "GET",
+    "path": "/v2/pjm/projects/{project_id}/members",
+    "group": "项目",
+    "groupPath": [
+      "项目管理",
+      "项目"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "项目"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:project"
+      ]
+    },
+    "description": "用于分页获取某项目中的成员。",
+    "summary": "用于分页获取某项目中的成员。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/project/member/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "项目的 id。"
+          }
+        },
+        "required": [
+          "project_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "project": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "identifier": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "template_type": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "is_archived": {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "is_deleted": {
+                    "anyOf": [
+                      {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "role": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "user_group": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "项目中的成员的全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 2,
+          "values": [
+            {
+              "id": "a0417f68e846aae315c85d24643678a9",
+              "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000/members/a0417f68e846aae315c85d24643678a9",
+              "project": {
+                "id": "5eb623f6a70571487ea47000",
+                "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000",
+                "identifier": "SCR",
+                "name": "Scrum 项目",
+                "template_type": "scrum",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "type": "user",
+              "user": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "role": {
+                "id": "6422711c3f12e6c1e46d40e6",
+                "url": "https://{rest_api_root}/v2/directory/roles/6422711c3f12e6c1e46d40e6",
+                "name": "管理员"
+              }
+            },
+            {
+              "id": "63c8fb32729dee3334d96af7",
+              "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000/members/63c8fb32729dee3334d96af7",
+              "project": {
+                "id": "5eb623f6a70571487ea47000",
+                "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000",
+                "identifier": "SCR",
+                "name": "Scrum 项目",
+                "template_type": "scrum",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "type": "user_group",
+              "user_group": {
+                "id": "63c8fb32729dee3334d96af7",
+                "url": "https://{rest_api_root}/v2/directory/user_groups/63c8fb32729dee3334d96af7",
+                "name": "Open Team"
+              },
+              "role": {
+                "id": "6422711c3f12e6c1e46d40e6",
+                "url": "https://{rest_api_root}/v2/directory/roles/6422711c3f12e6c1e46d40e6",
+                "name": "管理员"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

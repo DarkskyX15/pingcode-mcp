@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-expression-evaluate",
+  "meta": {
+    "name": "计算一组表达式",
+    "method": "POST",
+    "path": "/v2/expression/evaluate",
+    "group": "表达式",
+    "groupPath": [
+      "全局",
+      "表达式"
+    ],
+    "area": "全局",
+    "tags": [
+      "表达式"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖上下文主体的作用域"
+      ]
+    },
+    "description": "用于计算一组表达式并返回其结果。计算时将结合上下文求值，表达式可引用内置资源对象、当前用户以及自定义变量。  \n 计算前会做类型校验，类型不匹配时整批失败。单次集合操作的元素数量上限为 1024。",
+    "summary": "用于计算一组表达式并返回其结果。计算时将结合上下文求值，表达式可引用内置资源对象、当前用户以及自定义变量。",
+    "sourceFile": "src/modules/v2/pingcode/global/expression/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%AE%A1%E7%AE%97%E4%B8%80%E7%BB%84%E8%A1%A8%E8%BE%BE%E5%BC%8F"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "expand": {
+            "type": "boolean",
+            "description": "是否返回表达式计算的实际消耗。该值默认为 `false`。仅当值为 `true` 时，响应中才会包含 `metrics`。"
+          }
+        }
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "expressions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "需要计算的表达式列表，数量范围为 1～16 条，每条长度为 1～8192 个字符。",
+            "x-inferred-from-example": true
+          },
+          "context": {
+            "type": "object",
+            "description": "表达式计算时使用的上下文。上下文中的对象可在表达式中以其键名直接引用，例如 `workitem.whole_identifier`、`user.id`、`custom.config.value.enabled`。 值得注意的是，在 `context` 中的特定属性键值对在运行时将被自动补全为对应资源的全量结构，例如：`{ context: { workitem: { id: '5edca524cad2fa1125cb0630' } } }` 在运行时将被自动补全为 `{ context: { workitem: { …工作项全量结构… } } }`，类似效果的属性键包括：`product`、`ticket`、`idea`、`project`、`workitem`、`library`、`testcase`、`testrun`、`space`、`page`。另外，在自动补全资源时要求具备对应资源的作用域。例如 `context.workitem` 要求作用域包括 `pcp:read:pjm:workitem`。未传入或值为 `null` 的内置资源，在表达式中取值为 `null`，可通过 `workitem == null` 进行判断。 当前用户 `user` 由系统根据调用令牌自动注入，无需也不支持通过请求传入；若请求中包含 `context.user`，该值将被忽略。`user` 仅包含 `id`、`locale`、`timezone` 三个字段。使用用户令牌调用时，`user` 为当前用户，可在表达式中通过 `user.id`、`user.locale`、`user.timezone` 引用；使用企业令牌调用时，`user` 为 `null`，可通过 `user == null` 进行判断。 自定义变量统一通过 `context.custom` 传入，详见该参数说明。",
+            "properties": {
+              "custom": {
+                "type": "object",
+                "description": "自定义变量的键值对集合。表达式中通过 `custom` 引用，例如 `custom.order.amount`。嵌套深度不超过 8 层，JSON 序列化后不超过 65536 个字符，对象或数组的元素数量不超过 1024。键名不能占用内置上下文名称。",
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      },
+                      "value": {
+                        "type": "object",
+                        "properties": {
+                          "enabled": {
+                            "type": "boolean",
+                            "x-inferred-from-example": true
+                          },
+                          "threshold": {
+                            "type": "number",
+                            "x-inferred-from-example": true
+                          }
+                        },
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "order": {
+                    "type": "object",
+                    "properties": {
+                      "amount": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "status": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "workitem": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "expressions"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "expressions": [
+              "({ key: workitem.whole_identifier, type: workitem.type, done: workitem.state.name == '已完成', extra: custom.config.value.enabled })",
+              "custom.order.amount * 10"
+            ],
+            "context": {
+              "workitem": {
+                "id": "5edca524cad2fa112b06305c"
+              },
+              "custom": {
+                "config": {
+                  "type": "json",
+                  "value": {
+                    "enabled": true,
+                    "threshold": 3
+                  }
+                },
+                "order": {
+                  "amount": 100,
+                  "status": "open"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "object",
+          "items": {
+            "type": "object"
+          },
+          "description": "表达式计算结果列表。",
+          "properties": {
+            "value": {
+              "type": "object",
+              "description": "表达式的计算结果。该值可以是任意 JSON。"
+            },
+            "metrics": {
+              "type": "object",
+              "description": "表达式计算的实际消耗。仅当查询参数 `expand` 为 `true` 时返回。",
+              "properties": {
+                "steps": {
+                  "type": "object",
+                  "description": "表达式计算的步骤数。",
+                  "properties": {
+                    "value": {
+                      "type": "number",
+                      "description": "实际执行的步骤数。"
+                    },
+                    "limit": {
+                      "type": "number",
+                      "description": "允许的步骤数上限，默认为 8192。"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "limit"
+                  ]
+                },
+                "expensive_operations": {
+                  "type": "object",
+                  "description": "表达式计算的高开销操作数。",
+                  "properties": {
+                    "value": {
+                      "type": "number",
+                      "description": "实际执行的高开销操作数。"
+                    },
+                    "limit": {
+                      "type": "number",
+                      "description": "允许的高开销操作数上限，默认为 8。"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "limit"
+                  ]
+                }
+              },
+              "required": [
+                "steps",
+                "expensive_operations"
+              ]
+            }
+          },
+          "required": [
+            "value"
+          ]
+        }
+      },
+      "required": [
+        "results"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例（expand 为 true）：",
+        "type": "json",
+        "value": {
+          "results": [
+            {
+              "value": {
+                "key": "SCR-1",
+                "type": "epic",
+                "done": true,
+                "extra": true
+              },
+              "metrics": {
+                "steps": {
+                  "value": 24,
+                  "limit": 8192
+                },
+                "expensive_operations": {
+                  "value": 3,
+                  "limit": 8
+                }
+              }
+            },
+            {
+              "value": 1000,
+              "metrics": {
+                "steps": {
+                  "value": 6,
+                  "limit": 8192
+                },
+                "expensive_operations": {
+                  "value": 0,
+                  "limit": 8
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

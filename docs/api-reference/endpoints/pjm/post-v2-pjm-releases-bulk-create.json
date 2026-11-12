@@ -1,0 +1,627 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-releases-bulk-create",
+  "meta": {
+    "name": "批量创建发布",
+    "method": "POST",
+    "path": "/v2/pjm/releases/bulk/create",
+    "group": "发布",
+    "groupPath": [
+      "项目管理",
+      "发布"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "发布"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:release"
+      ]
+    },
+    "description": "用于批量创建发布，单次最多支持 100 条。  \n接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。  \n响应按请求条目顺序返回对应结果，通过 `state`（`success` / `failure`）判断操作结果，失败时通过 `message` 返回失败原因。",
+    "summary": "用于批量创建发布，单次最多支持 100 条。接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。响应按请求条目顺序返回对应结果，通过 state（success / failure）判断操作结果，失败时通过 message 返回失败原因。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/release/release/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E5%8F%91%E5%B8%83"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "releases": {
+            "type": "object",
+            "items": {
+              "type": "object"
+            },
+            "description": "需要批量创建的发布。该参数是一个对象数组（数组内对象不得超过 100 个）。",
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "description": "发布所属项目的 id。"
+              },
+              "name": {
+                "type": "string",
+                "description": "发布的名称。"
+              },
+              "start": {
+                "type": "object",
+                "description": "发布的开始时间。"
+              },
+              "published_at": {
+                "type": "object",
+                "description": "发布的时间。"
+              },
+              "assignee_id": {
+                "type": "string",
+                "description": "发布负责人的 id。"
+              },
+              "stage_id": {
+                "type": "string",
+                "description": "发布阶段的 id。"
+              },
+              "category_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "发布类别的 id 列表。"
+              }
+            },
+            "required": [
+              "project_id",
+              "name",
+              "start",
+              "published_at"
+            ]
+          }
+        },
+        "required": [
+          "releases"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "releases": [
+              {
+                "project_id": "5eb623f6a70571487ea47000",
+                "name": "1.0.0",
+                "start": {
+                  "date": 1565193600,
+                  "with_time": 0
+                },
+                "published_at": {
+                  "date": 1566403200,
+                  "with_time": 0
+                },
+                "assignee_id": "a0417f68e846aae315c85d24643678a9",
+                "stage_id": "5f44a8f8bb347b14b49624a1",
+                "category_ids": [
+                  "676a460a0fd987b7ea320889"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "description": "操作状态。",
+            "enum": [
+              "success",
+              "failure"
+            ]
+          },
+          "release": {
+            "type": "object",
+            "description": "发布的全量结构数据。操作成功时返回。",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "project": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "template_type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "is_archived": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "is_deleted": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "start": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "published_at": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "stage": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "color": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "assignee": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "stage_transitions": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "stage": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "anyOf": [
+                            {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                },
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                }
+                              ],
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        },
+                        "url": {
+                          "anyOf": [
+                            {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                },
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                }
+                              ],
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        },
+                        "name": {
+                          "anyOf": [
+                            {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                },
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                }
+                              ],
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        },
+                        "type": {
+                          "anyOf": [
+                            {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                },
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                }
+                              ],
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        },
+                        "color": {
+                          "anyOf": [
+                            {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                },
+                                {
+                                  "type": "string",
+                                  "x-inferred-from-example": true
+                                }
+                              ],
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "string",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    },
+                    "operated_at": {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "null",
+                              "x-inferred-from-example": true
+                            },
+                            {
+                              "type": "null",
+                              "x-inferred-from-example": true
+                            }
+                          ],
+                          "x-inferred-from-example": true
+                        },
+                        {
+                          "type": "null",
+                          "x-inferred-from-example": true
+                        }
+                      ],
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "progress": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "changelog": {
+                "type": "null",
+                "x-inferred-from-example": true
+              },
+              "categories": {
+                "type": "array",
+                "x-inferred-from-example": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "url": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    }
+                  },
+                  "x-inferred-from-example": true
+                }
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "created_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "updated_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "updated_by": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "display_name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_deleted": {
+                "type": "number",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "失败原因。操作失败时返回。"
+          }
+        },
+        "required": [
+          "state"
+        ]
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "state": "success",
+            "release": {
+              "id": "5eb623f6a70571487ea47001",
+              "url": "https://{rest_api_root}/v2/pjm/releases/5eb623f6a70571487ea47001",
+              "project": {
+                "id": "5eb623f6a70571487ea47000",
+                "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000",
+                "identifier": "SCR",
+                "template_type": "scrum",
+                "name": "Scrum 项目",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "name": "1.0.0",
+              "start": {
+                "date": 1565193600,
+                "with_time": 0
+              },
+              "published_at": {
+                "date": 1566403200,
+                "with_time": 0
+              },
+              "stage": {
+                "id": "5f44a8f8bb347b14b49624a1",
+                "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a1",
+                "name": "未开始",
+                "type": "pending",
+                "color": "#FA8888"
+              },
+              "assignee": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "stage_transitions": [
+                {
+                  "stage": {
+                    "id": "5f44a8f8bb347b14b49624a1",
+                    "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a1",
+                    "name": "未开始",
+                    "type": "pending",
+                    "color": "#FA8888"
+                  },
+                  "operated_at": null
+                },
+                {
+                  "stage": {
+                    "id": "5f44a8f8bb347b14b49624a2",
+                    "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a2",
+                    "name": "进行中",
+                    "type": "in_progress",
+                    "color": "#56ABFB"
+                  },
+                  "operated_at": null
+                },
+                {
+                  "stage": {
+                    "id": "5f44a8f8bb347b14b49624a3",
+                    "url": "https://{rest_api_root}/v2/pjm/release_stages/5f44a8f8bb347b14b49624a3",
+                    "name": "已发布",
+                    "type": "published",
+                    "color": "#73D897"
+                  },
+                  "operated_at": null
+                }
+              ],
+              "progress": 0,
+              "changelog": null,
+              "categories": [
+                {
+                  "id": "676a460a0fd987b7ea320889",
+                  "url": "https://{rest_api_root}/v2/categories/676a460a0fd987b7ea320889?entity_type=release",
+                  "name": "私有部署发布"
+                }
+              ],
+              "created_at": 1565366200,
+              "created_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "updated_at": 1565366200,
+              "updated_by": {
+                "id": "a0417f68e846aae315c85d24643678a9",
+                "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+                "name": "john",
+                "display_name": "John",
+                "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+              },
+              "is_deleted": 0
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

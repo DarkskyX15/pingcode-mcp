@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-directory-users",
+  "meta": {
+    "name": "创建一个企业成员",
+    "method": "POST",
+    "path": "/v2/directory/users",
+    "group": "企业成员",
+    "groupPath": [
+      "全局",
+      "组织",
+      "企业成员"
+    ],
+    "area": "全局",
+    "tags": [
+      "企业成员"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:global:team"
+      ]
+    },
+    "description": "用于创建一个企业成员。",
+    "summary": "用于创建一个企业成员。",
+    "sourceFile": "src/modules/v2/pingcode/global/organization/user/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BC%81%E4%B8%9A%E6%88%90%E5%91%98"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "企业成员的名称，在一个企业中这个名称是唯一的。"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "企业成员的显示名。"
+          },
+          "email": {
+            "type": "string",
+            "description": "企业成员的邮箱地址，在一个企业中这个邮箱地址是唯一的，邮箱地址和手机号其中一个必填。"
+          },
+          "mobile": {
+            "type": "string",
+            "description": "企业成员的手机号，在一个企业中这个手机号是唯一，邮箱地址和手机号其中一个必填。"
+          },
+          "password": {
+            "type": "string",
+            "description": "企业成员的密码，长度为 6～200 的字符串(包含 6 和 200)。"
+          },
+          "department_id": {
+            "type": "string",
+            "description": "企业成员的部门 id。"
+          },
+          "job_id": {
+            "type": "string",
+            "description": "企业成员的职位 id。"
+          },
+          "employee_number": {
+            "type": "string",
+            "description": "企业成员的工号。"
+          }
+        },
+        "required": [
+          "name",
+          "display_name"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "john",
+            "display_name": "John",
+            "email": "john@email.com",
+            "mobile": "15000000000",
+            "password": "123456",
+            "department_id": "6422711c3f12e6c1e46d40e6",
+            "job_id": "6440c881c56f557eb1aff6e5",
+            "employee_number": "zxv"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "企业成员的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "企业成员的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "企业成员的名称。"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "企业成员的显示名。"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "企业成员的头像地址。"
+        },
+        "department": {
+          "type": "object",
+          "description": "企业成员的部门。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "job": {
+          "type": "object",
+          "description": "企业成员的职位。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "email": {
+          "type": "string",
+          "description": "企业成员的邮箱地址。"
+        },
+        "mobile": {
+          "type": "string",
+          "description": "企业成员的手机号。"
+        },
+        "status": {
+          "type": "string",
+          "description": "企业成员的状态。",
+          "enum": [
+            "enabled",
+            "disabled",
+            "init"
+          ]
+        },
+        "employee_number": {
+          "type": "string",
+          "description": "企业成员的工号。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "display_name",
+        "avatar",
+        "department",
+        "job",
+        "email",
+        "mobile",
+        "status",
+        "employee_number"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "a0417f68e846aae315c85d24643678a9",
+          "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+          "name": "john",
+          "display_name": "John",
+          "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png",
+          "department": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/directory/departments/6422711c3f12e6c1e46d40e6",
+            "name": "技术支持"
+          },
+          "job": {
+            "id": "6440c881c56f557eb1aff6e5",
+            "url": "https://{rest_api_root}/v2/directory/jobs/6440c881c56f557eb1aff6e5",
+            "name": "后端工程师"
+          },
+          "email": "john@email.com",
+          "mobile": "15000000000",
+          "status": "init",
+          "employee_number": "zxv"
+        }
+      }
+    ]
+  }
+}

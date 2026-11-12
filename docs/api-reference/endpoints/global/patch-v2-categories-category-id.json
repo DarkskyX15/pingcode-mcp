@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-categories-category-id",
+  "meta": {
+    "name": "部分更新一个类别",
+    "method": "PATCH",
+    "path": "/v2/categories/{category_id}",
+    "group": "类别与分组",
+    "groupPath": [
+      "全局",
+      "通用",
+      "类别与分组"
+    ],
+    "area": "全局",
+    "tags": [
+      "类别与分组"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖 entity_type 对应的作用域"
+      ]
+    },
+    "description": "用于部分更新一个类别。",
+    "summary": "用于部分更新一个类别。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/category/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%88%AB",
+    "originalUrl": "/v2/categories/{category_id}?entity_type={entity_type}"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "category_id": {
+            "type": "string",
+            "description": "类别的 id。"
+          }
+        },
+        "required": [
+          "category_id"
+        ]
+      }
+    },
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "description": "类别所属实体类型。例如： 在 `entity_type` 为 `sprint` 时，更新迭代的类别，此时要求作用域包括 `pcp:write:pjm:sprint`；",
+            "enum": [
+              "sprint",
+              "release",
+              "testplan",
+              "project",
+              "library",
+              "product"
+            ]
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "类别的名称。"
+          },
+          "section_id": {
+            "type": "string",
+            "description": "类别所属分组 id。仅 `entity_type` 为 `sprint`、`release` 或 `testplan` 时有效。"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    }
+  }
+}

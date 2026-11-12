@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-pjm-projects-project-id-project-properties",
+  "meta": {
+    "name": "获取项目中的项目属性列表",
+    "method": "GET",
+    "path": "/v2/pjm/projects/{project_id}/project_properties",
+    "group": "项目",
+    "groupPath": [
+      "项目管理",
+      "项目"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "项目"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:pjm:configuration"
+      ]
+    },
+    "description": "用于分页获取某项目中的项目属性。",
+    "summary": "用于分页获取某项目中的项目属性。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/project/project-property/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "项目的 id。"
+          }
+        },
+        "required": [
+          "project_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "project": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "template_type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "is_archived": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "is_deleted": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "property": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "options": {
+                    "type": "array",
+                    "x-inferred-from-example": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        },
+                        "text": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      },
+                      "x-inferred-from-example": true
+                    }
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "项目中的项目属性全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "risk",
+              "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000/project_properties/risk",
+              "project": {
+                "id": "5eb623f6a70571487ea47000",
+                "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000",
+                "identifier": "SCR",
+                "name": "Scrum 项目",
+                "template_type": "scrum",
+                "is_archived": 0,
+                "is_deleted": 0
+              },
+              "property": {
+                "id": "risk",
+                "url": "https://{rest_api_root}/v2/pjm/project_properties/risk",
+                "name": "项目风险",
+                "type": "select",
+                "options": [
+                  {
+                    "id": "5efb1859110533727a82c603",
+                    "text": "高"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

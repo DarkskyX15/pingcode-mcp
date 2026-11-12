@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-directory-user-groups",
+  "meta": {
+    "name": "创建一个团队",
+    "method": "POST",
+    "path": "/v2/directory/user_groups",
+    "group": "团队",
+    "groupPath": [
+      "全局",
+      "组织",
+      "团队"
+    ],
+    "area": "全局",
+    "tags": [
+      "团队"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:global:team"
+      ]
+    },
+    "description": "用于创建一个团队。",
+    "summary": "用于创建一个团队。",
+    "sourceFile": "src/modules/v2/pingcode/global/organization/group/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%9B%A2%E9%98%9F"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "团队的名称，在一个企业中这个名称是唯一的。"
+          },
+          "visibility": {
+            "type": "string",
+            "description": "团队的可见范围。",
+            "enum": [
+              "private",
+              "public"
+            ],
+            "default": "private"
+          },
+          "description": {
+            "type": "string",
+            "description": "团队的描述。"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "Open Team",
+            "visibility": "private",
+            "description": "This is Open Team."
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "团队的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "团队的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "团队的名称。"
+        },
+        "visibility": {
+          "type": "string",
+          "description": "团队的可见性。",
+          "enum": [
+            "private",
+            "public"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "团队的描述。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "visibility",
+        "description"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63c8fb32729dee3334d96af7",
+          "url": "https://{rest_api_root}/v2/directory/user_groups/63c8fb32729dee3334d96af7",
+          "name": "Open Team",
+          "visibility": "private",
+          "description": "This is Open Team."
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-entity-properties",
+  "meta": {
+    "name": "向实体中添加一个扩展属性",
+    "method": "POST",
+    "path": "/v2/entity_properties",
+    "group": "实体扩展属性",
+    "groupPath": [
+      "全局",
+      "通用",
+      "实体扩展属性"
+    ],
+    "area": "全局",
+    "tags": [
+      "实体扩展属性"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖所属实体的作用域"
+      ]
+    },
+    "description": "用于向指定实体添加扩展属性。  \n value 为 JSON 且不超过 2KB、嵌套深度不超过 8 层，可通过 overwrite 覆盖已存在的 property_key。",
+    "summary": "用于向指定实体添加扩展属性。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/entity-property/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%90%91%E5%AE%9E%E4%BD%93%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%89%A9%E5%B1%95%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "description": "实体类型。例如： 在 `entity_type` 为 `workitem` 时，向工作项添加扩展属性，此时要求作用域包括 `pcp:write:pjm:workitem`；",
+            "enum": [
+              "workitem",
+              "idea",
+              "ticket",
+              "testcase",
+              "product",
+              "project",
+              "library",
+              "space",
+              "page"
+            ]
+          },
+          "entity_id": {
+            "type": "string",
+            "description": "实体的 id。"
+          },
+          "property_key": {
+            "type": "string",
+            "description": "属性键。最大长度 256。仅允许字母、数字、冒号、下划线、点、连字符（`a-zA-Z0-9:._-`）。用于显示在实体的 `entity_properties` 属性中。"
+          },
+          "value": {
+            "type": "object",
+            "description": "属性值。`value` 为任意合法 JSON，不超过 2KB，嵌套深度不超过 8 层.",
+            "properties": {
+              "score": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "risk": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "overwrite": {
+            "type": "number",
+            "description": "当相同 `property_key` 已存在时是否覆盖。1 表示覆盖，0 表示不覆盖。"
+          }
+        },
+        "required": [
+          "entity_type",
+          "entity_id",
+          "property_key",
+          "value",
+          "overwrite"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "entity_type": "workitem",
+            "entity_id": "6efca131b06329c524cdd2fb",
+            "property_key": "entity_property_key_a",
+            "value": {
+              "score": 95,
+              "risk": "low"
+            },
+            "overwrite": 1
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "属性 id。"
+        },
+        "property_key": {
+          "type": "string",
+          "description": "属性键。用于显示在实体的 `entity_properties` 属性中。"
+        },
+        "url": {
+          "type": "string",
+          "description": "属性资源地址。"
+        },
+        "value": {
+          "type": "object",
+          "description": "属性值。",
+          "properties": {
+            "score": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "risk": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "property_key",
+        "url",
+        "value"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "entity_property_key_a",
+          "url": "https://{rest_api_root}/v2/entity_properties/entity_property_key_a?entity_type=workitem&entity_id=6efca131b06329c524cdd2fb",
+          "property_key": "entity_property_key_a",
+          "value": {
+            "score": 95,
+            "risk": "low"
+          }
+        }
+      }
+    ]
+  }
+}

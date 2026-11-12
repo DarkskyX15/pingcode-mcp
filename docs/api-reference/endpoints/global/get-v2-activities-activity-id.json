@@ -1,0 +1,236 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-activities-activity-id",
+  "meta": {
+    "name": "获取一条活动记录",
+    "method": "GET",
+    "path": "/v2/activities/{activity_id}",
+    "group": "活动记录",
+    "groupPath": [
+      "全局",
+      "通用",
+      "活动记录"
+    ],
+    "area": "全局",
+    "tags": [
+      "活动记录"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖所属主体的作用域"
+      ]
+    },
+    "description": "用于按 id 获取一条活动记录。  \n 需通过 principal_type 指定所属主体。",
+    "summary": "用于按 id 获取一条活动记录。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/activity/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E6%9D%A1%E6%B4%BB%E5%8A%A8%E8%AE%B0%E5%BD%95",
+    "originalUrl": "/v2/activities/{activity_id}?principal_type={principal_type}&principal_id={principal_id}"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "activity_id": {
+            "type": "string",
+            "description": "活动记录的 id。"
+          }
+        },
+        "required": [
+          "activity_id"
+        ]
+      }
+    },
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "principal_type": {
+            "type": "string",
+            "description": "主体的类型。例如： 在 `principal_type` 为 `workitem` 时，获取工作项的活动记录，此时要求作用域包括 `pcp:read:pjm:workitem`；",
+            "enum": [
+              "workitem",
+              "testrun",
+              "testcase",
+              "idea",
+              "ticket"
+            ]
+          },
+          "principal_id": {
+            "type": "string",
+            "description": "主体的 id。"
+          }
+        },
+        "required": [
+          "principal_type",
+          "principal_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "活动记录的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "活动记录的资源地址。"
+        },
+        "template": {
+          "type": "string",
+          "description": "活动记录的模板。"
+        },
+        "type": {
+          "type": "string",
+          "description": "活动记录的操作类型。"
+        },
+        "summary": {
+          "type": "string",
+          "description": "活动记录的摘要。"
+        },
+        "content": {
+          "type": "object",
+          "description": "活动记录的内容。",
+          "properties": {
+            "property_key": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "origin": {
+              "type": "null",
+              "x-inferred-from-example": true
+            },
+            "target": {
+              "type": "array",
+              "x-inferred-from-example": true,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "client": {
+          "type": "string",
+          "description": "活动记录的客户端。",
+          "enum": [
+            "\"unknown\"",
+            "\"web\"",
+            "\"mail\"",
+            "\"iphone\"",
+            "\"ipad\"",
+            "\"android\"",
+            "\"android_hd\"",
+            "\"winphone\"",
+            "\"win8\"",
+            "\"wap\"",
+            "\"weixin\"",
+            "\"api\"",
+            "\"hook\"",
+            "\"fetch\"",
+            "\"windows\"",
+            "\"mac\"",
+            "\"h5\"",
+            "\"flow\""
+          ]
+        },
+        "created_at": {
+          "type": "number",
+          "description": "活动记录的创建时间。"
+        },
+        "created_by": {
+          "type": "object",
+          "description": "活动记录的创建者。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "template",
+        "type",
+        "summary",
+        "content",
+        "client",
+        "created_at",
+        "created_by"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "694ae20fdb8e0baef70f7ddb",
+          "url": "https://{rest_api_root}/v2/activities/694ae20fdb8e0baef70f7ddb?principal_type=idea&principal_id=683562430d684517b06b814b",
+          "template": "update-property",
+          "type": "update",
+          "summary": "修改了引用多选",
+          "content": {
+            "property_key": "yinyongduoxuan",
+            "origin": null,
+            "target": [
+              {
+                "id": "65fa797d8f0358d376233220",
+                "name": "REST API 产品"
+              }
+            ]
+          },
+          "client": "web",
+          "created_at": 1766515215,
+          "created_by": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          }
+        }
+      }
+    ]
+  }
+}

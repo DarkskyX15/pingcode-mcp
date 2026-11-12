@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-devops-users",
+  "meta": {
+    "name": "获取托管平台用户列表",
+    "method": "GET",
+    "path": "/v2/devops/users",
+    "group": "托管平台用户",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "托管平台用户"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "托管平台用户"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:read:devops:code"
+      ]
+    },
+    "description": "用于分页获取托管平台用户列表。",
+    "summary": "用于分页获取托管平台用户列表。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8",
+    "originalUrl": "/v2/devops/users?product_id={product_id}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "代码托管平台的 id。"
+          },
+          "name": {
+            "type": "string",
+            "description": "用户名。"
+          }
+        },
+        "required": [
+          "product_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "product": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "display_name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "avatar_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "托管平台用户全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "5666aea91f99e33cb7c44964",
+              "url": "https://{rest_api_root}/v2/devops/users/5666aea91f99e33cb7c44964",
+              "html_url": "https://github.com/terrylee",
+              "product": {
+                "id": "564587fe700d43b81b080765",
+                "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+                "name": "Github",
+                "type": "github"
+              },
+              "name": "terry",
+              "display_name": "Terry",
+              "avatar_url": "https://avatars2.githubusercontent.com/u/694592?v=4"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

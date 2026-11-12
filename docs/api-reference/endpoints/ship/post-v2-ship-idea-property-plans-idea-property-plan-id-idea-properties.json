@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-ship-idea-property-plans-idea-property-plan-id-idea-properties",
+  "meta": {
+    "name": "向需求属性方案中添加一个属性",
+    "method": "POST",
+    "path": "/v2/ship/idea_property_plans/{idea_property_plan_id}/idea_properties",
+    "group": "需求配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "需求配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "需求配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:configuration"
+      ]
+    },
+    "description": "用于向需求属性方案中添加一个属性。",
+    "summary": "用于向需求属性方案中添加一个属性。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/idea/property-plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%90%91%E9%9C%80%E6%B1%82%E5%B1%9E%E6%80%A7%E6%96%B9%E6%A1%88%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "idea_property_plan_id": {
+            "type": "string",
+            "description": "需求属性方案的 id。"
+          }
+        },
+        "required": [
+          "idea_property_plan_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "property_id": {
+            "type": "string",
+            "description": "需求属性的 id。"
+          }
+        },
+        "required": [
+          "property_id"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "property_id": "solution"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "属性方案中需求属性关联的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "属性方案中需求属性关联的资源地址。"
+        },
+        "property_plan": {
+          "type": "object",
+          "description": "需求属性方案的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "property": {
+          "type": "object",
+          "description": "需求属性的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "property_plan",
+        "property"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "solution",
+          "url": "https://{rest_api_root}/v2/ship/idea_property_plans/5d7a21f19ef715269ae90c50/idea_properties/solution",
+          "property_plan": {
+            "id": "5d7a21f19ef715269ae90c50",
+            "url": "https://{rest_api_root}/v2/ship/idea_property_plans/5d7a21f19ef715269ae90c50"
+          },
+          "property": {
+            "id": "solution",
+            "url": "https://{rest_api_root}/v2/ship/idea_properties/solution",
+            "name": "解决方案",
+            "type": "select"
+          }
+        }
+      }
+    ]
+  }
+}

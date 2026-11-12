@@ -1,0 +1,251 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-expression-analyse",
+  "meta": {
+    "name": "分析一组表达式",
+    "method": "POST",
+    "path": "/v2/expression/analyse",
+    "group": "表达式",
+    "groupPath": [
+      "全局",
+      "表达式"
+    ],
+    "area": "全局",
+    "tags": [
+      "表达式"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖上下文主体的作用域"
+      ]
+    },
+    "description": "用于分析和校验一组表达式的语法。分析时将结合上下文进行类型推断，表达式可引用内置资源对象、当前用户以及自定义变量。",
+    "summary": "用于分析和校验一组表达式的语法。分析时将结合上下文进行类型推断，表达式可引用内置资源对象、当前用户以及自定义变量。",
+    "sourceFile": "src/modules/v2/pingcode/global/expression/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%86%E6%9E%90%E4%B8%80%E7%BB%84%E8%A1%A8%E8%BE%BE%E5%BC%8F"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "expressions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "需要分析的表达式列表，数量范围为 1～16 条，每条长度为 1～8192 个字符。",
+            "x-inferred-from-example": true
+          },
+          "context": {
+            "type": "object",
+            "description": "表达式分析时使用的上下文。上下文中的对象可在表达式中以其键名直接引用，例如： `workitem.state.type`、`user.id`、`custom.order.amount`。 值得注意的是，在 `context` 中的特定属性键值对在运行时将被自动补全为对应资源的全量结构，例如：`{ context: { workitem: { id: '5edca524cad2fa1125cb0630' } } }` 在运行时将被自动补全为 `{ context: { workitem: { …工作项全量结构… } } }`，类似效果的属性键包括：`product`、`ticket`、`idea`、`project`、`workitem`、`library`、`testcase`、`testrun`、`space`、`page`。另外，在自动补全资源时要求具备对应资源的作用域。例如 `context.workitem` 要求作用域包括 `pcp:read:pjm:workitem`。未传入或值为 `null` 的内置资源，在表达式中取值为 `null`，可通过 `workitem == null` 进行判断。 当前用户 `user` 由系统根据调用令牌自动注入，无需也不支持通过请求传入；若请求中包含 `context.user`，该值将被忽略。`user` 仅包含 `id`、`locale`、`timezone` 三个字段。使用用户令牌调用时，`user` 为当前用户，可在表达式中通过 `user.id`、`user.locale`、`user.timezone` 引用；使用企业令牌调用时，`user` 为 `null`，可通过 `user == null` 进行判断。 自定义变量统一通过 `context.custom` 传入，详见该参数说明。",
+            "properties": {
+              "custom": {
+                "type": "object",
+                "description": "自定义变量的键值对集合。表达式中通过 `custom` 引用，例如 `custom.order.amount`。嵌套深度不超过 8 层，JSON 序列化后不超过 65536 个字符，对象或数组的元素数量不超过 1024。键名不能占用内置上下文名称。",
+                "properties": {
+                  "order": {
+                    "type": "object",
+                    "properties": {
+                      "amount": {
+                        "type": "number",
+                        "x-inferred-from-example": true
+                      },
+                      "status": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "workitem": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "expressions"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "expressions": [
+              "workitem.state.type == 'pending' && workitem.tags.some(t => t.name == '标签-1')",
+              "user != null && user.id == workitem.assignee.id",
+              "custom.order.amount + '元'"
+            ],
+            "context": {
+              "workitem": {
+                "id": "5edca524cad2fa112b06305c"
+              },
+              "custom": {
+                "order": {
+                  "amount": 100,
+                  "status": "open"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "object",
+          "items": {
+            "type": "object"
+          },
+          "description": "表达式分析结果列表。",
+          "properties": {
+            "expression": {
+              "type": "string",
+              "description": "被分析的表达式。"
+            },
+            "valid": {
+              "type": "boolean",
+              "description": "表达式是否有效。"
+            },
+            "type": {
+              "type": "string",
+              "description": "表达式推断出的结果类型。"
+            },
+            "diagnostics": {
+              "type": "object",
+              "items": {
+                "type": "object"
+              },
+              "description": "表达式的诊断信息列表。",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "诊断码。"
+                },
+                "severity": {
+                  "type": "string",
+                  "description": "诊断级别。"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "诊断信息。"
+                },
+                "line": {
+                  "type": "number",
+                  "description": "错误所在行号。"
+                },
+                "column": {
+                  "type": "number",
+                  "description": "错误所在列号。"
+                },
+                "start": {
+                  "type": "number",
+                  "description": "错误起始位置。"
+                },
+                "end": {
+                  "type": "number",
+                  "description": "错误结束位置。"
+                },
+                "source_line": {
+                  "type": "string",
+                  "description": "出错的源码行。"
+                },
+                "node_type": {
+                  "type": "string",
+                  "description": "出错的语法节点类型。"
+                }
+              },
+              "required": [
+                "code",
+                "severity",
+                "message",
+                "line",
+                "column",
+                "start",
+                "end",
+                "source_line",
+                "node_type"
+              ]
+            }
+          },
+          "required": [
+            "expression",
+            "valid",
+            "type",
+            "diagnostics"
+          ]
+        }
+      },
+      "required": [
+        "results"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "results": [
+            {
+              "expression": "workitem.state.type == 'pending' && workitem.tags.some(t => t.name == '标签-1')",
+              "valid": true,
+              "type": "Boolean",
+              "diagnostics": []
+            },
+            {
+              "expression": "user != null && user.id == workitem.assignee.id",
+              "valid": true,
+              "type": "Boolean",
+              "diagnostics": []
+            },
+            {
+              "expression": "custom.order.amount + '元'",
+              "valid": false,
+              "type": "Unknown",
+              "diagnostics": [
+                {
+                  "code": "type-mismatch",
+                  "severity": "error",
+                  "message": "Operator + cannot be applied to Number and String",
+                  "line": 1,
+                  "column": 14,
+                  "start": 13,
+                  "end": 14,
+                  "source_line": "order.amount + '元'",
+                  "node_type": "BinaryExpression"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

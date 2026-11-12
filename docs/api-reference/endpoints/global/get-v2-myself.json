@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-myself",
+  "meta": {
+    "name": "获取个人信息",
+    "method": "GET",
+    "path": "/v2/myself",
+    "group": "个人",
+    "groupPath": [
+      "全局",
+      "个人"
+    ],
+    "area": "全局",
+    "tags": [
+      "个人"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:account:personal"
+      ]
+    },
+    "description": "用于获取当前用户的个人信息。",
+    "summary": "用于获取当前用户的个人信息。",
+    "sourceFile": "src/modules/v2/pingcode/global/myself/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF"
+  },
+  "request": {},
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "个人的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "个人的地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "个人的名称。"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "个人的显示名。"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "个人的头像。"
+        },
+        "department": {
+          "type": "object",
+          "description": "个人的部门。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "job": {
+          "type": "object",
+          "description": "个人的职位。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "email": {
+          "type": "string",
+          "description": "个人的邮箱。"
+        },
+        "mobile": {
+          "type": "string",
+          "description": "个人的手机号。"
+        },
+        "status": {
+          "type": "string",
+          "description": "个人的状态。"
+        },
+        "employee_number": {
+          "type": "string",
+          "description": "个人的工号。"
+        },
+        "locale": {
+          "type": "string",
+          "description": "个人的语言偏好。"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "个人的时区偏好。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "display_name",
+        "avatar",
+        "department",
+        "job",
+        "email",
+        "mobile",
+        "status",
+        "employee_number",
+        "locale",
+        "timezone"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "a0417f68e846aae315c85d24643678a9",
+          "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+          "name": "john",
+          "display_name": "John",
+          "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png",
+          "department": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/directory/departments/6422711c3f12e6c1e46d40e6",
+            "name": "技术支持"
+          },
+          "job": {
+            "id": "6440c881c56f557eb1aff6e5",
+            "url": "https://{rest_api_root}/v2/directory/jobs/6440c881c56f557eb1aff6e5",
+            "name": "后端工程师"
+          },
+          "email": "terry@pingcode.com",
+          "mobile": "15000000000",
+          "status": "enabled",
+          "employee_number": "zxv",
+          "locale": "zh-CN",
+          "timezone": "Asia/Shanghai"
+        }
+      }
+    ]
+  }
+}

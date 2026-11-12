@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-testhub-testcases-search",
+  "meta": {
+    "name": "搜索用例列表",
+    "method": "POST",
+    "path": "/v2/testhub/testcases/search",
+    "group": "用例",
+    "groupPath": [
+      "测试管理",
+      "用例"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "用例"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:testhub:testcase"
+      ]
+    },
+    "description": "用于按类 MongoDB 结构化条件搜索用例。  \n 默认不含已删除/已归档项。",
+    "summary": "用于按类 MongoDB 结构化条件搜索用例。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/case/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%90%9C%E7%B4%A2%E7%94%A8%E4%BE%8B%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "description": "搜索模式。`query` 表示基于 `payload.filter` 的结构化条件查询。",
+            "enum": [
+              "query"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "description": "搜索参数。",
+            "properties": {
+              "filter": {
+                "type": "object",
+                "description": "过滤条件。",
+                "properties": {
+                  "title": {
+                    "type": "object",
+                    "properties": {
+                      "contains": {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  },
+                  "library.id": {
+                    "type": "object",
+                    "properties": {
+                      "in": {
+                        "type": "array",
+                        "x-inferred-from-example": true,
+                        "items": {
+                          "type": "string",
+                          "x-inferred-from-example": true
+                        }
+                      }
+                    },
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "keywords": {
+                "type": "string",
+                "description": "关键字。支持用例编号和用例标题。"
+              },
+              "include_public_image_token": {
+                "type": "string",
+                "description": "包含获取图片资源 token 的属性。"
+              },
+              "include_deleted": {
+                "type": "boolean",
+                "description": "是否查询已删除的用例。",
+                "default": false
+              },
+              "page_size": {
+                "type": "number",
+                "description": "每页条数，取值范围 1-100。",
+                "default": 30
+              },
+              "page_index": {
+                "type": "number",
+                "description": "页码，从 0 开始。",
+                "default": 0
+              }
+            }
+          }
+        },
+        "required": [
+          "mode",
+          "payload"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "mode": "query",
+            "payload": {
+              "filter": {
+                "title": {
+                  "contains": "登录"
+                },
+                "library.id": {
+                  "in": [
+                    "5eb623f6a70571487ea47000"
+                  ]
+                }
+              },
+              "keywords": "CSK",
+              "page_size": 10,
+              "page_index": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-categories",
+  "meta": {
+    "name": "获取类别列表",
+    "method": "GET",
+    "path": "/v2/categories",
+    "group": "类别与分组",
+    "groupPath": [
+      "全局",
+      "通用",
+      "类别与分组"
+    ],
+    "area": "全局",
+    "tags": [
+      "类别与分组"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "依赖 entity_type 对应的作用域"
+      ]
+    },
+    "description": "用于分页获取指定实体类型的类别列表。",
+    "summary": "用于分页获取指定实体类型的类别列表。",
+    "sourceFile": "src/modules/v2/pingcode/global/common/category/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%88%AB%E5%88%97%E8%A1%A8",
+    "originalUrl": "/v2/categories?entity_type={entity_type}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "description": "类别所属实体类型。例如： 在 `entity_type` 为 `sprint` 时，获取迭代的类别，此时要求作用域包括 `pcp:read:pjm:sprint`；",
+            "enum": [
+              "sprint",
+              "release",
+              "testplan",
+              "project",
+              "library",
+              "product"
+            ]
+          },
+          "pilot_id": {
+            "type": "string",
+            "description": "类别所在的产品、项目或测试库的 id。仅 `entity_type` 为 `sprint`、`release` 或 `testplan` 时有效且必填。"
+          }
+        },
+        "required": [
+          "entity_type"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-permission-check-global",
+  "meta": {
+    "name": "检查我的全局权限",
+    "method": "POST",
+    "path": "/v2/permission/check/global",
+    "group": "权限",
+    "groupPath": [
+      "全局",
+      "权限"
+    ],
+    "area": "全局",
+    "tags": [
+      "权限"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:permission"
+      ]
+    },
+    "description": "用于按指定权限点检查当前用户的全局权限。  \n 响应体为对象数组，包含请求中每个权限点的检查结果。",
+    "summary": "用于按指定权限点检查当前用户的全局权限。",
+    "sourceFile": "src/modules/v2/pingcode/global/permission/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%A3%80%E6%9F%A5%E6%88%91%E7%9A%84%E5%85%A8%E5%B1%80%E6%9D%83%E9%99%90"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "需要检查的权限点列表。",
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "permissions"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "permissions": [
+              "pca:global:user:manage:member",
+              "pca:global:team:manage:system",
+              "pca:global:overview:home"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "权限点。"
+          },
+          "has_permission": {
+            "type": "number",
+            "description": "是否有权限。`1` 表示有权限，`0` 表示无权限。",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        },
+        "required": [
+          "key",
+          "has_permission"
+        ]
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "key": "pca:global:user:manage:member",
+            "has_permission": 1
+          },
+          {
+            "key": "pca:global:team:manage:system",
+            "has_permission": 1
+          },
+          {
+            "key": "pca:global:overview:home",
+            "has_permission": 1
+          }
+        ]
+      }
+    ]
+  }
+}

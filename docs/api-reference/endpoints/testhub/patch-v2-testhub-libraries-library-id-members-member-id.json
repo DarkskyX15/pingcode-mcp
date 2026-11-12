@@ -1,0 +1,219 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "patch-v2-testhub-libraries-library-id-members-member-id",
+  "meta": {
+    "name": "部分更新测试库中的一个成员",
+    "method": "PATCH",
+    "path": "/v2/testhub/libraries/{library_id}/members/{member_id}",
+    "group": "测试库",
+    "groupPath": [
+      "测试管理",
+      "测试库"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "测试库"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:library"
+      ]
+    },
+    "description": "用于部分更新测试库成员的角色。  \n 仅管理员可更改其他用户的角色。",
+    "summary": "用于部分更新测试库成员的角色。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/library/member/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E9%83%A8%E5%88%86%E6%9B%B4%E6%96%B0%E6%B5%8B%E8%AF%95%E5%BA%93%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E6%88%90%E5%91%98"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "library_id": {
+            "type": "string",
+            "description": "测试库的 id。"
+          },
+          "member_id": {
+            "type": "string",
+            "description": "企业成员或团队的 id。"
+          }
+        },
+        "required": [
+          "library_id",
+          "member_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "role_id": {
+            "type": "string",
+            "description": "角色的 id。管理员可以更改其他用户的角色，但非管理员用户无权更改其他用户的角色。"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "role_id": "6422711c3f12e6c1e46d40e6"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "测试库成员的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "测试库成员的资源地址。"
+        },
+        "library": {
+          "type": "object",
+          "description": "所属测试库的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "type": {
+          "type": "string",
+          "description": "测试库成员的类型。",
+          "enum": [
+            "user",
+            "user_group"
+          ]
+        },
+        "user": {
+          "type": "object",
+          "description": "企业成员的引用结构数据。当 `type` 为 `user` 时，该字段返回。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "user_group": {
+          "type": "object",
+          "description": "团队的引用结构数据。当 `type` 为 `user_group` 时，该字段返回。"
+        },
+        "role": {
+          "type": "object",
+          "description": "成员角色的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "library",
+        "type",
+        "role"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "a0417f68e846aae315c85d24643678a9",
+          "url": "https://{rest_api_root}/v2/testhub/libraries/5eb623f6a70571487ea47000/members/a0417f68e846aae315c85d24643678a9",
+          "library": {
+            "id": "5eb623f6a70571487ea47000",
+            "url": "https://{rest_api_root}/v2/testhub/libraries/5eb623f6a70571487ea47000",
+            "identifier": "CSK",
+            "name": "测试库",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "type": "user",
+          "user": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "role": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/directory/roles/6422711c3f12e6c1e46d40e6",
+            "name": "管理员"
+          }
+        }
+      }
+    ]
+  }
+}

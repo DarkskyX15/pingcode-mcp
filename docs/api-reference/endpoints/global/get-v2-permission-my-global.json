@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-permission-my-global",
+  "meta": {
+    "name": "获取我的全局权限",
+    "method": "GET",
+    "path": "/v2/permission/my/global",
+    "group": "权限",
+    "groupPath": [
+      "全局",
+      "权限"
+    ],
+    "area": "全局",
+    "tags": [
+      "权限"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:permission"
+      ]
+    },
+    "description": "用于获取当前用户的全局权限。响应体为对象数组。",
+    "summary": "用于获取当前用户的全局权限。响应体为对象数组。",
+    "sourceFile": "src/modules/v2/pingcode/global/permission/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E6%88%91%E7%9A%84%E5%85%A8%E5%B1%80%E6%9D%83%E9%99%90"
+  },
+  "request": {},
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "权限点。"
+          },
+          "has_permission": {
+            "type": "number",
+            "description": "是否有权限。`1` 表示有权限，`0` 表示无权限。",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        },
+        "required": [
+          "key",
+          "has_permission"
+        ]
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "key": "pca:global:user:manage:member",
+            "has_permission": 1
+          },
+          {
+            "key": "pca:global:team:manage:system",
+            "has_permission": 1
+          },
+          {
+            "key": "pca:global:overview:home",
+            "has_permission": 1
+          }
+        ]
+      }
+    ]
+  }
+}

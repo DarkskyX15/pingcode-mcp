@@ -1,0 +1,347 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-devops-prs-pr-id",
+  "meta": {
+    "name": "获取一个拉取请求",
+    "method": "GET",
+    "path": "/v2/devops/prs/{pr_id}",
+    "group": "拉取请求",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "拉取请求"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "拉取请求"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:read:devops:code"
+      ]
+    },
+    "description": "用于按 id 获取拉取请求全量信息。",
+    "summary": "用于按 id 获取拉取请求全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/pullrequest.facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E6%8B%89%E5%8F%96%E8%AF%B7%E6%B1%82"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "pr_id": {
+            "type": "string",
+            "description": "拉取请求的 id。"
+          }
+        },
+        "required": [
+          "pr_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "拉取请求的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "拉取请求的资源地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "拉取请求的托管平台。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "repository": {
+          "type": "object",
+          "description": "拉取请求的代码仓库。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "full_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "created_at": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "title": {
+          "type": "string",
+          "description": "拉取请求的标题。"
+        },
+        "number": {
+          "type": "number",
+          "description": "拉取请求的编号。"
+        },
+        "status": {
+          "type": "string",
+          "description": "拉取请求的状态。",
+          "enum": [
+            "open",
+            "closed",
+            "merged",
+            "abandoned"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "拉取请求的描述。"
+        },
+        "author": {
+          "type": "object",
+          "description": "拉取请求的创建者。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "source_branch": {
+          "type": "object",
+          "description": "拉取请求的源分支。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "created_at": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "target_branch": {
+          "type": "object",
+          "description": "拉取请求的目标分支。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "created_at": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "created_at": {
+          "type": "number",
+          "description": "拉取请求的创建时间。"
+        },
+        "merged_at": {
+          "type": "number",
+          "description": "拉取请求的合并的时间。"
+        },
+        "merged_commit_sha": {
+          "type": "string",
+          "description": "拉取请求的源分支最后一次提交的 SHA 值。"
+        },
+        "merged_by": {
+          "type": "object",
+          "description": "拉取请求的合并者。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "comments_count": {
+          "type": "number",
+          "description": "拉取请求的评论数量。"
+        },
+        "review_comments_count": {
+          "type": "number",
+          "description": "拉取请求的代码评审评论数量。"
+        },
+        "commits_count": {
+          "type": "number",
+          "description": "拉取请求的提交数量。"
+        },
+        "additions_count": {
+          "type": "number",
+          "description": "拉取请求的新增文件数量。"
+        },
+        "deletions_count": {
+          "type": "number",
+          "description": "拉取请求的删除文件数量。"
+        },
+        "changed_files_count": {
+          "type": "number",
+          "description": "拉取请求的更改文件数量。"
+        },
+        "workitems": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "拉取请求关联的 PingCode 的工作项列表。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "product",
+        "repository",
+        "title",
+        "number",
+        "status",
+        "description",
+        "author",
+        "source_branch",
+        "target_branch",
+        "created_at",
+        "merged_at",
+        "merged_commit_sha",
+        "merged_by",
+        "comments_count",
+        "review_comments_count",
+        "commits_count",
+        "additions_count",
+        "deletions_count",
+        "changed_files_count",
+        "workitems"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "594587fe700d43b81b080789",
+          "url": "https://{rest_api_root}/v2/devops/prs/594587fe700d43b81b080789",
+          "product": {
+            "id": "564587fe700d43b81b080765",
+            "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+            "name": "Github",
+            "type": "github"
+          },
+          "repository": {
+            "id": "564587fe700d43b81b080766",
+            "url": "https://{rest_api_root}/v2/devops/repos/564587fe700d43b81b080766",
+            "name": "ngx-planet",
+            "full_name": "worktile/ngx-planet",
+            "created_at": 1403018919
+          },
+          "title": "fix(doc): #PLM-001 fix document title",
+          "number": 1,
+          "status": "merged",
+          "description": "Please give some great suggestions",
+          "author": {
+            "id": "5666aea91f99e33cb7c44964",
+            "url": "https://{rest_api_root}/v2/devops/users/5666aea91f99e33cb7c44964",
+            "name": "terry"
+          },
+          "source_branch": {
+            "id": "564587fe700d43b81b080767",
+            "url": "https://{rest_api_root}/v2/devops/branches/564587fe700d43b81b080767",
+            "name": "terry/#PLM-001",
+            "created_at": 1403018919
+          },
+          "target_branch": {
+            "id": "564587fe700d43b81b080776",
+            "url": "https://{rest_api_root}/v2/devops/branches/564587fe700d43b81b080776",
+            "name": "develop",
+            "created_at": 1402018919
+          },
+          "created_at": 1403014000,
+          "merged_at": 1473018919,
+          "merged_commit_sha": "96a024347146ebdc5f481f45e6e6871e0c43af5f",
+          "merged_by": {
+            "id": "5666aea91f99e33cb7c44964",
+            "url": "https://{rest_api_root}/v2/devops/users/5666aea91f99e33cb7c44964",
+            "name": "terry"
+          },
+          "comments_count": 2,
+          "review_comments_count": 2,
+          "commits_count": 2,
+          "additions_count": 0,
+          "deletions_count": 0,
+          "changed_files_count": 3,
+          "workitems": []
+        }
+      }
+    ]
+  }
+}

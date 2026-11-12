@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-ship-ticket-states",
+  "meta": {
+    "name": "创建一个工单状态",
+    "method": "POST",
+    "path": "/v2/ship/ticket_states",
+    "group": "工单配置",
+    "groupPath": [
+      "产品管理",
+      "产品配置中心",
+      "工单配置"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "工单配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:ship:configuration"
+      ]
+    },
+    "description": "用于创建一个工单状态。",
+    "summary": "用于创建一个工单状态。",
+    "sourceFile": "src/modules/v2/pingcode/ship/configuration/ticket/state/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%8D%95%E7%8A%B6%E6%80%81"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "工单状态的名称，在一个企业中这个名称是唯一的。"
+          },
+          "type": {
+            "type": "string",
+            "description": "工单状态的类型。",
+            "enum": [
+              "pending",
+              "in_progress",
+              "completed",
+              "closed"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "处理中",
+            "type": "pending"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工单状态的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工单状态的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "工单状态的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "工单状态的类型。",
+          "enum": [
+            "pending",
+            "in_progress",
+            "completed",
+            "closed"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "description": "工单状态的颜色。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "type",
+        "color"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "6422711c3f12e6c1e46d40f2",
+          "url": "https://{rest_api_root}/v2/ship/ticket_states/6422711c3f12e6c1e46d40f2",
+          "name": "处理中",
+          "type": "pending",
+          "color": "#56ABFB"
+        }
+      }
+    ]
+  }
+}

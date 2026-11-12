@@ -1,0 +1,222 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-devops-repos",
+  "meta": {
+    "name": "获取代码仓库列表",
+    "method": "GET",
+    "path": "/v2/devops/repos",
+    "group": "代码仓库",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "代码仓库"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "代码仓库"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:read:devops:code"
+      ]
+    },
+    "description": "用于分页获取指定托管平台下的代码仓库列表。",
+    "summary": "用于分页获取指定托管平台下的代码仓库列表。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E5%88%97%E8%A1%A8",
+    "originalUrl": "/v2/devops/repos?product_id={product_id}"
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "代码托管平台的 id。"
+          },
+          "full_name": {
+            "type": "string",
+            "description": "代码仓库的全称。"
+          }
+        },
+        "required": [
+          "product_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "product": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "full_name": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "created_at": {
+                "type": "number",
+                "x-inferred-from-example": true
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "url": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "is_fork": {
+                "type": "boolean",
+                "x-inferred-from-example": true
+              },
+              "is_private": {
+                "type": "boolean",
+                "x-inferred-from-example": true
+              },
+              "description": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "branches_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "commits_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "compare_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "pulls_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "代码仓库全量结构数据的数组。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "page_size": 30,
+          "page_index": 0,
+          "total": 1,
+          "values": [
+            {
+              "id": "564587fe700d43b81b080766",
+              "url": "https://{rest_api_root}/v2/devops/repos/564587fe700d43b81b080766",
+              "html_url": "https://github.com/worktile/ngx-planet",
+              "product": {
+                "id": "564587fe700d43b81b080765",
+                "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+                "name": "Github",
+                "type": "github"
+              },
+              "name": "ngx-planet",
+              "full_name": "worktile/ngx-planet",
+              "created_at": 1403018919,
+              "owner": {
+                "id": "5666aea91f99e33cb7c44964",
+                "url": "https://{rest_api_root}/v2/devops/users/5666aea91f99e33cb7c44964",
+                "name": "terry"
+              },
+              "is_fork": false,
+              "is_private": false,
+              "description": "A powerful, reliable, fully-featured and production ready Micro Frontend library for Angular",
+              "branches_url": "https://github.com/worktile/ngx-planet/tree/{branch}",
+              "commits_url": "https://github.com/worktile/ngx-planet/commit/{sha}",
+              "compare_url": "https://github.com/worktile/ngx-planet/compare/{base}...{head}",
+              "pulls_url": "https://github.com/worktile/ngx-planet/pull/{number}"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

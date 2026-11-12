@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-nos-create-download-url",
+  "meta": {
+    "name": "创建一个下载地址",
+    "method": "POST",
+    "path": "/v2/nexus/nos/create_download_url",
+    "group": "NOS",
+    "groupPath": [
+      "存储",
+      "NOS"
+    ],
+    "area": "存储",
+    "tags": [
+      "NOS"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:storage:app"
+      ]
+    },
+    "description": "创建文件下载的 URL 地址。",
+    "summary": "创建文件下载的 URL 地址。",
+    "sourceFile": "src/modules/v2/nexus/storage/nos/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "对象文件的 `key`。"
+          }
+        },
+        "required": [
+          "key"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "key": "nos/demo.png"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "x-inferred-from-example": true
+        }
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "url": "https://{nos_api_root}/api/download/451f6c4ae36b4d689f85d6621b7643a0?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        }
+      }
+    ]
+  }
+}

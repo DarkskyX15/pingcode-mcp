@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "put-v2-devops-products-product-id",
+  "meta": {
+    "name": "全量更新一个托管平台",
+    "method": "PUT",
+    "path": "/v2/devops/products/{product_id}",
+    "group": "托管平台",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "托管平台"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "托管平台"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:code"
+      ]
+    },
+    "description": "用于全量更新一个托管平台。",
+    "summary": "用于全量更新一个托管平台。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%85%A8%E9%87%8F%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "代码托管平台的 id。"
+          }
+        },
+        "required": [
+          "product_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "代码托管平台的名称，在一个企业中这个名称是唯一的。"
+          },
+          "type": {
+            "type": "string",
+            "description": "代码托管平台的产品类型，主要用于显示图标。",
+            "enum": [
+              "github",
+              "gitlab",
+              "bitbucket",
+              "coding.net",
+              "gogs",
+              "git",
+              "svn",
+              "gerrit",
+              "other"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "代码托管平台简介。"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "name": "Github",
+            "type": "github",
+            "description": "Github 公有云"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "托管平台的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "托管平台的资源地址。"
+        },
+        "name": {
+          "type": "string",
+          "description": "托管平台的名称。"
+        },
+        "type": {
+          "type": "string",
+          "description": "托管平台的类型。",
+          "enum": [
+            "github",
+            "gitlab",
+            "bitbucket",
+            "coding.net",
+            "gogs",
+            "git",
+            "svn",
+            "gerrit",
+            "other"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "托管平台的描述。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "name",
+        "type",
+        "description"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "564587fe700d43b81b080765",
+          "url": "https://{rest_api_root}/v2/devops/products/564587fe700d43b81b080765",
+          "name": "Github",
+          "type": "github",
+          "description": "Github 公有云"
+        }
+      }
+    ]
+  }
+}

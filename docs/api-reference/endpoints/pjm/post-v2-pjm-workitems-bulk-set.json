@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-workitems-bulk-set",
+  "meta": {
+    "name": "批量设置工作项属性",
+    "method": "POST",
+    "path": "/v2/pjm/workitems/bulk/set",
+    "group": "工作项",
+    "groupPath": [
+      "项目管理",
+      "工作项"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:workitem"
+      ]
+    },
+    "description": "用于批量为多个工作项设置相同的属性值。单次最多支持 100 条。  \n接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。  \n响应按请求条目顺序返回对应结果，通过 `state`（`success` / `failure`）判断操作结果，失败时通过 `message` 返回失败原因。",
+    "summary": "用于批量为多个工作项设置相同的属性值。单次最多支持 100 条。接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。响应按请求条目顺序返回对应结果，通过 state（success / failure）判断操作结果，失败时通过 message 返回失败原因。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/work-item/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%89%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%E5%B7%A5%E4%BD%9C%E9%A1%B9%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "工作项 id 列表。数组长度不超过 100。",
+            "x-inferred-from-example": true
+          },
+          "property_name": {
+            "type": "string",
+            "description": "要设置的属性名。支持内置字段（如 `title`、`state_id`）或自定义属性（如 `properties.prop_a`）。"
+          },
+          "property_value": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "object"
+                }
+              ],
+              "x-pingcode-type": "String/Number/String[]/Object"
+            },
+            "description": "要写入的属性值，取值规则与「部分更新一个工作项」中同名参数一致。"
+          }
+        },
+        "required": [
+          "ids",
+          "property_name"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "ids": [
+              "547000eb6a70571487623fea"
+            ],
+            "property_name": "title",
+            "property_value": "这是一个工作项"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "description": "操作状态。",
+            "enum": [
+              "success",
+              "failure"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "工作项 id。"
+          },
+          "message": {
+            "type": "string",
+            "description": "操作失败时的错误信息。"
+          }
+        },
+        "required": [
+          "state",
+          "id"
+        ]
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "state": "success",
+            "id": "547000eb6a70571487623fea"
+          }
+        ]
+      }
+    ]
+  }
+}

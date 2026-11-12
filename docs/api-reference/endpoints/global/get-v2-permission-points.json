@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-permission-points",
+  "meta": {
+    "name": "获取全部权限点",
+    "method": "GET",
+    "path": "/v2/permission/points",
+    "group": "权限",
+    "groupPath": [
+      "全局",
+      "权限"
+    ],
+    "area": "全局",
+    "tags": [
+      "权限"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:global:permission"
+      ]
+    },
+    "description": "用于获取全部权限点定义。  \n 响应体为对象，包含：`global`、`pjm`、`ship`、`testhub`、`wiki` 属性，对应的属性值为权限信息的数组。",
+    "summary": "用于获取全部权限点定义。",
+    "sourceFile": "src/modules/v2/pingcode/global/permission/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E5%85%A8%E9%83%A8%E6%9D%83%E9%99%90%E7%82%B9"
+  },
+  "request": {},
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "global": {
+          "type": "object",
+          "items": {
+            "type": "object"
+          },
+          "description": "全局权限信息的列表。",
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "权限点。"
+            },
+            "name": {
+              "type": "string",
+              "description": "权限点的名称。"
+            },
+            "group": {
+              "type": "string",
+              "description": "权限点所属分组，用于区分权限点适用的资源类型，如 `project`、`workitem`、`sprint` 等。"
+            }
+          },
+          "required": [
+            "key"
+          ]
+        },
+        "pjm": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              },
+              "group": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                ],
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "项目管理权限信息列表。元素字段同 `global`。",
+          "x-inferred-from-example": true
+        },
+        "ship": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "产品管理权限信息列表。元素字段同 `global`。"
+        },
+        "testhub": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "测试管理权限信息列表。元素字段同 `global`。"
+        },
+        "wiki": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "知识库管理权限信息列表。元素字段同 `global`。"
+        }
+      }
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "global": [
+            {
+              "key": "pca:global:pjm:project:create",
+              "name": "新建项目",
+              "group": "project"
+            }
+          ],
+          "pjm": [
+            {
+              "key": "pca:pjm:task:create",
+              "name": "创建任务",
+              "group": "workitem"
+            },
+            {
+              "key": "pca:pjm:sprint:manage",
+              "name": "迭代管理",
+              "group": "sprint"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-devops-commits",
+  "meta": {
+    "name": "创建一个提交",
+    "method": "POST",
+    "path": "/v2/devops/commits",
+    "group": "提交",
+    "groupPath": [
+      "DevOps_数据集成",
+      "代码",
+      "提交"
+    ],
+    "area": "DevOps_数据集成",
+    "tags": [
+      "提交"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:write:devops:code"
+      ]
+    },
+    "description": "用于录入代码仓库中的实际提交，供在 PingCode 中展示。",
+    "summary": "用于录入代码仓库中的实际提交，供在 PingCode 中展示。",
+    "sourceFile": "src/modules/v2/pingcode/devops/scm/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%8F%90%E4%BA%A4"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "sha": {
+            "type": "string",
+            "description": "提交的 SHA 值。"
+          },
+          "message": {
+            "type": "string",
+            "description": "提交的描述信息。"
+          },
+          "committer_name": {
+            "type": "string",
+            "description": "提交者的用户名。"
+          },
+          "committed_at": {
+            "type": "number",
+            "description": "提交的时间。"
+          },
+          "tree_id": {
+            "type": "string",
+            "description": "提交树的 SHA 值。"
+          },
+          "files_added": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "新增文件的文件名列表。",
+            "x-inferred-from-example": true
+          },
+          "files_removed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "移除文件的文件名列表。",
+            "x-inferred-from-example": true
+          },
+          "files_modified": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "更新文件的文件名列表。",
+            "x-inferred-from-example": true
+          },
+          "workitem_identifiers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "PingCode 工作项编号的列表。通过该参数将提交与一个或多个工作项关联。",
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "sha",
+          "message",
+          "committer_name",
+          "committed_at",
+          "files_added",
+          "files_removed",
+          "files_modified"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "sha": "96a024347146ebdc5f481f45e6e6871e0c43af5f",
+            "message": "feat(scope): #PLM-001 initialization code structure",
+            "committer_name": "terry",
+            "committed_at": 1403018919,
+            "tree_id": "1bf8989985e70389c07daa5052464a9c6f4896bb",
+            "files_added": [
+              "index.ts"
+            ],
+            "files_removed": [
+              "utilities.ts"
+            ],
+            "files_modified": [
+              "README.md"
+            ],
+            "workitem_identifiers": [
+              "PLM-001"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "提交的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "提交的资源地址。"
+        },
+        "sha": {
+          "type": "string",
+          "description": "提交的 SHA 值。"
+        },
+        "message": {
+          "type": "string",
+          "description": "提交的描述信息。"
+        },
+        "committer_name": {
+          "type": "string",
+          "description": "提交者的用户名。"
+        },
+        "committed_at": {
+          "type": "number",
+          "description": "提交的时间。"
+        },
+        "tree_id": {
+          "type": "string",
+          "description": "提交树的 SHA 值。"
+        },
+        "files_added": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "提交新增文件的文件名列表。",
+          "x-inferred-from-example": true
+        },
+        "files_removed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "提交移除文件的文件名列表。",
+          "x-inferred-from-example": true
+        },
+        "files_modified": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "提交更新文件的文件名列表。",
+          "x-inferred-from-example": true
+        },
+        "file_changed_count": {
+          "type": "number",
+          "description": "提交更新文件数量。"
+        },
+        "workitems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "short_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "html_url": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "identifier": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "title": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "start": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "due": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  },
+                  "with_time": {
+                    "type": "number",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              },
+              "parent_id": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "prop_a": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  },
+                  "prop_b": {
+                    "type": "string",
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": "提交关联的 PingCode 工作项列表。",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "sha",
+        "message",
+        "committer_name",
+        "committed_at",
+        "tree_id",
+        "files_added",
+        "files_removed",
+        "files_modified",
+        "file_changed_count",
+        "workitems"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5e3bb2128cfda459bbafa3fb",
+          "url": "https://{rest_api_root}/v2/devops/commits/5e3bb2128cfda459bbafa3fb",
+          "sha": "96a024347146ebdc5f481f45e6e6871e0c43af5f",
+          "message": "feat(scope): #PLM-001 initialization code structure",
+          "committer_name": "terry",
+          "committed_at": 1403018919,
+          "tree_id": "1bf8989985e70389c07daa5052464a9c6f4896bb",
+          "files_added": [
+            "index.ts"
+          ],
+          "files_removed": [
+            "utilities.ts"
+          ],
+          "files_modified": [
+            "README.md"
+          ],
+          "file_changed_count": 3,
+          "workitems": [
+            {
+              "id": "564587fe700d43b81b080ab8",
+              "url": "https://{rest_api_root}/v2/pjm/workitems/564587fe700d43b81b080ab8",
+              "short_id": "c9WqLmTO",
+              "html_url": "https://yctech.pingcode.com/pjm/workitems/c9WqLmTO",
+              "identifier": "PLM-001",
+              "title": "这是一个用户故事",
+              "start": {
+                "date": 1583290309,
+                "with_time": 1
+              },
+              "due": {
+                "date": 1583290347,
+                "with_time": 1
+              },
+              "parent_id": "5edca524cad2fa112b06105c",
+              "properties": {
+                "prop_a": "prop_a_value",
+                "prop_b": "prop_b_value"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

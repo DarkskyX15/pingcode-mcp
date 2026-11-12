@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-authorize",
+  "meta": {
+    "name": "请求授权",
+    "method": "GET",
+    "path": "/authorize",
+    "group": "授权码",
+    "groupPath": [
+      "鉴权",
+      "授权码"
+    ],
+    "area": "鉴权",
+    "tags": [
+      "授权码"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [],
+      "scopes": []
+    },
+    "description": "授权码模式（`OAuth2 Authorization Code`）是最常用的授权方式，适用于企业员工管理个人数据。通过该方式获取的访问令牌（`access_token`）在 PingCode 中被称为用户令牌，该令牌归属指定用户，仅可访问对应用户权限范围内的数据。  \n 开发者可通过引导用户手动授权的方式获取用户令牌，使用该模式需提前准备 `client_id` 和 `redirect_uri` 两个核心参数。开发者可登录 PingCode 企业后台，在凭据管理模块创建应用、配置对应数据权限范围，同时获取应用唯一标识 `client_id` 以及授权回调地址 `redirect_uri`。完成配置后，需在第三方应用的页面引导用户通过浏览器访问 PingCode 授权页面，由用户自主完成授权确认操作；授权成功后，页面将自动跳转至预设的 `redirect_uri` 回调地址，同时在 URL 参数中返回临时授权码 `code`。开发者可凭借已获取的 `client_id` 和临时 `code` 兑换正式的用户令牌，后续调用接口、访问受保护资源时，只需在 HTTP 请求头部配置 `Authorization: Bearer {access_token}` 格式参数，即可完成权限校验与数据访问。  \n 用户访问授权页面前需已登录 PingCode。  \n 授权页面地址：`https://{oauth2_root}/authorize`。",
+    "summary": "授权码模式（OAuth2 Authorization Code）是最常用的授权方式，适用于企业员工管理个人数据。通过该方式获取的访问令牌（access_token）在 PingCode 中被称为用户令牌，该令牌归属指定用户，仅可访问对应用户权限范围内的数据。",
+    "sourceFile": "src/modules/v2/pingcode/authorization/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%AF%B7%E6%B1%82%E6%8E%88%E6%9D%83",
+    "baseUrl": "https://{oauth2_root}",
+    "originalUrl": "https://{oauth2_root}/authorize?response_type=code",
+    "queryDefaults": [
+      {
+        "name": "response_type",
+        "value": "code"
+      }
+    ]
+  },
+  "request": {
+    "query": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "response_type": {
+            "type": "string",
+            "description": "响应类型，这里固定为 code 类型。",
+            "enum": [
+              "code"
+            ]
+          },
+          "client_id": {
+            "type": "string",
+            "description": "PingCode 应用的 Client ID"
+          }
+        },
+        "required": [
+          "response_type",
+          "client_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object"
+    }
+  }
+}

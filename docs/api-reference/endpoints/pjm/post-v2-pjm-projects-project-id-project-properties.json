@@ -1,0 +1,247 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-pjm-projects-project-id-project-properties",
+  "meta": {
+    "name": "向项目中添加一个项目属性",
+    "method": "POST",
+    "path": "/v2/pjm/projects/{project_id}/project_properties",
+    "group": "项目",
+    "groupPath": [
+      "项目管理",
+      "项目"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "项目"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:configuration"
+      ]
+    },
+    "description": "用于向项目中添加一个项目属性。",
+    "summary": "用于向项目中添加一个项目属性。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/project/project-property/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%90%91%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "description": "项目的 id。"
+          }
+        },
+        "required": [
+          "project_id"
+        ]
+      }
+    },
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "property_id": {
+            "type": "string",
+            "description": "项目属性的 id。"
+          }
+        },
+        "required": [
+          "property_id"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "property_id": "risk"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "资源的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "资源的地址。"
+        },
+        "project": {
+          "type": "object",
+          "description": "所属项目的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "template_type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "property": {
+          "type": "object",
+          "description": "项目属性的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "type": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "options": {
+              "type": "array",
+              "x-inferred-from-example": true,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          },
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          }
+                        ],
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  },
+                  "text": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          },
+                          {
+                            "type": "string",
+                            "x-inferred-from-example": true
+                          }
+                        ],
+                        "x-inferred-from-example": true
+                      },
+                      {
+                        "type": "string",
+                        "x-inferred-from-example": true
+                      }
+                    ],
+                    "x-inferred-from-example": true
+                  }
+                },
+                "x-inferred-from-example": true
+              }
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "project",
+        "property"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "risk",
+          "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000/project_properties/risk",
+          "project": {
+            "id": "5eb623f6a70571487ea47000",
+            "url": "https://{rest_api_root}/v2/pjm/projects/5eb623f6a70571487ea47000",
+            "identifier": "SCR",
+            "name": "Scrum 项目",
+            "template_type": "scrum",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "property": {
+            "id": "risk",
+            "url": "https://{rest_api_root}/v2/pjm/project_properties/risk",
+            "name": "项目风险",
+            "type": "select",
+            "options": [
+              {
+                "id": "5efb1859110533727a82c603",
+                "text": "高"
+              },
+              {
+                "id": "5efb1859110533727a82c604",
+                "text": "中"
+              },
+              {
+                "id": "5efb1859110533727a82c605",
+                "text": "低"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-directory-users-bulk-set",
+  "meta": {
+    "name": "批量设置企业成员属性",
+    "method": "POST",
+    "path": "/v2/directory/users/bulk/set",
+    "group": "企业成员",
+    "groupPath": [
+      "全局",
+      "组织",
+      "企业成员"
+    ],
+    "area": "全局",
+    "tags": [
+      "企业成员"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:global:team"
+      ]
+    },
+    "description": "用于批量为多个企业成员设置相同的属性值。单次最多支持 100 条。  \n接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。  \n响应按请求条目顺序返回对应结果，通过 `state`（`success` / `failure`）判断操作结果，失败时通过 `message` 返回失败原因。",
+    "summary": "用于批量为多个企业成员设置相同的属性值。单次最多支持 100 条。接口支持部分成功，单条失败不会影响其他条目，已成功的数据不会回滚。响应按请求条目顺序返回对应结果，通过 state（success / failure）判断操作结果，失败时通过 message 返回失败原因。",
+    "sourceFile": "src/modules/v2/pingcode/global/organization/user/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E6%89%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%E4%BC%81%E4%B8%9A%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "企业成员 id 列表。数组长度不超过 100，不能包含自己和团队拥有者。",
+            "x-inferred-from-example": true
+          },
+          "property_name": {
+            "type": "string",
+            "description": "需要设置的企业成员属性名，目前仅支持：status（可选值为：enabled、disabled）。"
+          },
+          "property_value": {
+            "type": "string",
+            "description": "需要设置的企业成员属性值。"
+          }
+        },
+        "required": [
+          "ids",
+          "property_name",
+          "property_value"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "ids": [
+              "a0417f68e846aae315c85d24643678a9"
+            ],
+            "property_name": "status",
+            "property_value": "enabled"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "description": "操作状态。",
+            "enum": [
+              "success",
+              "failure"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "企业成员 id。"
+          },
+          "message": {
+            "type": "string",
+            "description": "操作失败时的错误信息。"
+          }
+        },
+        "required": [
+          "state",
+          "id"
+        ]
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": [
+          {
+            "state": "success",
+            "id": "a0417f68e846aae315c85d24643678a9"
+          }
+        ]
+      }
+    ]
+  }
+}

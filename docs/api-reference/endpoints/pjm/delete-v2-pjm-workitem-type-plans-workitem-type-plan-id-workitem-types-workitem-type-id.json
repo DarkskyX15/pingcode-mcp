@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "delete-v2-pjm-workitem-type-plans-workitem-type-plan-id-workitem-types-workitem-type-id",
+  "meta": {
+    "name": "在工作项类型方案中移除一个类型",
+    "method": "DELETE",
+    "path": "/v2/pjm/workitem_type_plans/{workitem_type_plan_id}/workitem_types/{workitem_type_id}",
+    "group": "工作项配置",
+    "groupPath": [
+      "项目管理",
+      "项目配置中心",
+      "工作项配置"
+    ],
+    "area": "项目管理",
+    "tags": [
+      "工作项配置"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:pjm:configuration"
+      ]
+    },
+    "description": "用于从工作项类型方案中移除一个类型。",
+    "summary": "用于从工作项类型方案中移除一个类型。",
+    "sourceFile": "src/modules/v2/pingcode/pjm/configuration/work-item-config/work-item-type-plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%9C%A8%E5%B7%A5%E4%BD%9C%E9%A1%B9%E7%B1%BB%E5%9E%8B%E6%96%B9%E6%A1%88%E4%B8%AD%E7%A7%BB%E9%99%A4%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "workitem_type_plan_id": {
+            "type": "string",
+            "description": "工作项类型方案的 id。"
+          },
+          "workitem_type_id": {
+            "type": "string",
+            "description": "工作项类型的 id。"
+          }
+        },
+        "required": [
+          "workitem_type_plan_id",
+          "workitem_type_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "工作项类型方案中工作项类型的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "工作项类型方案中工作项类型的地址。"
+        },
+        "type_plan": {
+          "type": "object",
+          "description": "工作项类型方案的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "type": {
+          "type": "object",
+          "description": "工作项类型的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "group": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "sub_types": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "子工作项类型的引用结构数据列表。"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "type_plan",
+        "type",
+        "sub_types"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "630da48bc9443b1aa94ce3ea",
+          "url": "https://{rest_api_root}/v2/pjm/workitem_type_plans/65b0d9fd9ee456e672657e39/workitem_types/630da48bc9443b1aa94ce3ea",
+          "type_plan": {
+            "id": "65b0d9fd9ee456e672657e39",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_type_plans/65b0d9fd9ee456e672657e39"
+          },
+          "type": {
+            "id": "630da48bc9443b1aa94ce3ea",
+            "url": "https://{rest_api_root}/v2/pjm/workitem_types/630da48bc9443b1aa94ce3ea",
+            "name": "需求",
+            "group": "requirement"
+          },
+          "sub_types": []
+        }
+      }
+    ]
+  }
+}

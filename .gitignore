@@ -1,0 +1,8 @@
+node_modules/
+.local/
+.dsh/
+.env
+.env.*
+*.env
+credentials*.json
+*.pending

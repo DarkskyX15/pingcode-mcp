@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-nexus-kvs-set",
+  "meta": {
+    "name": "写入存储数据",
+    "method": "POST",
+    "path": "/v2/nexus/kvs/set",
+    "group": "KVS",
+    "groupPath": [
+      "存储",
+      "KVS"
+    ],
+    "area": "存储",
+    "tags": [
+      "KVS"
+    ],
+    "listed": false,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌"
+      ],
+      "scopes": [
+        "pcp:storage:app"
+      ]
+    },
+    "description": "写入存储数据。",
+    "summary": "写入存储数据。",
+    "sourceFile": "src/modules/v2/nexus/storage/kvs/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%86%99%E5%85%A5%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "数据存储的 `key`。"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object"
+              },
+              {
+                "type": "array"
+              }
+            ],
+            "x-pingcode-type": "String|Number|Boolean|Object|Array",
+            "description": "数据存储的 `value`。"
+          },
+          "options": {
+            "type": "object",
+            "description": "可选配置项。",
+            "properties": {
+              "policy": {
+                "type": "string",
+                "description": "数据存储策略。默认值为 `FAIL_IF_EXISTS`，当 `key` 已经存在时，直接报错。当值为 `OVERRIDE` 时表示会覆盖旧的 `value`。",
+                "enum": [
+                  "OVERRIDE",
+                  "FAIL_IF_EXISTS"
+                ]
+              },
+              "secret": {
+                "type": "boolean",
+                "description": "值 `value` 是否加密，默认值为 `false`。"
+              }
+            }
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "key": "kvs_key",
+            "value": "kvs_value",
+            "options": {
+              "policy": "OVERRIDE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "value": {
+          "type": "string",
+          "x-inferred-from-example": true
+        }
+      },
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "key": "kvs_key",
+          "value": "kvs_value"
+        }
+      }
+    ]
+  }
+}

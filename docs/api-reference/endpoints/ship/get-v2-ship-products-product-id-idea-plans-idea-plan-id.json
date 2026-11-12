@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-products-product-id-idea-plans-idea-plan-id",
+  "meta": {
+    "name": "获取一个需求计划",
+    "method": "GET",
+    "path": "/v2/ship/products/{product_id}/idea_plans/{idea_plan_id}",
+    "group": "产品",
+    "groupPath": [
+      "产品管理",
+      "产品"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "产品"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:product"
+      ]
+    },
+    "description": "用于按 id 获取产品中的需求计划全量信息。",
+    "summary": "用于按 id 获取产品中的需求计划全量信息。",
+    "sourceFile": "src/modules/v2/pingcode/ship/product/plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E8%AE%A1%E5%88%92"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "产品的 id。"
+          },
+          "idea_plan_id": {
+            "type": "string",
+            "description": "需求计划的 id。"
+          }
+        },
+        "required": [
+          "product_id",
+          "idea_plan_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "需求计划的 id。"
+        },
+        "url": {
+          "type": "string",
+          "description": "需求计划的资源地址。"
+        },
+        "product": {
+          "type": "object",
+          "description": "需求计划所属产品的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "identifier": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "is_archived": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "is_deleted": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "name": {
+          "type": "string",
+          "description": "需求计划的名称。"
+        },
+        "assignee": {
+          "type": "object",
+          "description": "需求计划负责人的引用结构数据。",
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "url": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "display_name": {
+              "type": "string",
+              "x-inferred-from-example": true
+            },
+            "avatar": {
+              "type": "string",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "start_at": {
+          "type": "object",
+          "description": "需求计划的开始时间，单位为秒。",
+          "properties": {
+            "date": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "with_time": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        },
+        "end_at": {
+          "type": "object",
+          "description": "需求计划的结束时间，单位为秒。",
+          "properties": {
+            "date": {
+              "type": "number",
+              "x-inferred-from-example": true
+            },
+            "with_time": {
+              "type": "number",
+              "x-inferred-from-example": true
+            }
+          },
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "product",
+        "name",
+        "assignee",
+        "start_at",
+        "end_at"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "63bb744414bd13c9def24ce4",
+          "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e6/idea_plans/63bb744414bd13c9def24ce4",
+          "product": {
+            "id": "6422711c3f12e6c1e46d40e6",
+            "url": "https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e6",
+            "identifier": "SLC",
+            "name": "示例产品",
+            "is_archived": 0,
+            "is_deleted": 0
+          },
+          "name": "账号管理",
+          "assignee": {
+            "id": "a0417f68e846aae315c85d24643678a9",
+            "url": "https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9",
+            "name": "john",
+            "display_name": "John",
+            "avatar": "https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png"
+          },
+          "start_at": {
+            "date": 1672704000,
+            "with_time": 0
+          },
+          "end_at": {
+            "date": 1672963199,
+            "with_time": 0
+          }
+        }
+      }
+    ]
+  }
+}

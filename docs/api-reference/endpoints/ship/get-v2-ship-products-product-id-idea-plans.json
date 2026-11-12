@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "get-v2-ship-products-product-id-idea-plans",
+  "meta": {
+    "name": "获取需求计划列表",
+    "method": "GET",
+    "path": "/v2/ship/products/{product_id}/idea_plans",
+    "group": "产品",
+    "groupPath": [
+      "产品管理",
+      "产品"
+    ],
+    "area": "产品管理",
+    "tags": [
+      "产品"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:read:ship:product"
+      ]
+    },
+    "description": "用于分页获取产品中的需求计划。",
+    "summary": "用于分页获取产品中的需求计划。",
+    "sourceFile": "src/modules/v2/pingcode/ship/product/plan/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E8%8E%B7%E5%8F%96%E9%9C%80%E6%B1%82%E8%AE%A1%E5%88%92%E5%88%97%E8%A1%A8"
+  },
+  "request": {
+    "path": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "产品的 id。"
+          }
+        },
+        "required": [
+          "product_id"
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "page_size": {
+          "type": "number",
+          "description": "每页条数。"
+        },
+        "page_index": {
+          "type": "number",
+          "description": "页码，从 0 开始。"
+        },
+        "total": {
+          "type": "number",
+          "description": "总条数。"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "产品中的需求计划全量结构数据的数组。"
+        }
+      },
+      "required": [
+        "page_size",
+        "page_index",
+        "total",
+        "values"
+      ]
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "raw": "        {\n            \"id\": \"63bb744414bd13c9def24ce4\",\n            \"url\": \"https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e6/idea_plans/63bb744414bd13c9def24ce4\",\n                \"id\": \"6422711c3f12e6c1e46d40e6\",\n                \"url\": \"https://{rest_api_root}/v2/ship/products/6422711c3f12e6c1e46d40e6\",\n                \"identifier\": \"SLC\",\n                \"name\": \"示例产品\",\n                \"is_archived\": 0,\n                \"is_deleted\": 0\n            },\n            \"name\": \"账号管理\",\n            \"assignee\": {\n                \"id\": \"a0417f68e846aae315c85d24643678a9\",\n                \"url\": \"https://{rest_api_root}/v2/directory/users/a0417f68e846aae315c85d24643678a9\",\n                \"name\": \"john\",\n                \"display_name\": \"John\",\n                \"avatar\": \"https://s3.amazonaws.com/bucket/b46ef40c-e22e-4ecf-a599-cace9fba839a_160x160.png\"\n            },\n            \"start_at\": { \"date\": 1672704000, \"with_time\": 0 },\n            \"end_at\": { \"date\": 1672963199, \"with_time\": 0 }\n        }\n    ]\n}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "schemaVersion": "pingcode-endpoint/1",
+  "id": "post-v2-testhub-testcases",
+  "meta": {
+    "name": "创建一个用例",
+    "method": "POST",
+    "path": "/v2/testhub/testcases",
+    "group": "用例",
+    "groupPath": [
+      "测试管理",
+      "用例"
+    ],
+    "area": "测试管理",
+    "tags": [
+      "用例"
+    ],
+    "listed": true,
+    "version": "2.0.0",
+    "auth": {
+      "tokens": [
+        "企业令牌",
+        "用户令牌"
+      ],
+      "scopes": [
+        "pcp:write:testhub:testcase"
+      ]
+    },
+    "description": "用于创建一个用例。",
+    "summary": "用于创建一个用例。",
+    "sourceFile": "src/modules/v2/pingcode/testhub/case/facade.ts",
+    "docsUrl": "https://open.pingcode.com/#api-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BE%8B"
+  },
+  "request": {
+    "body": {
+      "required": true,
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "library_id": {
+            "type": "string",
+            "description": "测试库的 id。"
+          },
+          "title": {
+            "type": "string",
+            "description": "测试用例的标题。"
+          },
+          "suite_id": {
+            "type": "string",
+            "description": "测试用例所属模块的 id。"
+          },
+          "type_id": {
+            "type": "string",
+            "description": "测试用例类型的 id。"
+          },
+          "important_level_id": {
+            "type": "string",
+            "description": "测试用例重要程度的 id。"
+          },
+          "maintenance_id": {
+            "type": "string",
+            "description": "测试用例维护人的 id。"
+          },
+          "participant_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "测试用例关注人的 id 列表。",
+            "x-inferred-from-example": true
+          },
+          "properties": {
+            "type": "object",
+            "description": "测试用例属性的键值对集合，需要注意的是，当前测试用例对应的属性方案需要包含这些测试用例属性。",
+            "properties": {
+              "prop_a": {
+                "type": "string",
+                "x-inferred-from-example": true
+              },
+              "prop_b": {
+                "type": "string",
+                "x-inferred-from-example": true
+              }
+            },
+            "x-inferred-from-example": true
+          },
+          "description": {
+            "type": "string",
+            "description": "测试用例的描述。"
+          },
+          "precondition": {
+            "type": "string",
+            "description": "测试用例的前置条件。"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "step_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    }
+                  ],
+                  "x-inferred-from-example": true
+                },
+                "description": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    },
+                    {
+                      "type": "string",
+                      "x-inferred-from-example": true
+                    }
+                  ],
+                  "x-inferred-from-example": true
+                },
+                "is_group": {
+                  "anyOf": [
+                    {
+                      "type": "boolean",
+                      "x-inferred-from-example": true
+                    },
+                    {
+                      "type": "boolean",
+                      "x-inferred-from-example": true
+                    }
+                  ],
+                  "x-inferred-from-example": true
+                },
+                "expected_value": {
+                  "type": "string",
+                  "x-inferred-from-example": true
+                },
+                "group_id": {
+                  "type": "string",
+                  "x-inferred-from-example": true
+                }
+              },
+              "x-inferred-from-example": true
+            },
+            "description": "测试用例的步骤列表。steps 是整体更新的。",
+            "x-inferred-from-example": true
+          }
+        },
+        "required": [
+          "library_id",
+          "title"
+        ]
+      },
+      "examples": [
+        {
+          "name": "请求示例：",
+          "type": "json",
+          "value": {
+            "library_id": "5eb623f6a70571487ea47000",
+            "title": "这是一个测试用例",
+            "suite_id": "55714870a70ea4eb623f6700",
+            "type_id": "5cf189b35de9c20620ad7153",
+            "important_level_id": "57a109b35ae8c20630fd7256",
+            "maintenance_id": "a0417f68e846aae315c85d24643678a9",
+            "participant_ids": [
+              "a0417f68e846aae315c85d24643678a9"
+            ],
+            "properties": {
+              "prop_a": "prop_a_value",
+              "prop_b": "prop_b_value"
+            },
+            "description": "测试用例的备注",
+            "precondition": "前置条件的描述信息",
+            "steps": [
+              {
+                "step_id": "5cdca524cade3a112b063071",
+                "description": "UI 测试",
+                "is_group": true
+              },
+              {
+                "step_id": "5cdca524cade3a112b063072",
+                "description": "在浏览器地址栏中输入 https://pingcode.com",
+                "expected_value": "成功访问 PingCode 官网",
+                "is_group": false,
+                "group_id": "5cdca524cade3a112b063071"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "用例的 id。"
+        },
+        "url": {
+          "type": "string",
+          "x-inferred-from-example": true
+        },
+        "title": {
+          "type": "string",
+          "x-inferred-from-example": true
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "x-inferred-from-example": true
+    },
+    "examples": [
+      {
+        "name": "响应示例：",
+        "type": "json",
+        "value": {
+          "id": "5edca524cad2fa112b06305c",
+          "url": "https://{rest_api_root}/v2/testhub/testcases/5edca524cad2fa112b06305c",
+          "title": "这是一个测试用例"
+        }
+      }
+    ]
+  }
+}
